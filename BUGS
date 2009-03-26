@@ -1,0 +1,6 @@
+
+Known bugs/issues with gf2x version 0.9
+
+- Toom tuning reports bizarre results on opteron. Prefer the shipped
+  x86_64/gf2x-thresholds.h (even though this was for a core2)
+

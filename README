@@ -1,0 +1,120 @@
+Installation guide for the gf2x package.
+========================================
+
+Authors: Richard Brent, Pierrick Gaudry, Emmanuel Thomé, Paul Zimmermann.
+Licence: GNU General Public License (version 2 or any later version).
+
+This package contains routines for fast arithmetic in GF(2)[x]
+(multiplication, squaring, gcd).
+
+It contains the following files:
+
+Miscellaneous doc files:
+
+README
+BUGS
+tuning/TODO
+tuning/README
+hardware/tuned/README
+AUTHORS
+ChangeLog
+
+Actual code:
+
+gf2x.h                 - main api
+gf2x-impl.h            - internal api
+gf2x.c                 - top-level source for multiplication code
+gf2x-small.h           - small-sized inlined multiplication routines
+toom.c                 - main file for Karatsuba and Toom-Cook multiplication
+fft.c                  - multiplication using Fast Fourier Transform
+ntl_gf2x_mul_code.h    - file to be hooked in NTL (see below)
+
+Code adapted for the selected hardware
+
+hardware/              - pre-configured codes for selected architectures.
+hardware/*/gf2x-thresholds.h - pre-tuned thresholds files
+hardware/generic/gf2x-thresholds.h - placeholder thresholds
+hardware/generic64/    - code that works on any 64-bit platform
+hardware/generic32/    - code that works on any 32-bit platform
+hardware/x86_64/       - code that works on amd64 and intel core2
+hardware/x86_sse2/     - code that works on x86 platforms supporting sse2
+hardware/generic/      - code that works everywhere. Does _not_ include mul1
+
+gf2x/                  - place where symlinks to the files above go
+
+For testing:
+
+tests/check-mul.c       - simple check program
+tests/check-mul.res     - reference results from check-mul
+tests/do-check-mul.sh   - shell script driving check-mul
+
+For tuning:
+
+tuning/tuneup.c         - tuning program for basecase multiplication
+tuning/tunetoom.c       - tuning program for Karatsuba/Toom-Cook multiplication
+tuning/tunefft.c        - tuning program for FFT multiplication
+tuning/tune-lowlevel.pl
+
+tuning/mul*.c              - various candidate code samples for basic routines
+tuning/gen_bb_mul_code.c   - program to generate many alternatives for mul1
+tuning/replace.h           - helper code
+tuning/replace.c           - helper code
+tuning/tuning-common.h     - helper code
+tuning/tuning-common.c     - helper code
+tuning/timing.h            - helper code
+tuning/timing.c            - helper code
+tuning/update-thresholds.c - helper code
+
+Applications that use gf2x and NTL:
+
+apps/halfgcd.hpp - subquadratic gcd over GF(2)[x]
+apps/halfgcd.cpp - subquadratic gcd over GF(2)[x]
+apps/factor.cpp  - finds smallest irreducible factor of trinomial over GF(2)
+apps/check*.sh   - some tests using factor
+
+Caution:
+========
+
+gcc versions 4.3.0 and 4.3.1 have a bug which affects gf2x in a an
+unpredictable way. It is recommended to upgrade to at least 4.3.2, or
+configure with --disable-sse2
+
+Instructions to install the package:
+====================================
+
+1) Type:
+
+      ./configure && make && make check
+
+2) Optional, but recommended: tune Karatsuba/Toom-Cook and FFT multiplication
+
+      make -C tuning tune-lowlevel
+      make -C tuning tune-toom
+      make -C tuning tune-fft
+
+   Note that there are some minor issues related to tuning on amd64 -- see BUGS.
+
+   Tuning unfortunately takes a long while. Detailed information on tuning
+   can be found in the tuning/tunetoom.c and tuning/tunefft.c files, as well
+   as tuning/README.
+
+3) run:
+
+      make && make check
+
+   to see whether everything went ok.
+
+Hooking gf2x into ntl:
+======================
+
+ntl-5.4.3 offers the possibility to replace the multiplication of
+polynomials with the gf2x code. For this, do:
+<to be documented, pending input from VS>
+
+For version 5.4.2 of ntl, you have the possibility of patching an NTL
+tree with gf2x. For this, do the following.
+
+- untar ntl-5.4.2 in /path/to/ntl-5.4.2
+- build gf2x: cd /path/to/gf2x ; ./configure ; make
+- from the gf2x source tree, run ./inject-ntl-5.4.2 /path/to/ntl-5.4.2
+- cd /path/to/ntl-5.4.2 ; make && make check
