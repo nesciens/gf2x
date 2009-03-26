@@ -84,7 +84,7 @@ for my $s (sort { $a <=> $b } keys %sizes) {
     # Show the commands at the same time as we execute them.
     mysys "rm ../$slot";
     mysys "mv $prepared ../$ltarget";
-    mysys "ln -sf $ltarget ../$slot";
+    mysys "ln -sf ../$ltarget ../$slot";
 
     print STDERR "Library source has changed -- rebuilding\n";
     mysys "$make -C ..";
