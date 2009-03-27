@@ -41,47 +41,47 @@
 extern "C" {
 #endif
 
-long gf2x_toomspace(long n);
-long gf2x_toomuspace(long n);
-void gf2x_mul_basecase(unsigned long * c, const unsigned long * a,
+extern long gf2x_toomspace(long n);
+extern long gf2x_toomuspace(long n);
+extern void gf2x_mul_basecase(unsigned long * c, const unsigned long * a,
 			 long na, const unsigned long * b, long nb) MAYBE_UNUSED;
 
 
-void gf2x_mul_toom(unsigned long *c, const unsigned long *a,
+extern void gf2x_mul_toom(unsigned long *c, const unsigned long *a,
 			const unsigned long *b, long n, unsigned long *stk);
-void gf2x_mul_kara(unsigned long *c, const unsigned long *a, const unsigned long *b,
+extern void gf2x_mul_kara(unsigned long *c, const unsigned long *a, const unsigned long *b,
 			long n, unsigned long *stk);
-void gf2x_mul_tc3(unsigned long *c, const unsigned long *a, const unsigned long *b,
+extern void gf2x_mul_tc3(unsigned long *c, const unsigned long *a, const unsigned long *b,
 		 	long n, unsigned long *stk);
-void gf2x_mul_tc3w(unsigned long *c, const unsigned long *a, const unsigned long *b,
+extern void gf2x_mul_tc3w(unsigned long *c, const unsigned long *a, const unsigned long *b,
 		        long n, unsigned long *stk);
-void gf2x_mul_tc4(unsigned long *c, const unsigned long *a, const unsigned long *b,
+extern void gf2x_mul_tc4(unsigned long *c, const unsigned long *a, const unsigned long *b,
 			long n, unsigned long *stk);
-short gf2x_best_toom(unsigned int);
-long gf2x_toomspace(long);
+extern short gf2x_best_toom(unsigned int);
+extern long gf2x_toomspace(long);
 
-void gf2x_mul_tc3u(unsigned long * c, const unsigned long * a, long sa,
+extern void gf2x_mul_tc3u(unsigned long * c, const unsigned long * a, long sa,
 	      const unsigned long * b, unsigned long * stk);
-short gf2x_best_utoom(unsigned int);
-long gf2x_toomuspace(long);
+extern short gf2x_best_utoom(unsigned int);
+extern long gf2x_toomuspace(long);
 
 
-void gf2x_mul_fft0(unsigned long *c, const unsigned long *a, long an,
+extern void gf2x_mul_fft0(unsigned long *c, const unsigned long *a, long an,
 	     const unsigned long *b, long bn, long K, long M);
-void gf2x_mul_fft(unsigned long *c, const unsigned long *a, long an,
+extern void gf2x_mul_fft(unsigned long *c, const unsigned long *a, long an,
 		            const unsigned long *b, long bn, long K);
-void gf2x_mul_fft1(unsigned long *c, long cn,
+extern void gf2x_mul_fft1(unsigned long *c, long cn,
 	     const unsigned long *aa, long an,
 	     const unsigned long *bb, long bn, long K, long M);
-void gf2x_mul_fft2(unsigned long *c, const unsigned long *a, long an,
+extern void gf2x_mul_fft2(unsigned long *c, const unsigned long *a, long an,
 	     const unsigned long *b, long bn, long K);
 
 
 /* tunetoom.c need to peek into toom.c's tables ; that's very ugly. SO
  * please don't use for anything else.
  * */
-short best_tab[GF2X_TOOM_TUNING_LIMIT];
-short best_utab[GF2X_TOOM_TUNING_LIMIT];
+extern short best_tab[GF2X_TOOM_TUNING_LIMIT];
+extern short best_utab[GF2X_TOOM_TUNING_LIMIT];
 
 
 /* Karatsuba, Toom, and so on are in separate .c files */

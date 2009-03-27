@@ -63,6 +63,7 @@
 */
 
 #define _BSD_SOURCE
+#define _POSIX_C_SOURCE 200112L /* solaris needs >= 199506L for ctime_r */
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>		/* for LONG_MAX */

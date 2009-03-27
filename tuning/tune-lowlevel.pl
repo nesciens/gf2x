@@ -31,7 +31,7 @@ if (!defined($make=$ENV{'MAKE'})) {
 
 # make sure the upper build is complete. It might be bad to do this
 # check, but since this script is bound to call make anyway... 
-mysys "$make -C ..";
+mysys "cd .. ; $make";
 
 my @summary = ();
 
@@ -70,7 +70,7 @@ for my $s (sort { $a <=> $b } keys %sizes) {
     my $slot="gf2x/gf2x_mul$s.h";
     my $prepared="ready_gf2x_mul$s.c";
     mysys "sed -e s/tuning_//g $selected > $prepared";
-    my $rc=system "diff -q ../$slot $prepared";
+    my $rc=system "diff ../$slot $prepared > /dev/null";
 
     if ($rc == 0) {
         print STDERR "Choice identical to the selected file\n";
@@ -87,7 +87,7 @@ for my $s (sort { $a <=> $b } keys %sizes) {
     mysys "ln -sf ../$ltarget ../$slot";
 
     print STDERR "Library source has changed -- rebuilding\n";
-    mysys "$make -C ..";
+    mysys "cd .. ; $make";
 }
 
 print STDERR "Summary of tune-lowlevel results\n";

@@ -41,4 +41,4 @@ dist-hook:
                 | xargs rm -rf
 
 tune-lowlevel tune-toom tune-fft: all
-	$(MAKE) -C tuning $@
+	cd tuning; $(MAKE) $@

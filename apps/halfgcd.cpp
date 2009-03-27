@@ -420,6 +420,7 @@ void FastGCD(GF2X& d, const GF2X& u, const GF2X& v)
          }
      }
 
+   // base case.
    GCD(d, u1, v1);
 }
 

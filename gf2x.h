@@ -66,7 +66,7 @@ extern "C" {
  *
  * c must have enough room to hold an+bn words.
  */
-void gf2x_mul(unsigned long *c,
+extern void gf2x_mul(unsigned long *c,
 		const unsigned long *aa, unsigned int an,
 		const unsigned long *bb, unsigned int bn);
 
@@ -76,10 +76,10 @@ struct gf2x_mul_pool_s {
 	size_t stk_size;
 };
 typedef struct gf2x_mul_pool_s gf2x_mul_pool_t[1];
-void gf2x_mul_pool_init(gf2x_mul_pool_t);
-void gf2x_mul_pool_clear(gf2x_mul_pool_t);
+extern void gf2x_mul_pool_init(gf2x_mul_pool_t);
+extern void gf2x_mul_pool_clear(gf2x_mul_pool_t);
 
-void gf2x_mul_r(unsigned long *c,
+extern void gf2x_mul_r(unsigned long *c,
 		const unsigned long *aa, unsigned int an,
 		const unsigned long *bb, unsigned int bn, gf2x_mul_pool_t);
 

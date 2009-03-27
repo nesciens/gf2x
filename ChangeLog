@@ -1,59 +1,154 @@
-commit c7cdc666c9bdbc996cf8c1d2faf27619e635e669
+commit 42dc5dcde084eb02b2fd140fbe90f1830ac74d9e
 Author: Emmanuel Thomé <Emmanuel.Thome@normalesup.org>
-Date:   Wed Mar 25 17:17:08 2009 +0100
+Date:   Fri Mar 27 15:43:29 2009 +0100
 
-    release gf2x-0.9
+    release gf2x-0.9.0.996
 
-commit 4d69c6c4a04d13cb2116d13c053af0d67f549451
+ trunk/ChangeLog |   17 ++++-------------
+ 1 files changed, 4 insertions(+), 13 deletions(-)
+
+commit 4c7fe752d7579ea3bb6fe3f3c8b696a45bdc41c6
 Author: Emmanuel Thomé <Emmanuel.Thome@normalesup.org>
-Date:   Wed Mar 25 17:16:18 2009 +0100
+Date:   Fri Mar 27 13:40:32 2009 +0100
 
-    autotools-ized + improved tuning.
+    preparation for 0.9.1 [ 0.9.0.996 ]
+    
+        changes for solaris and windows
+        added extern statements to header files (fixes build on mac os x)
 
-commit 91aacbd377c8ff74e5931312d477360c330c8220
-Author: Emmanuel Thomé <Emmanuel.Thome@normalesup.org>
-Date:   Mon Mar 23 15:04:02 2009 +0100
+ trunk/ChangeLog               |  203 ++++++++++++++++++++++++++++++-----------
+ trunk/Makefile.am             |    2 +-
+ trunk/apps/halfgcd.cpp        |    1 +
+ trunk/configure.ac            |    2 +-
+ trunk/gf2x.h                  |    8 +-
+ trunk/gf2x/gf2x-impl.h        |   38 ++++----
+ trunk/tests/check-mul.c       |    3 +-
+ trunk/tuning/Makefile.am      |  104 +++++++++++-----------
+ trunk/tuning/tune-lowlevel.pl |    6 +-
+ trunk/tuning/tunefft.c        |    1 +
+ trunk/tuning/tunetoom.c       |    1 +
+ 11 files changed, 234 insertions(+), 135 deletions(-)
 
-    import stuff from cado
+commit f7c429436e410aca5a5e7c80f7182c311f4e6ea5
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Fri Mar 27 00:49:34 2009 +0000
 
-commit a660b2ca59651726463ea48cfc7d6759546e5158
-Author: Emmanuel Thomé <Emmanuel.Thome@normalesup.org>
-Date:   Fri Nov 21 09:31:57 2008 +0100
+    added a version.sh script, and corrected a pattern rule
+    
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@5 e5c1114b-a573-4582-9dac-f72f410959ce
 
-    release gf2x-0.3.2
+ trunk/Makefile.am   |    3 ++-
+ trunk/configure.ac  |    2 +-
+ trunk/version.sh.in |    2 ++
+ 3 files changed, 5 insertions(+), 2 deletions(-)
 
-commit 0b62760dacef8850f509a5dbb5c67941b0633449
-Author: Emmanuel Thomé <Emmanuel.Thome@normalesup.org>
-Date:   Fri Nov 21 09:31:03 2008 +0100
+commit 76569b6603451fb3476cf686d70aba4a4010c583
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Fri Mar 27 00:10:20 2009 +0000
 
-    bugfix -- update-thresholds was missing from the tuning target.
+    some autotools improvements.
+    
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@4 e5c1114b-a573-4582-9dac-f72f410959ce
 
-commit 1a0d099fce742d06f73bffdfce42599c2877a988
-Author: Emmanuel Thomé <Emmanuel.Thome@normalesup.org>
-Date:   Wed Oct 15 11:33:31 2008 +0200
+ trunk/Makefile.am        |    4 +++-
+ trunk/README             |   10 +++++-----
+ trunk/README.svn-tree    |   18 ++++++++++++++++++
+ trunk/no-distribute.txt  |    1 +
+ trunk/tests/Makefile.am  |    3 +++
+ trunk/tuning/Makefile.am |    5 +++++
+ 6 files changed, 35 insertions(+), 6 deletions(-)
 
-    release gf2x-0.3.1
+commit a492ec47e0b9493c02640d77e61e5b31ab882f42
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Thu Mar 26 16:24:30 2009 +0000
 
-commit f6b200b460ac87f8e4cacb287025a869ac3740ff
-Author: Emmanuel Thomé <Emmanuel.Thome@normalesup.org>
-Date:   Wed Oct 15 11:27:28 2008 +0200
+    woops -- bug in tune-lowlevel.pl
+    
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@3 e5c1114b-a573-4582-9dac-f72f410959ce
 
-    removed binary that sneaked in
+ trunk/tuning/tune-lowlevel.pl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-commit 850affa10f99fe2ac5ac24bf8c5d39f5d172dc6e
-Author: Emmanuel Thomé <Emmanuel.Thome@normalesup.org>
-Date:   Wed Oct 15 11:26:05 2008 +0200
+commit d66d21053ed7c8c4756b8624e5d50e5b04403bbb
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Thu Mar 26 15:43:38 2009 +0000
 
-    added one cleaning target to Makefile
+    first import into the svn tree, from my devel tree.
+    
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@1 e5c1114b-a573-4582-9dac-f72f410959ce
 
-commit 0ee11183f878fa91cb6df8ac404be9d4794c4d84
-Author: Emmanuel Thomé <Emmanuel.Thome@normalesup.org>
-Date:   Wed Oct 15 11:25:22 2008 +0200
-
-    Fixed bug -- the fft tuning was too eagerly discarding TC when it was high time for it...
-
-commit 0e79615a116f4d972ceffd80dc396ab6b205616a
-Author: Emmanuel Thomé <Emmanuel.Thome@normalesup.org>
-Date:   Wed Oct 15 11:24:32 2008 +0200
-
-    release gf2x-0.3
+ trunk/AUTHORS                             |    7 +
+ trunk/BUGS                                |    6 +
+ trunk/COPYING                             |  340 +++++
+ trunk/ChangeLog                           |   59 +
+ trunk/Makefile.am                         |   41 +
+ trunk/README                              |  120 ++
+ trunk/acinclude.m4                        |  101 ++
+ trunk/apps/Makefile.am                    |   13 +
+ trunk/apps/check-factor-000.sh            |    1 +
+ trunk/apps/check-factor-001.sh            |    1 +
+ trunk/apps/check-factor-002.sh            |    1 +
+ trunk/apps/check-factor-003.sh            |    1 +
+ trunk/apps/factor.cpp                     | 1402 +++++++++++++++++++++
+ trunk/apps/halfgcd.cpp                    |  425 +++++++
+ trunk/apps/halfgcd.hpp                    |   30 +
+ trunk/bench.c                             |   96 ++
+ trunk/boilerplate                         |   21 +
+ trunk/configure.ac                        |   73 ++
+ trunk/fft.c                               |  893 ++++++++++++++
+ trunk/gf2x.c                              |  228 ++++
+ trunk/gf2x.h                              |   90 ++
+ trunk/gf2x/gf2x-impl.h                    |   93 ++
+ trunk/gf2x/gf2x-small.h                   |  295 +++++
+ trunk/hardware/generic/gf2x-thresholds.h  |   96 ++
+ trunk/hardware/generic/gf2x_mul2.h        |   42 +
+ trunk/hardware/generic/gf2x_mul3.h        |   48 +
+ trunk/hardware/generic/gf2x_mul4.h        |   48 +
+ trunk/hardware/generic32/gf2x_mul1.h      |  168 +++
+ trunk/hardware/generic64/gf2x_mul1.h      |  210 ++++
+ trunk/hardware/opteron/gf2x-thresholds.h  |  236 ++++
+ trunk/hardware/opteron/gf2x_mul1.h        |  223 ++++
+ trunk/hardware/tuned/README               |    2 +
+ trunk/hardware/x86_64/gf2x-thresholds.h   |  270 ++++
+ trunk/hardware/x86_64/gf2x_mul2.h         |  139 +++
+ trunk/hardware/x86_sse2/gf2x-thresholds.h |  292 +++++
+ trunk/hardware/x86_sse2/gf2x_mul1.h       |  169 +++
+ trunk/hardware/x86_sse2/gf2x_mul3.h       |  180 +++
+ trunk/hardware/x86_sse2/gf2x_mul4.h       |  195 +++
+ trunk/inject-ntl-5.4.2                    |   22 +
+ trunk/no-distribute.txt                   |    5 +
+ trunk/ntl_gf2x_mul_code.h                 |   40 +
+ trunk/patch-wrt-ntl-5.4.2                 |   57 +
+ trunk/tests/Makefile.am                   |   11 +
+ trunk/tests/check-mul.c                   |  176 +++
+ trunk/tests/check-mul.res                 |   26 +
+ trunk/tests/do-check-mul.sh               |   13 +
+ trunk/toom.c                              | 1902 +++++++++++++++++++++++++++++
+ trunk/tuning/Makefile.am                  |  231 ++++
+ trunk/tuning/README                       |   55 +
+ trunk/tuning/TODO                         |    3 +
+ trunk/tuning/gen_bb_mul_code.c            |  192 +++
+ trunk/tuning/mul1_avx.c                   |   41 +
+ trunk/tuning/mul2k.c                      |   46 +
+ trunk/tuning/mul2t.c                      |  139 +++
+ trunk/tuning/mul3k.c                      |   53 +
+ trunk/tuning/mul3t.c                      |  180 +++
+ trunk/tuning/mul4k.c                      |   53 +
+ trunk/tuning/mul4t.c                      |  195 +++
+ trunk/tuning/replace.c                    |  136 ++
+ trunk/tuning/replace.h                    |   44 +
+ trunk/tuning/timing.c                     |   36 +
+ trunk/tuning/timing.h                     |   42 +
+ trunk/tuning/tune-lowlevel.pl             |   96 ++
+ trunk/tuning/tunefft.c                    |  313 +++++
+ trunk/tuning/tunetoom.c                   |  397 ++++++
+ trunk/tuning/tuneup.c                     |  108 ++
+ trunk/tuning/tuning-common.c              |  144 +++
+ trunk/tuning/tuning-common.h              |   67 +
+ trunk/tuning/update-thresholds.c          |  426 +++++++
+ trunk/wipeout-autotools                   |    6 +
+ 70 files changed, 11910 insertions(+), 0 deletions(-)

@@ -22,6 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <inttypes.h>
 
 #include "gf2x.h"
 #include "gf2x/gf2x-impl.h"
@@ -165,7 +166,7 @@ int main(int argc, char * argv[])
         exit(1);
     }
 
-    printf("%d %d %08x %08x\n", n1, n2, check0, start);
+    printf("%d %d %08" PRIx32 " %08" PRIx32 "\n", n1, n2, check0, start);
 
     free(a);
     free(b);
