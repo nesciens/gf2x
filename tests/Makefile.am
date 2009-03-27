@@ -1,4 +1,7 @@
 
+# Be aware that ``make check'' from here cannot ensure that the
+# upper-level library is up-to-date.
+
 AM_CPPFLAGS = -I$(top_srcdir) -I$(top_builddir)
 
 check_PROGRAMS=check-mul

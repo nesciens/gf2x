@@ -20,7 +20,7 @@ if ENABLE_NTL_CHECKS
     MAYBE_APPS=apps
 endif
 
-SUBDIRS=tests tuning $(MAYBE_APPS)
+SUBDIRS=. tests tuning $(MAYBE_APPS)
 
 DIST_SUBDIRS=tests tuning apps
 
@@ -39,3 +39,5 @@ dist-hook:
 	-find $(distdir) \( -name .svn -type d \) -o -name "*~" -o -name ".#*" \
                 | xargs rm -rf
 
+tune-%: all
+	$(MAKE) -C tuning $@

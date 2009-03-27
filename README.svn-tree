@@ -1,0 +1,18 @@
+
+If you read this file, you are grabbing the gf2x sources from the SVN
+tree. The SVN tree does not include the autotools-generated files. To
+generate them, you must have the autotools installed. The package has
+been built with the following version of the autotools:
+
+automake-1.10.1
+autoconf-2.63
+libtool-1.5.26
+
+To generate, simply type
+
+    autoreconf -i
+
+If you want to get rid of all the autotools-generated stuff, do
+
+    ./wipeout-autotools
+

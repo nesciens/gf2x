@@ -84,13 +84,13 @@ Instructions to install the package:
 
 1) Type:
 
-      ./configure && make && make check
+      ./configure && make check
 
 2) Optional, but recommended: tune Karatsuba/Toom-Cook and FFT multiplication
 
-      make -C tuning tune-lowlevel
-      make -C tuning tune-toom
-      make -C tuning tune-fft
+      make tune-lowlevel
+      make tune-toom
+      make tune-fft
 
    Note that there are some minor issues related to tuning on amd64 -- see BUGS.
 
@@ -100,7 +100,7 @@ Instructions to install the package:
 
 3) run:
 
-      make && make check
+      make check
 
    to see whether everything went ok.
 

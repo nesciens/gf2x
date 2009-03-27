@@ -186,6 +186,7 @@ endif
 ######################################################################
 EXTRA_PROGRAMS+=$(LOWLEVEL)
 tune-lowlevel: $(LOWLEVEL)
+	$(MAKE) -C $(top_builddir)
 	MAKE="$(MAKE)" srcdir=$(srcdir)	\
 	perl $(srcdir)/tune-lowlevel.pl $(LOWLEVEL)
 EXTRA_DIST+=tune-lowlevel.pl
@@ -205,12 +206,14 @@ tunetoom.res: tunetoom
 	./tunetoom -s 1.05 2048 -o tunetoom.res
 
 tune-toom: tunetoom.res update-thresholds
+	$(MAKE) -C $(top_builddir)
 	cat ../gf2x/gf2x-thresholds.h > tuned_thresholds.h
 	./update-thresholds -o tuned_thresholds.h < tunetoom.res
 	mkdir -p ../hardware/tuned/
 	mv -f tuned_thresholds.h ../hardware/tuned/gf2x-thresholds.h
 	rm -f ../gf2x/gf2x-thresholds.h
 	ln -sf ../hardware/tuned/gf2x-thresholds.h ../gf2x/
+	$(MAKE) -C $(top_builddir)
 
 ######################################################################
 EXTRA_PROGRAMS+=tunefft
@@ -221,11 +224,13 @@ tunefft.res: tunefft
 	./tunefft -s 1.02 8000000 -o tunefft.res
 
 tune-fft: tunefft.res update-thresholds
+	$(MAKE) -C $(top_builddir)
 	cat ../gf2x/gf2x-thresholds.h > tuned_thresholds.h
 	./update-thresholds -o tuned_thresholds.h < tunefft.res
 	mkdir -p ../hardware/tuned/
 	mv -f tuned_thresholds.h ../hardware/tuned/gf2x-thresholds.h
 	rm -f ../gf2x/gf2x-thresholds.h
 	ln -sf ../hardware/tuned/gf2x-thresholds.h ../gf2x/
+	$(MAKE) -C $(top_builddir)
 
 CLEANFILES+=$(EXTRA_PROGRAMS) $(EXTRA_LTLIBRARIES)
