@@ -31,6 +31,7 @@ DISTCLEANFILES=gf2x/gf2x-thresholds.h	\
 	       gf2x/gf2x_mul4.h
 
 EXTRA_DIST=
+EXTRA_DIST+=version.sh.in
 EXTRA_DIST+=BUGS
 EXTRA_DIST+=patch-wrt-ntl-5.4.2 inject-ntl-5.4.2
 EXTRA_DIST+=ntl_gf2x_mul_code.h
@@ -39,5 +40,5 @@ dist-hook:
 	-find $(distdir) \( -name .svn -type d \) -o -name "*~" -o -name ".#*" \
                 | xargs rm -rf
 
-tune-%: all
+tune-lowlevel tune-toom tune-fft: all
 	$(MAKE) -C tuning $@

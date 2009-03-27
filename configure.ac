@@ -67,7 +67,7 @@ AM_CONDITIONAL([GF2X_SSE2_AVAILABLE],[test "x$gf2x_cv_cc_supports_sse2" != xno])
 
 AC_CONFIG_HEADERS([gf2x/gf2x-config.h])
 
-AC_CONFIG_FILES([Makefile tests/Makefile apps/Makefile tuning/Makefile])
+AC_CONFIG_FILES([version.sh Makefile tests/Makefile apps/Makefile tuning/Makefile])
 AC_OUTPUT
 
 # vim: set sw=1:
