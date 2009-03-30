@@ -98,6 +98,11 @@ Instructions to install the package:
    can be found in the tuning/tunetoom.c and tuning/tunefft.c files, as well
    as tuning/README.
 
+   All the tuning targets automatically rebuild the library in order to
+   incorporate the tuned parameters. So an additional ``make'' is
+   unnecessary (although innocuous, since the library should be up to
+   date).
+
 3) run:
 
       make check

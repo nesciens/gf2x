@@ -1,3 +1,12 @@
+commit d4b8e1713f568ef3f8b3a2488f6f1c1049c6cfea
+Author: Emmanuel Thomé <Emmanuel.Thome@normalesup.org>
+Date:   Fri Mar 27 16:02:30 2009 +0100
+
+    release gf2x-0.9.1
+
+ trunk/ChangeLog |   29 +++++++++++++----------------
+ 1 files changed, 13 insertions(+), 16 deletions(-)
+
 commit 9a25d68b7aa7428d6e4a5c63b4054c1424a9e1a1
 Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
 Date:   Fri Mar 27 15:01:40 2009 +0000
