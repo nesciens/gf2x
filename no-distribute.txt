@@ -1,5 +1,4 @@
 no-distribute.txt
-boilerplate
 bench.c
 wipeout-autotools
 tuning/mul1_avx.c

@@ -6,7 +6,7 @@ include_HEADERS=gf2x.h	\
 		gf2x/gf2x-small.h
 
 # All these are generated.
-nodist_include_HEADERS=	\
+nobase_nodist_include_HEADERS=	\
 		gf2x/gf2x-config.h		\
 		gf2x/gf2x-thresholds.h		\
 		gf2x/gf2x_mul1.h		\
@@ -31,6 +31,8 @@ DISTCLEANFILES=gf2x/gf2x-thresholds.h	\
 	       gf2x/gf2x_mul4.h
 
 EXTRA_DIST=
+EXTRA_DIST+=configfsf.guess
+EXTRA_DIST+=configfsf.sub
 EXTRA_DIST+=version.sh.in
 EXTRA_DIST+=BUGS
 EXTRA_DIST+=patch-wrt-ntl-5.4.2 inject-ntl-5.4.2
