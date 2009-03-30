@@ -1,21 +1,18 @@
-commit 42dc5dcde084eb02b2fd140fbe90f1830ac74d9e
-Author: Emmanuel Thomé <Emmanuel.Thome@normalesup.org>
-Date:   Fri Mar 27 15:43:29 2009 +0100
+commit 9a25d68b7aa7428d6e4a5c63b4054c1424a9e1a1
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Fri Mar 27 15:01:40 2009 +0000
 
-    release gf2x-0.9.0.996
-
- trunk/ChangeLog |   17 ++++-------------
- 1 files changed, 4 insertions(+), 13 deletions(-)
-
-commit 4c7fe752d7579ea3bb6fe3f3c8b696a45bdc41c6
-Author: Emmanuel Thomé <Emmanuel.Thome@normalesup.org>
-Date:   Fri Mar 27 13:40:32 2009 +0100
-
-    preparation for 0.9.1 [ 0.9.0.996 ]
+    preparation for 0.9.1
     
-        changes for solaris and windows
-        added extern statements to header files (fixes build on mac os x)
+        essentially some portability fixes:
+    
+        solaris: accomodate for contrived libc and stupid make
+        windows: add $(EXEEXT) here and there
+        mac os x: added extern statements to header files (a real bug)
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@6 e5c1114b-a573-4582-9dac-f72f410959ce
 
+ trunk/BUGS                    |    3 +-
  trunk/ChangeLog               |  203 ++++++++++++++++++++++++++++++-----------
  trunk/Makefile.am             |    2 +-
  trunk/apps/halfgcd.cpp        |    1 +
@@ -27,7 +24,7 @@ Date:   Fri Mar 27 13:40:32 2009 +0100
  trunk/tuning/tune-lowlevel.pl |    6 +-
  trunk/tuning/tunefft.c        |    1 +
  trunk/tuning/tunetoom.c       |    1 +
- 11 files changed, 234 insertions(+), 135 deletions(-)
+ 12 files changed, 236 insertions(+), 136 deletions(-)
 
 commit f7c429436e410aca5a5e7c80f7182c311f4e6ea5
 Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
