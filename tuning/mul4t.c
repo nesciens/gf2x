@@ -33,6 +33,23 @@
 #error "This code is for 32-bit only"
 #endif
 
+#include "gf2x/gf2x-config.h"
+
+#ifndef HAVE_SSE2_SUPPORT
+#error "This code needs sse-2 support"
+#endif
+
+#ifndef	GNUC_VERSION
+#define GNUC_VERSION(X,Y,Z)     \
+    (defined(__GNUC__) &&        \
+    (__GNUC__ == X && __GNUC_MINOR__ == Y && __GNUC_PATCHLEVEL__ == Z))
+#endif
+#if (GNUC_VERSION(4,3,0) || GNUC_VERSION(4,3,1))
+#warning "Your GCC version is buggy. Binary fields may fail randomly"
+/* Gcc bug reports 37101 and 37340 -- the only convenient fix is to
+ * upgrade to 4.3.2 */
+#endif
+
 #ifdef  TUNING
 #undef  GF2X_STORAGE_CLASS_mul4
 #define GF2X_STORAGE_CLASS_mul4 /**/

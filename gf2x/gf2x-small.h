@@ -28,6 +28,17 @@
 
 #include "gf2x/gf2x-thresholds.h"
 
+/* functions here will end up as static functions, therefore we prefer to
+ * avoid the warning relative to the fact that they are unused. */
+
+#ifndef	MAYBE_UNUSED
+#if defined(__GNUC__)
+#define MAYBE_UNUSED __attribute__ ((unused))
+#else
+#define MAYBE_UNUSED
+#endif
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
