@@ -22,6 +22,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "gf2x.h"
 #include "gf2x/gf2x-impl.h"
