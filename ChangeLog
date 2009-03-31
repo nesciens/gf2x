@@ -1,8 +1,152 @@
-commit d4b8e1713f568ef3f8b3a2488f6f1c1049c6cfea
-Author: Emmanuel Thomé <Emmanuel.Thome@normalesup.org>
-Date:   Fri Mar 27 16:02:30 2009 +0100
+commit 1500cde91067d4ed95a53cb4b857162040b13adf
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Tue Mar 31 09:41:47 2009 +0000
+
+    fixed carriage return problem
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@13 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/acinclude.m4 |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 8bbff031ef94ea44c7780c401df0e9ec5ef8adaf
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Tue Mar 31 09:41:46 2009 +0000
+
+    forgotten header
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@12 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/fft.c  |    1 +
+ trunk/gf2x.c |    1 +
+ 2 files changed, 2 insertions(+), 0 deletions(-)
+
+commit 9f2275d5809129d27221735829cf327e2bff6f91
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Tue Mar 31 09:18:30 2009 +0000
+
+    doc fix, + headers cleanup
+    
+    Most notably, gf2x.h does not need gf2x-thresholds.h at all. It rather
+    belongs to gf2x-impl.h
+    
+    Also moved the gcc version check relative to sse-2 to the files actually
+    using sse-2.
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@11 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/Makefile.am                   |    2 +-
+ trunk/README                        |  112 +++++++++++++++++++++++++++++++----
+ trunk/gf2x.h                        |   49 ++++------------
+ trunk/gf2x/gf2x-impl.h              |   16 ++++--
+ trunk/gf2x/gf2x-small.h             |   11 ++++
+ trunk/hardware/x86_64/gf2x_mul2.h   |   17 +++++
+ trunk/hardware/x86_sse2/gf2x_mul3.h |   17 +++++
+ trunk/hardware/x86_sse2/gf2x_mul4.h |   17 +++++
+ trunk/tuning/Makefile.am            |    8 ++-
+ trunk/tuning/README                 |    2 +-
+ trunk/tuning/mul2t.c                |   17 +++++
+ trunk/tuning/mul3t.c                |   17 +++++
+ trunk/tuning/mul4t.c                |   17 +++++
+ 13 files changed, 243 insertions(+), 59 deletions(-)
+
+commit cdb6ec00796469bcee1102db44796a5a56ca20d5
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Mon Mar 30 13:59:56 2009 +0000
+
+    checks were never failing...
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@10 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/tests/do-check-mul.sh |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+commit eb714da054189263bf6de6defc2ec5a8aa689980
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Mon Mar 30 13:36:22 2009 +0000
+
+    primitive ABI selection.
+    
+    lots of trivial changes to fix typography in copyright blobs...
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@9 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/COPYING                             |   18 +-
+ trunk/Makefile.am                         |    4 +-
+ trunk/acinclude.m4                        |   42 +
+ trunk/apps/factor.cpp                     |    2 +-
+ trunk/apps/halfgcd.cpp                    |    2 +-
+ trunk/apps/halfgcd.hpp                    |    2 +-
+ trunk/bench.c                             |    2 +-
+ trunk/boilerplate                         |   21 -
+ trunk/config.guess                        |  853 ++++++++++++++++
+ trunk/config.sub                          |  143 +++
+ trunk/configfsf.guess                     | 1460 +++++++++++++++++++++++++++
+ trunk/configfsf.sub                       | 1554 +++++++++++++++++++++++++++++
+ trunk/configure.ac                        |   67 ++-
+ trunk/fft.c                               |    2 +-
+ trunk/gf2x.c                              |    2 +-
+ trunk/gf2x.h                              |    2 +-
+ trunk/gf2x/gf2x-impl.h                    |    2 +-
+ trunk/gf2x/gf2x-small.h                   |    2 +-
+ trunk/hardware/generic/gf2x-thresholds.h  |    2 +-
+ trunk/hardware/generic/gf2x_mul2.h        |    2 +-
+ trunk/hardware/generic/gf2x_mul3.h        |    2 +-
+ trunk/hardware/generic/gf2x_mul4.h        |    2 +-
+ trunk/hardware/generic32/gf2x_mul1.h      |    2 +-
+ trunk/hardware/generic64/gf2x_mul1.h      |    2 +-
+ trunk/hardware/opteron/gf2x-thresholds.h  |    2 +-
+ trunk/hardware/opteron/gf2x_mul1.h        |    2 +-
+ trunk/hardware/x86_64/gf2x-thresholds.h   |    2 +-
+ trunk/hardware/x86_64/gf2x_mul2.h         |    2 +-
+ trunk/hardware/x86_sse2/gf2x-thresholds.h |    2 +-
+ trunk/hardware/x86_sse2/gf2x_mul1.h       |    2 +-
+ trunk/hardware/x86_sse2/gf2x_mul3.h       |    2 +-
+ trunk/hardware/x86_sse2/gf2x_mul4.h       |    2 +-
+ trunk/no-distribute.txt                   |    1 -
+ trunk/ntl_gf2x_mul_code.h                 |    2 +-
+ trunk/tests/check-mul.c                   |    2 +-
+ trunk/toom.c                              |    2 +-
+ trunk/tuning/gen_bb_mul_code.c            |    2 +-
+ trunk/tuning/mul1_avx.c                   |    2 +-
+ trunk/tuning/mul2k.c                      |    2 +-
+ trunk/tuning/mul2t.c                      |    2 +-
+ trunk/tuning/mul3k.c                      |   10 +-
+ trunk/tuning/mul3t.c                      |    2 +-
+ trunk/tuning/mul4k.c                      |    4 +-
+ trunk/tuning/mul4t.c                      |    2 +-
+ trunk/tuning/replace.c                    |    2 +-
+ trunk/tuning/replace.h                    |    2 +-
+ trunk/tuning/timing.c                     |    2 +-
+ trunk/tuning/timing.h                     |    2 +-
+ trunk/tuning/tunefft.c                    |    2 +-
+ trunk/tuning/tunetoom.c                   |    2 +-
+ trunk/tuning/tuneup.c                     |    2 +-
+ trunk/tuning/tuning-common.c              |    2 +-
+ trunk/tuning/tuning-common.h              |    2 +-
+ trunk/tuning/update-thresholds.c          |    2 +-
+ trunk/wipeout-autotools                   |    2 +-
+ 55 files changed, 4171 insertions(+), 92 deletions(-)
+
+commit 2720f2ad3b94a167dad509a43e5f933e845e006e
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Mon Mar 30 13:36:20 2009 +0000
+
+    doc fix.
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@8 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/ChangeLog |    9 +++++++++
+ trunk/README    |    5 +++++
+ 2 files changed, 14 insertions(+), 0 deletions(-)
+
+commit 94326faeef543d1c99942825a0b48f998dd1ff92
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Mon Mar 30 13:36:18 2009 +0000
 
     release gf2x-0.9.1
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@7 e5c1114b-a573-4582-9dac-f72f410959ce
 
  trunk/ChangeLog |   29 +++++++++++++----------------
  1 files changed, 13 insertions(+), 16 deletions(-)
