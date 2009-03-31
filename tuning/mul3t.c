@@ -19,12 +19,13 @@
    02111-1307, USA.
 */
 
-/* Implements 128x128 -> 256 bit product using SSE2 instructions. */
+/* Implements 96x96 -> 192 bit product using SSE2 instructions. */
 
 #ifndef tuning_GF2X_mul3_H_
 #define tuning_GF2X_mul3_H_
 
 #include "gf2x.h"
+#include "gf2x/gf2x-impl.h"
 
 #include <stdint.h>
 #include <emmintrin.h>

@@ -25,6 +25,7 @@
 #define GF2X_MUL2_H_
 
 #include "gf2x.h"
+#include "gf2x/gf2x-impl.h"
 
 #include <stdint.h>
 #include <emmintrin.h>
