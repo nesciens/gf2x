@@ -1,8 +1,37 @@
-commit 03c69efe1256c8508b04c77410bc0421db074f1f
+commit f85c51cc062438554171f6b25c41b9a8ab358e35
 Author: Emmanuel Thomé <Emmanuel.Thome@normalesup.org>
-Date:   Tue Mar 31 11:43:24 2009 +0200
+Date:   Tue Mar 31 13:09:14 2009 +0200
+
+    bumped version number
+
+ trunk/ChangeLog    |   41 +++++++++++++++++++++++++++++++++++++++--
+ trunk/configure.ac |    2 +-
+ 2 files changed, 40 insertions(+), 3 deletions(-)
+
+commit 60a291a55a1c7088515e04ea8d46c85af11030bc
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Tue Mar 31 10:11:58 2009 +0000
+
+    very smart -- forgotten another include...
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@15 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/ChangeLog                     |    9 +++++++++
+ trunk/hardware/x86_64/gf2x_mul2.h   |    1 +
+ trunk/hardware/x86_sse2/gf2x_mul3.h |    3 ++-
+ trunk/hardware/x86_sse2/gf2x_mul4.h |    1 +
+ trunk/tuning/mul2t.c                |    1 +
+ trunk/tuning/mul3t.c                |    3 ++-
+ trunk/tuning/mul4t.c                |    1 +
+ 7 files changed, 17 insertions(+), 2 deletions(-)
+
+commit f8282bc22deb64c30725bba1a1460a225a40a667
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Tue Mar 31 10:11:57 2009 +0000
 
     release gf2x-0.9.2
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@14 e5c1114b-a573-4582-9dac-f72f410959ce
 
  trunk/ChangeLog |  150 +++++++++++++++++++++++++++++++++++++++++++++++++++++-
  1 files changed, 147 insertions(+), 3 deletions(-)
