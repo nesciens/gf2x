@@ -25,7 +25,7 @@ int main() {
 AC_DEFUN([VERIFY_WORDSIZE],[
     AC_MSG_CHECKING([whether $CC has $1-bit unsigned longs])
     AC_RUN_IFELSE([WORDSIZE_CODE()],[
-        detected=`cat conftest.out`
+        detected=`cat conftest.out | tr -d -c 0-9`
         if test x$detected = x ; then
             AC_MSG_ERROR([test program failed])
         elif test x$1 != x$detected ; then
