@@ -1,12 +1,14 @@
-commit f85c51cc062438554171f6b25c41b9a8ab358e35
-Author: Emmanuel Thomé <Emmanuel.Thome@normalesup.org>
-Date:   Tue Mar 31 13:09:14 2009 +0200
+commit a01fabf420d0148e8c5eec8b9b36a12f166ec5a6
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Tue Mar 31 11:14:58 2009 +0000
 
     bumped version number
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@16 e5c1114b-a573-4582-9dac-f72f410959ce
 
- trunk/ChangeLog    |   41 +++++++++++++++++++++++++++++++++++++++--
+ trunk/ChangeLog    |   33 +++++++++++++++++++++++++++++++--
  trunk/configure.ac |    2 +-
- 2 files changed, 40 insertions(+), 3 deletions(-)
+ 2 files changed, 32 insertions(+), 3 deletions(-)
 
 commit 60a291a55a1c7088515e04ea8d46c85af11030bc
 Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
