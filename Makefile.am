@@ -5,12 +5,12 @@ lib_LTLIBRARIES=libgf2x.la
 libgf2x_la_SOURCES=gf2x.c toom.c fft.c
 nobase_include_HEADERS=gf2x.h	\
 		gf2x/gf2x-impl.h		\
+		gf2x/gf2x-tfft.h		\
 		gf2x/gf2x-small.h
 
 # All these are generated.
 nobase_nodist_include_HEADERS=	\
 		gf2x/gf2x-config.h		\
-		gf2x/gf2x-tfft.h		\
 		gf2x/gf2x-thresholds.h		\
 		gf2x/gf2x_mul1.h		\
 		gf2x/gf2x_mul2.h		\
