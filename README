@@ -1,6 +1,8 @@
 
 Authors: Richard Brent, Pierrick Gaudry, Emmanuel Thomé, Paul Zimmermann.
-Licence: GNU General Public License (version 2 or any later version).
+Licence:
+    library: GNU Lesser General Public License (version 2.1 or any later version).
+    apps: GNU general Public License (version 2 or any later version)
 
 This package contains routines for fast arithmetic in GF(2)[x]
 (multiplication, squaring, gcd).
@@ -79,7 +81,8 @@ tuning/timing.h            - helper code
 tuning/timing.c            - helper code
 tuning/update-thresholds.c - helper code
 
-Applications that use gf2x and NTL:
+Applications that use gf2x and NTL. These applications are covered by the
+GPL.
 
 apps/halfgcd.hpp - subquadratic gcd over GF(2)[x]
 apps/halfgcd.cpp - subquadratic gcd over GF(2)[x]
