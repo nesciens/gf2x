@@ -122,28 +122,18 @@ void gf2x_mul_r(unsigned long * c,
      * not yet been tuned */
 #ifdef GF2X_MUL_FFT_TABLE
     long ix, K, sab = sc / 2;
-    long FFT2;
     long max_ix = sizeof(T_FFT_TAB)/sizeof(T_FFT_TAB[0]);
     for (ix = 0; T_FFT_TAB[ix + 1][0] <= sab && ix + 1 < max_ix; ix++);
     /* now T_FFT_TAB[ix][0] <= sab < T_FFT_TAB[ix+1][0] */
     K = T_FFT_TAB[ix][1];
-    if (K < 0) {
-        FFT2 = 1;
-        K = -K;
-    } else {
-        FFT2 = 0;
-    }
 
     /* gf2x_mul_fft can handle unbalanced operands if not too
      * small: return the result in {dst, sa+sb} */
 
     /* Note that dst aliasing a or b works with fft. */
-    if ((K >= 3) && (sc >= GF2X_MUL_FFT_THRESHOLD)) {
-        if (FFT2)
-            gf2x_mul_fft2(dst, a, sa, b, sb, K);	// Split FFT into two
-        else
-            gf2x_mul_fft(dst, a, sa, b, sb, K);	// Don't split here
 
+    if (sc >= GF2X_MUL_FFT_THRESHOLD && K && K != 1) {
+        gf2x_mul_fft(dst, a, sa, b, sb, K);
         goto end_of_gf2x_mul_r;
     }
 #endif

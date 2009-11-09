@@ -7,7 +7,3 @@
 - there is no addmul_2 routine, and when sse-2 registers are available,
   there could be a clear win in using it. (or addmul_4 on 32-bit
   machines). It's even quite easy.
-
-- the interface should be augmented to allow FFT transform caching. It's
-  not a whole lot of work.
-
