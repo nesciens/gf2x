@@ -234,8 +234,12 @@ ugly_label:
                 memcpy(u, c, 2 * maxn * sizeof(unsigned long));
             }
             check(a, mid, b, mid, reference, u, "F1", c);
-	    TIME(t2[i], gf2x_mul_fft2(v, a, mid, b, mid, K));
-	    check(a, mid, b, mid, "F1", c, "F2", v);
+            if (K >= GF2X_WORDSIZE) {
+                TIME(t2[i], gf2x_mul_fft(v, a, mid, b, mid, -K));
+                check(a, mid, b, mid, "F1", c, "F2", v);
+            } else {
+                t2[i] = DBL_MAX;
+            }
 	    if (t1[i] < t2[i]) {
 		T[i] = t1[i];
 		printf("F1(%ld):%1.1e ", K, T[i]);
