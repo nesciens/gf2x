@@ -112,6 +112,75 @@ AC_DEFUN([CHECK_SSE2_SUPPORT],[
 
 
 
+AC_DEFUN([PCLMUL_EXAMPLE],[
+#include <wmmintrin.h>
+#include <assert.h>
+int main() {
+assert(sizeof(unsigned long) == 8); /* assume 64-bit */
+typedef union { __v2di s; unsigned long x[[2]]; } __v2di_proxy;
+__v2di xx, yy;
+__v2di_proxy zz;
+xx = (__v2di) { 23, 0 };
+yy = (__v2di) { 47, 0 };
+zz.s = _mm_clmulepi64_si128(xx, yy, 0);
+return zz.x[[0]] - 61;
+}
+])
+
+# Check whether we need some flag such as -mpclmul in order to enable pclmulqdq
+# support
+AC_DEFUN([CHECK_PCLMUL_SUPPORT],[
+ ac_save_CFLAGS=$CFLAGS
+ AC_CACHE_CHECK([whether $CC can compile pclmulqdq and if it supported by the hardware], [gf2x_cv_cc_supports_pclmul],[
+  gf2x_cv_cc_supports_pclmul=no
+  if test "x${enable_pclmul}" != xyes ; then
+   echo $ECHO_N " disabled, "
+  else
+   AC_RUN_IFELSE([PCLMUL_EXAMPLE()],[
+    gf2x_cv_cc_supports_pclmul=yes
+   ],[
+    CFLAGS="$ac_save_CFLAGS -mpclmul"
+    AC_RUN_IFELSE([PCLMUL_EXAMPLE()],[
+     gf2x_cv_cc_supports_pclmul="requires -mpclmul"
+    ],[
+     gf2x_cv_cc_supports_pclmul=no
+    ])
+   ])
+  fi
+ ])
+ ac_save_CPPFLAGS=$CPPFLAGS
+ if test "$gf2x_cv_cc_supports_pclmul" = "requires -mpclmul" ;then
+  # Tweaking CFLAGS is often not enough.
+  AC_CACHE_CHECK([whether -mpclmul is also needed by the preprocessor],
+   [gf2x_cv_cpp_requires_mpclmul_flag],[
+   AC_PREPROC_IFELSE([PCLMUL_EXAMPLE()],[
+    gf2x_cv_cpp_requires_mpclmul_flag=no
+   ],[
+    CPPFLAGS="$ac_save_CPPFLAGS -mpclmul"
+    AC_PREPROC_IFELSE([PCLMUL_EXAMPLE()],[
+    gf2x_cv_cpp_requires_mpclmul_flag=yes
+    ],[
+     AC_MSG_ERROR([Sorry, the preprocessor can't parse pclmul !])
+    ])
+   ])
+  ])
+ fi
+ CFLAGS=$ac_save_CFLAGS
+ CPPFLAGS=$ac_save_CPPFLAGS
+ if test "$gf2x_cv_cc_supports_pclmul" = "requires -mpclmul" ;then
+  CFLAGS="$CFLAGS -mpclmul"
+ fi
+ if test "$gf2x_cv_cpp_requires_mpclmul_flag" = "yes" ; then
+  CPPFLAGS="$CPPFLAGS -mpclmul"
+ fi
+ if test "$gf2x_cv_cc_supports_pclmul" != "no" ;then
+  AC_DEFINE([HAVE_PCLMUL_SUPPORT],[1],[Define if pclmul as present in the source tree is supported by the compiler and hardware])
+ fi
+])# CHECK_PCLMUL_SUPPORT
+
+
+
+
 AC_DEFUN([AC_COMPILE_WARNINGS], [
 AC_MSG_CHECKING([warning verbosity option])
   AC_REQUIRE([AC_PROG_CC])

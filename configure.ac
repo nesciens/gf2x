@@ -17,6 +17,10 @@ AC_ARG_ENABLE([sse2],
               [AS_HELP_STRING([--enable-sse2],
                               [Turn on sse-2 code (default is yes)])])
 
+AC_ARG_ENABLE([pclmul],
+              [AS_HELP_STRING([--enable-pclmul=no],
+                              [Turn on pclmul code (default is no)])])
+
 AM_CONDITIONAL([ENABLE_NTL_CHECKS],[test x$enable_ntl_checks = xyes])
 
 AC_PROG_CC
@@ -34,6 +38,8 @@ AC_SUBST([GF2X_WORDSIZE], [$gf2x_wordsize])
 
 
 CHECK_SSE2_SUPPORT()
+
+CHECK_PCLMUL_SUPPORT()
 
 : ${ABI='default'}
 
@@ -63,7 +69,11 @@ if test x$hwdir = x ; then
    ;;
   core2|opteron|x86_64|nocona|k10)
    # Note: could set to something else if we have separate tuning files.
-   hwdir=x86_64
+   if test "$gf2x_cv_cc_supports_pclmul" = "no" ; then
+     hwdir=x86_64
+   else
+     hwdir=x86_64_pclmul
+   fi
    if test x$ABI = x32 ; then
     hwdir=x86_sse2
    elif test x$ABI = xdefault ; then
