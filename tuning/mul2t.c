@@ -20,10 +20,14 @@
 */
 /* Implements 128x128 -> 256 bit product using SSE2 instructions. */
 
-#ifndef tuning_GF2X_MUL2_H_
-#define tuning_GF2X_MUL2_H_
+#ifndef GF2X_MUL2_H_
+#define GF2X_MUL2_H_
 
 #include "gf2x.h"
+/* All gf2x source files for lowlevel functions must include gf2x-small.h
+ * This is mandatory for the tuning mechanism. */
+#include "gf2x-small.h"
+
 #include "gf2x/gf2x-impl.h"
 
 #include <stdint.h>
@@ -50,13 +54,8 @@
  * upgrade to 4.3.2 */
 #endif
 
-#ifdef  TUNING
-#undef  GF2X_STORAGE_CLASS_mul2
-#define GF2X_STORAGE_CLASS_mul2 /**/
-#endif
-
 GF2X_STORAGE_CLASS_mul2
-void tuning_gf2x_mul2(unsigned long * t, unsigned long const * s1,
+void gf2x_mul2(unsigned long * t, unsigned long const * s1,
         unsigned long const * s2)
 {
     typedef union {
@@ -153,4 +152,4 @@ void tuning_gf2x_mul2(unsigned long * t, unsigned long const * s1,
     }
 }
 
-#endif  /* tuning_GF2X_MUL2_H_ */
+#endif  /* GF2X_MUL2_H_ */

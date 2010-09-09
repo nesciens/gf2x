@@ -3,4 +3,18 @@
 /bin/rm -rf missing ltmain.sh install-sh  depcomp configure autom4te.cache aclocal.m4 INSTALL compile libtool
 /bin/rm -rf Makefile.in apps/Makefile.in autoscan.log config.h.in tuning/Makefile.in
 
+(cd config ; xargs rm) <<EOF
+compile
+config.guess
+config.sub
+depcomp
+install-sh
+libtool.m4
+ltmain.sh
+ltoptions.m4
+ltsugar.m4
+ltversion.m4
+lt~obsolete.m4
+missing
+EOF
 # Do autoreconf -i to recover.

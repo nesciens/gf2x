@@ -49,7 +49,7 @@ for my $s (sort { $a <=> $b } keys %sizes) {
         my $r = `./$p`;
         chomp($r);
         print STDERR "$r\n";
-        $r =~ /^(.*)\s:\s(\d+)\sns$/;
+        $r =~ /^(.*)\s:\s([\d\.]+)\sns$/;
         push @results, [$1, $2];
     }
     @results = sort { $a->[1] <=> $b->[1] } @results;
@@ -68,14 +68,14 @@ for my $s (sort { $a <=> $b } keys %sizes) {
     print STDERR "Selected $selected\n";
     my $ltarget="hardware/tuned/gf2x_mul$s.h";
     my $slot="gf2x/gf2x_mul$s.h";
-    my $prepared="ready_gf2x_mul$s.c";
-    mysys "sed -e s/tuning_//g $selected > $prepared";
-    my $rc=system "diff ../$slot $prepared > /dev/null";
+    # my $prepared="ready_gf2x_mul$s.c";
+    # mysys "sed -e s///g $selected > $prepared";
+    my $rc=system "diff ../$slot $selected > /dev/null";
 
     if ($rc == 0) {
         print STDERR "Choice identical to the selected file\n";
         push @summary, "$msg (unchanged)\n";
-        unlink $prepared;
+        # unlink $prepared;
         next;
     }
     push @summary, "$msg\n";
@@ -83,8 +83,14 @@ for my $s (sort { $a <=> $b } keys %sizes) {
     mkdir "../hardware/tuned" unless -d "../hardware/tuned";
     # Show the commands at the same time as we execute them.
     mysys "rm ../$slot";
-    mysys "mv $prepared ../$ltarget";
-    mysys "ln -sf ../$ltarget ../$slot";
+    mysys "rm ../$ltarget";
+    if ($selected =~ /gen_/) {
+        # generated file: do a copy, not a link.
+        mysys "cp -f ../../tuning/$selected ../$ltarget";
+    } else {
+        mysys "ln -sf ../../tuning/$selected ../$ltarget";
+        mysys "ln -sf ../$ltarget ../$slot";
+    }
 
     print STDERR "Library source has changed -- rebuilding\n";
     mysys "cd .. ; $make";

@@ -302,4 +302,8 @@ static void gf2x_mul9 (unsigned long *c, const unsigned long *a, const unsigned 
   c[14] ^= ab9;
 }
 
+#ifdef TUNING
+#include "tuning_undef_wrapper.h"
+#endif
+
 #endif  /* GF2X_SMALL_H_ */

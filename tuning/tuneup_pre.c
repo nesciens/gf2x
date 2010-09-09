@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <inttypes.h>
 #include <sys/types.h>
 #include <sys/resource.h>
 #include <string.h>
@@ -32,21 +33,16 @@
 
 #include "timing.h"
 
-/* Enough to be measurable. */
-#define N 2000000
+#include "tuning_undefs_@@SIZE@@.h"
 
-#ifndef TSIZE
-#error "Define TSIZE to be the size of the operands of the test function"
-#endif
+// make it somewhat realistic.
+#define N       (1 << 16)
+#define NMASK   ((N)-1)
 
-#define PAD_(X,Y)       X ## Y
-#define PAD(X,Y)        PAD_(X,Y)
-#define TFUNCTION       PAD(tuning_gf2x_mul,TSIZE)
-
-#if TSIZE == 1
-extern void TFUNCTION(unsigned long *c, unsigned long a, unsigned long b);
+#if @@SIZE@@ == 1
+extern void gf2x_mul@@SIZE@@(unsigned long *c, unsigned long a, unsigned long b);
 #else
-extern void TFUNCTION(unsigned long *c, const unsigned long *a, const unsigned long *b);
+extern void gf2x_mul@@SIZE@@(unsigned long *c, const unsigned long *a, const unsigned long *b);
 #endif
 
 int main(int argc, char *argv[])
@@ -54,49 +50,57 @@ int main(int argc, char *argv[])
     unsigned long i, *c0, *c, *a, *b;
     uint64_t st;
 
-    unsigned int m = N / TSIZE;
-
     char * progname = "me";
     if (argc >= 1) {
         progname = argv[0];
     }
 
-    if (m < 10) m = 10;
+    a = (unsigned long *) malloc((N + @@SIZE@@) * sizeof(unsigned long));
+    b = (unsigned long *) malloc((N + @@SIZE@@) * sizeof(unsigned long));
+    c = (unsigned long *) malloc(2 * @@SIZE@@ * sizeof(unsigned long));
+    c0 = (unsigned long *) malloc(2 * @@SIZE@@ * sizeof(unsigned long));
 
-    a = (unsigned long *) malloc((m + TSIZE) * sizeof(unsigned long));
-    b = (unsigned long *) malloc((m + TSIZE) * sizeof(unsigned long));
-    c = (unsigned long *) malloc(2 * TSIZE * sizeof(unsigned long));
-    c0 = (unsigned long *) malloc(2 * TSIZE * sizeof(unsigned long));
-
-    for (i = 0; i < m; i++) {
+    for (i = 0; i < N + @@SIZE@@; i++) {
         a[i] = (unsigned long) rand();
         b[i] = (unsigned long) rand();
     }
 
-    for (i = 0; i < 10 && i < m; i++) {
+    st = 0;
+    for (i = 0; i < 10 && i < N; i++) {
         /* Use this one as a reference implementation */
-        gf2x_mul(c0, a + i, TSIZE, b + i, TSIZE);
-#if TSIZE == 1
-        TFUNCTION (c, a[i], b[i]);
+        gf2x_mul(c0, a + i, @@SIZE@@, b + i, @@SIZE@@);
+        st -= microseconds();
+#if @@SIZE@@ == 1
+        gf2x_mul@@SIZE@@ (c, a[i & NMASK], b[i & NMASK]);
 #else
-        TFUNCTION (c, a + i, b + i);
+        gf2x_mul@@SIZE@@ (c, a + (i & NMASK), b + (i & NMASK));
 #endif
-        if (memcmp(c, c0, 2 * TSIZE * sizeof(unsigned long)) != 0) {
+        st += microseconds();
+        if (memcmp(c, c0, 2 * @@SIZE@@ * sizeof(unsigned long)) != 0) {
             fprintf(stderr, "Error, computed test values do not match\n");
             exit(255);
         }
     }
 
-    st = microseconds();
-    for (i = 0; i < m; i++) {
-#if TSIZE == 1
-        TFUNCTION (c, a[i], b[i]);
+    uint64_t m = i;
+
+    /* arrange for the measure to take at least .1 seconds */
+    for( ; ; ) {
+        st = -microseconds();
+        for (i = 0; i < m; i++) {
+#if @@SIZE@@ == 1
+            gf2x_mul@@SIZE@@ (c, a[i & NMASK], b[i & NMASK]);
 #else
-        TFUNCTION (c, a + i, b + i);
+            gf2x_mul@@SIZE@@ (c, a + (i & NMASK), b + (i & NMASK));
 #endif
+        }
+        st += microseconds();
+        if (st >= 100000)
+            break;
+        m *= 3;
     }
 
-    printf("%s : %1.0f ns\n", progname, (microseconds() - st) / (double) m * 1.0e3);
+    printf("%s : %1.1f ns\n", progname, (double) st / (double) m * 1.0e3);
 
 
     free(c0);

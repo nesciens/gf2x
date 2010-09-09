@@ -20,11 +20,9 @@
 */
 /* Generates low-level multiplication routines over GF(2)[x]. */
 
-/* define the INTEL_AVX macro if you want to use the PCLMULQDQ assembly
-   instruction */
-
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 int main(int argc, char *argv[])
 {
@@ -43,66 +41,52 @@ int main(int argc, char *argv[])
     printf(
 "/* This file is part of the gf2x library.\n"
 "\n"
-"   Copyright 2007,2008,2009\n"
+"   Copyright 2007, 2008, 2009\n"
 "   Richard Brent, Pierrick Gaudry, Emmanuel Thome', Paul Zimmermann\n"
 "\n"
 "   This program is free software; you can redistribute it and/or modify it\n"
-"   under the terms of the GNU General Public License as published by the\n"
-"   Free Software Foundation; either version 2 of the License, or (at your\n"
-"   option) any later version.\n"
-"\n"
+"   under the terms of the GNU Lesser General Public License as published by\n"
+"   the Free Software Foundation; either version 2.1 of the License, or (at\n"
+"   your option) any later version.\n"
+"   \n"
 "   This program is distributed in the hope that it will be useful, but WITHOUT\n"
 "   ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or\n"
-"   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for\n"
-"   more details.\n"
-"\n"
-"   You should have received a copy of the GNU General Public License along\n"
-"   with this program; see the file COPYING.  If not, write to the Free\n"
-"   Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA\n"
-"   02111-1307, USA.\n"
+"   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public\n"
+"   License for more details.\n"
+"   \n"
+"   You should have received a copy of the GNU Lesser General Public\n"
+"   License along with CADO-NFS; see the file COPYING.  If not, write to\n"
+"   the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,\n"
+"   Boston, MA 02110-1301, USA.\n"
 "*/\n"
 "\n");
-    printf("#ifndef tuning_GF2X_MUL1_C_\n");
-    printf("#define tuning_GF2X_MUL1_C_\n");
+    printf("#ifndef GF2X_MUL1_H_\n");
+    printf("#define GF2X_MUL1_H_\n");
     printf("\n");
     printf("/* This file was generated automatically with\n");
     printf("   %s %u %u. Don't edit it! */\n",
 	   argv[0], w, K);
     printf("\n");
     printf(
-"#include \"gf2x.h\"\n"
-"\n"
-"#ifdef  TUNING\n"
-"#undef  GF2X_STORAGE_CLASS_mul1\n"
-"#define GF2X_STORAGE_CLASS_mul1 /**/\n"
-"#undef  GF2X_STORAGE_CLASS_mul_1_n\n"
-"#define GF2X_STORAGE_CLASS_mul_1_n /**/\n"
-"#undef  GF2X_STORAGE_CLASS_addmul_1_n\n"
-"#define GF2X_STORAGE_CLASS_addmul_1_n /**/\n"
-"#endif\n"
-"\n"
-);
-
-#ifdef INTEL_AVX
-    printf("\n#include \"mul1_avx.c\"\n");
-#endif
+        "#include \"gf2x.h\"\n"
+"/* All gf2x source files for lowlevel functions must include gf2x-small.h\n"
+" * This is mandatory for the tuning mechanism. */\n"
+        "#include \"gf2x-small.h\"\n"
+        "\n");
 
     for (fn = 0; fn < 3; fn++) {
 	if (fn == 0) {
-#ifdef INTEL_AVX
-          continue;
-#endif
 	    printf("GF2X_STORAGE_CLASS_mul1 void\n");
-	    printf("tuning_gf2x_mul1 (unsigned long *c, unsigned long a, unsigned long b)\n");
+	    printf("gf2x_mul1 (unsigned long *c, unsigned long a, unsigned long b)\n");
 	} else if (fn == 1) {
 		// continue;	/* mul_1_n is no longer used */
 	    printf("GF2X_STORAGE_CLASS_mul_1_n unsigned long\n");
 	    printf
-		("tuning_gf2x_mul_1_n (unsigned long *cp, const unsigned long *bp, long sb, unsigned long a)\n");
+		("gf2x_mul_1_n (unsigned long *cp, const unsigned long *bp, long sb, unsigned long a)\n");
 	} else if (fn == 2) {
 	    printf("GF2X_STORAGE_CLASS_addmul_1_n unsigned long\n");
 	    printf
-		("tuning_gf2x_addmul_1_n (unsigned long *dp, const unsigned long *cp, const unsigned long* bp, long sb,\n");
+		("gf2x_addmul_1_n (unsigned long *dp, const unsigned long *cp, const unsigned long* bp, long sb,\n");
 	    printf("        unsigned long a)\n");
 	}
 	printf("{\n");
@@ -163,6 +147,9 @@ int main(int argc, char *argv[])
 	       K bits from b for index j >= i */
 	    /* Gaudry's no-branching optimization */
 	    printf("   tmp = -((a >> %u) & 1);\n", w - i);
+            if (w == 32) {
+                mask2 = (unsigned long) (uint32_t) mask2;
+            }
 	    printf("   tmp &= ((b & 0x%lx) >> %u);\n", mask2, i);
 	    printf("   hi = hi ^ tmp;\n");
 	    mask2 = (mask2 << 1) & MASK;
@@ -185,7 +172,7 @@ int main(int argc, char *argv[])
 	printf("}\n\n");
     }
 
-    printf("#endif\t/* tuning_GF2X_MUL1_C_ */\n");
+    printf("#endif\t/* GF2X_MUL1_H_ */\n");
 
     return 0;
 }

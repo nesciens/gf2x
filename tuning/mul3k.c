@@ -18,20 +18,17 @@
    the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
-#ifndef tuning_GF2X_MUL3_H_
-#define tuning_GF2X_MUL3_H_
+#ifndef GF2X_MUL3_H_
+#define GF2X_MUL3_H_
 
 #include "gf2x.h"
+/* All gf2x source files for lowlevel functions must include gf2x-small.h
+ * This is mandatory for the tuning mechanism. */
 #include "gf2x/gf2x-small.h"
-
-#ifdef  TUNING
-#undef  GF2X_STORAGE_CLASS_mul3
-#define GF2X_STORAGE_CLASS_mul3 /**/
-#endif
 
 /* specialized Karatsuba */
 GF2X_STORAGE_CLASS_mul3
-void tuning_gf2x_mul3 (unsigned long *c, const unsigned long *a, const unsigned long *b)
+void gf2x_mul3 (unsigned long *c, const unsigned long *a, const unsigned long *b)
 {
   unsigned long aa[2], bb[2], ab[4], c24, c35;
   gf2x_mul1 (c + 4, a[2], b[2]);
@@ -82,4 +79,4 @@ void XXXtuning_gf2x_mul3 (unsigned long *c, const unsigned long *a, const unsign
 }
 #endif
 
-#endif  /* tuning_GF2X_MUL3_H_ */
+#endif  /* GF2X_MUL3_H_ */

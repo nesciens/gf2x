@@ -18,6 +18,7 @@
    the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
+
 #ifndef GF2X_MUL1_H_
 #define GF2X_MUL1_H_
 
@@ -25,15 +26,9 @@
    ./gen_bb_mul_code 32 2. Don't edit it! */
 
 #include "gf2x.h"
-
-#ifdef  TUNING
-#undef  GF2X_STORAGE_CLASS_mul1
-#define GF2X_STORAGE_CLASS_mul1 /**/
-#undef  GF2X_STORAGE_CLASS_mul_1_n
-#define GF2X_STORAGE_CLASS_mul_1_n /**/
-#undef  GF2X_STORAGE_CLASS_addmul_1_n
-#define GF2X_STORAGE_CLASS_addmul_1_n /**/
-#endif
+/* All gf2x source files for lowlevel functions must include gf2x-small.h
+ * This is mandatory for the tuning mechanism. */
+#include "gf2x-small.h"
 
 GF2X_STORAGE_CLASS_mul1 void
 gf2x_mul1 (unsigned long *c, unsigned long a, unsigned long b)
