@@ -3,6 +3,9 @@
 /bin/rm -rf missing ltmain.sh install-sh  depcomp configure autom4te.cache aclocal.m4 INSTALL compile libtool
 /bin/rm -rf Makefile.in apps/Makefile.in autoscan.log config.h.in src/Makefile.in
 /bin/rm -rf gf2x/gf2x-config.h.in
+/bin/rm -rf ./.deps ./.libs
+
+find . -name .libs | xargs rm -rf
 
 (cd config ; xargs rm) <<EOF
 compile

@@ -182,9 +182,6 @@ void gf2x_mul_r(unsigned long * c,
                 break;
             }
 
-            /* TODO: Should do addmul_2_n here, that would be an easy
-             * improvement. */
-
             // finally: the general case
             for (i = 0; i + sa <= sb; i += sa) {
                 // Generic (balanced) Toom-Cook mult.
