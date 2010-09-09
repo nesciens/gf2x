@@ -18,7 +18,7 @@
    the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
-/* Implements 128x128 -> 256 bit product using SSE2 instructions. */
+/* Implements 128x128 -> 256 bit product using pclmulqdq instruction. */
 
 #ifndef GF2X_MUL2_H_
 #define GF2X_MUL2_H_
@@ -54,22 +54,23 @@ void gf2x_mul2(unsigned long * t, unsigned long const * s1,
     } __v2di_proxy;
 
     __v2di ss1, ss2;
-    __v2di_proxy t00, t01, t10, t11;
+    __v2di_proxy t00, t11, tk;
     ss1 = (__v2di) { s1[0], s1[1] };
-    ss2 = (__v2di) { s2[0], s2[0] };
+    ss2 = (__v2di) { s2[0], s2[1] };
 
     t00.s = _mm_clmulepi64_si128(ss1, ss2, 0);
-    t01.s = _mm_clmulepi64_si128(ss1, ss2, 1);
+    t11.s = _mm_clmulepi64_si128(ss1, ss2, 17);
     
-    ss2 = (__v2di) { s2[1], s2[1] };
-    t10.s = _mm_clmulepi64_si128(ss1, ss2, 0);
-    t11.s = _mm_clmulepi64_si128(ss1, ss2, 1);
+    ss1 = (__v2di) { s1[0]^s1[1], 0 };
+    ss2 = (__v2di) { s2[0]^s2[1], 0 };
+    tk.s = _mm_clmulepi64_si128(ss1, ss2, 0);
+
+    tk.s ^= t00.s ^ t11.s;
 
     /* store result */
     t[0] = t00.x[0];
-    t[1] = t00.x[1] ^ t10.x[0] ^ t01.x[0];
-    t[2] = t11.x[0] ^ t10.x[1] ^ t01.x[1];
+    t[1] = t00.x[1] ^ tk.x[0];
+    t[2] = t11.x[0] ^ tk.x[1];
     t[3] = t11.x[1];
 }
-
 #endif  /* GF2X_MUL2_H_ */
