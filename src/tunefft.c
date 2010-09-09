@@ -42,10 +42,10 @@
 
        cat ../gf2x-thresholds.h > tuned_thresholds.h
        ./update-thresholds -o tuned_thresholds.h < tunefft.res
-       mkdir -p ../hardware/tuned/
-       mv tuned_thresholds.h ../hardware/tuned/gf2x-thresholds.h
+       mkdir -p ../already_tuned/tuned/
+       mv tuned_thresholds.h ../already_tuned/tuned/gf2x-thresholds.h
        rm -f ../gf2x-thresholds.h
-       ln -sf hardware/tuned/gf2x-thresholds.h ../
+       ln -sf already_tuned/tuned/gf2x-thresholds.h ../
 */
 
 #define _BSD_SOURCE

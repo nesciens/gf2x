@@ -346,10 +346,10 @@ tune-toom: tunetoom.res update-thresholds$(EXEEXT)
 	cd $(top_builddir) ; $(MAKE)
 	cat ../gf2x/gf2x-thresholds.h > tuned_thresholds.h
 	./update-thresholds -o tuned_thresholds.h < tunetoom.res
-	mkdir -p ../hardware/tuned/
-	mv -f tuned_thresholds.h ../hardware/tuned/gf2x-thresholds.h
+	mkdir -p ../already_tuned/tuned/
+	mv -f tuned_thresholds.h ../already_tuned/tuned/gf2x-thresholds.h
 	rm -f ../gf2x/gf2x-thresholds.h
-	ln -sf ../hardware/tuned/gf2x-thresholds.h ../gf2x/
+	ln -sf ../already_tuned/tuned/gf2x-thresholds.h ../gf2x/
 	cd $(top_builddir) ; $(MAKE)
 
 ######################################################################
@@ -366,10 +366,10 @@ tune-fft: tunefft.res update-thresholds$(EXEEXT)
 	cd $(top_builddir) ; $(MAKE)
 	cat ../gf2x/gf2x-thresholds.h > tuned_thresholds.h
 	./update-thresholds -o tuned_thresholds.h < tunefft.res
-	mkdir -p ../hardware/tuned/
-	mv -f tuned_thresholds.h ../hardware/tuned/gf2x-thresholds.h
+	mkdir -p ../already_tuned/tuned/
+	mv -f tuned_thresholds.h ../already_tuned/tuned/gf2x-thresholds.h
 	rm -f ../gf2x/gf2x-thresholds.h
-	ln -sf ../hardware/tuned/gf2x-thresholds.h ../gf2x/
+	ln -sf ../already_tuned/tuned/gf2x-thresholds.h ../gf2x/
 	cd $(top_builddir) ; $(MAKE)
 
 CLEANFILES+=$(EXTRA_PROGRAMS) $(EXTRA_LTLIBRARIES) tunetoom.res tunefft.res

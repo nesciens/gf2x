@@ -23,9 +23,9 @@ if ENABLE_NTL_CHECKS
     MAYBE_APPS=apps
 endif
 
-SUBDIRS=. tests tuning $(MAYBE_APPS)
+SUBDIRS=. tests src $(MAYBE_APPS)
 
-DIST_SUBDIRS=tests tuning apps
+DIST_SUBDIRS=tests src apps
 
 DISTCLEANFILES=gf2x/gf2x-thresholds.h	\
 	       gf2x/gf2x_mul1.h		\
@@ -39,10 +39,10 @@ EXTRA_DIST+=config/configfsf.sub
 EXTRA_DIST+=version.sh.in
 EXTRA_DIST+=BUGS
 EXTRA_DIST+=patch-wrt-ntl-5.4.2 inject-ntl-5.4.2
-EXTRA_DIST+=hardware
+EXTRA_DIST+=already_tuned
 dist-hook:
 	-find $(distdir) \( -name .svn -type d \) -o -name "*~" -o -name ".#*" \
                 | xargs rm -rf
 
 tune-lowlevel tune-toom tune-fft: all
-	cd tuning; $(MAKE) $@
+	cd src; $(MAKE) $@

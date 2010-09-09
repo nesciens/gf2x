@@ -66,7 +66,7 @@ for my $s (sort { $a <=> $b } keys %sizes) {
         }
     }
     print STDERR "Selected $selected\n";
-    my $ltarget="hardware/tuned/gf2x_mul$s.h";
+    my $ltarget="already_tuned/tuned/gf2x_mul$s.h";
     my $slot="gf2x/gf2x_mul$s.h";
     # my $prepared="ready_gf2x_mul$s.c";
     # mysys "sed -e s///g $selected > $prepared";
@@ -79,16 +79,16 @@ for my $s (sort { $a <=> $b } keys %sizes) {
         next;
     }
     push @summary, "$msg\n";
-    mkdir "../hardware" unless -d "../hardware";
-    mkdir "../hardware/tuned" unless -d "../hardware/tuned";
+    mkdir "../already_tuned" unless -d "../already_tuned";
+    mkdir "../already_tuned/tuned" unless -d "../already_tuned/tuned";
     # Show the commands at the same time as we execute them.
     mysys "rm ../$slot";
     mysys "rm ../$ltarget";
     if ($selected =~ /gen_/) {
         # generated file: do a copy, not a link.
-        mysys "cp -f ../../tuning/$selected ../$ltarget";
+        mysys "cp -f ../../src/$selected ../$ltarget";
     } else {
-        mysys "ln -sf ../../tuning/$selected ../$ltarget";
+        mysys "ln -sf ../../src/$selected ../$ltarget";
         mysys "ln -sf ../$ltarget ../$slot";
     }
 

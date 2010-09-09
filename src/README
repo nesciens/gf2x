@@ -13,7 +13,7 @@ This tuning job requires perl, and quite probably won't work if
 cross-compiling. It should work out-of-source cleanly, though.
 
 
-All the tuning steps below update the ../hardware/tuned subdirectory, and
+All the tuning steps below update the ../already_tuned/tuned subdirectory, and
 move the corresponding links in the top-level directory.
 
 * Step 1 -- tuning the low-level routines *
@@ -37,7 +37,7 @@ may be adapted by a manual procedure.
 The developers may be interested by your tuning results. You may thus
 post to the list gf2x-discuss@lists.gforge.inria.fr ; we need:
 
-- the contents of the hardware/tuned subdirectory
+- the contents of the already_tuned/tuned subdirectory
 - anything relevant for identifying your machine, or machine family, and
   compiler. This includes for example the output of the following
   commands, at least the ones that exist:
