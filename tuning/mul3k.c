@@ -49,4 +49,37 @@ void tuning_gf2x_mul3 (unsigned long *c, const unsigned long *a, const unsigned 
   c[5] = ab[3] ^ c35;
 }
 
+#if 0
+/* another specialized Karatsuba */
+GF2X_STORAGE_CLASS_mul3
+void XXXtuning_gf2x_mul3 (unsigned long *c, const unsigned long *a, const unsigned long *b)
+{
+  unsigned long aa[2], bb[2], p[5], pp[5];
+  unsigned long *p0 = p;
+  unsigned long *p1 = p+2;
+  unsigned long *p2 = p+4;
+  unsigned long *pp0 = pp;
+  unsigned long *pp1 = pp+2;
+  unsigned long *pp2 = pp+4;
+  aa[0] = a[1]^a[2];
+  aa[1] = a[0]^a[2];
+  aa[1] = a[0]^a[1];
+  bb[0] = b[1]^b[2];
+  bb[1] = b[0]^b[2];
+  bb[1] = b[0]^b[1];
+  gf2x_mul1 (p0, a[0], b[0]);
+  gf2x_mul1 (p1, a[1], b[1]);
+  gf2x_mul1 (p2, a[2], b[2]);
+  gf2x_mul1 (pp0, aa[0], bb[0]);
+  gf2x_mul1 (pp1, aa[1], bb[1]);
+  gf2x_mul1 (pp2, aa[2], bb[2]);
+  c[0] = p0[0];
+  c[1] = p0[0]^p1[0]^pp2[0]         ^  p0[1];
+  c[2] = p0[0]^p1[0]^p2[0]^pp1[0]   ^  p0[1]^p1[1]^pp2[1];
+  c[3] = pp0[0]^p1[0]^p2[0]         ^  p0[1]^p1[1]^p2[1]^pp1[1];
+  c[4] = p2[0]                      ^  pp0[1]^p1[1]^p2[1];
+  c[5] =                               p2[1];
+}
+#endif
+
 #endif  /* tuning_GF2X_MUL3_H_ */
