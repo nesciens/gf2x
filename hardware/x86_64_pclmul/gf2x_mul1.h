@@ -100,7 +100,10 @@ gf2x_mul_1_n (unsigned long *cp, const unsigned long *bp, long sb, unsigned long
     if (i == sb - 2) {  // case bp is even
         x = (__v2di) { bp[i], bp[i+1] }; 
         cc.s = _mm_clmulepi64_si128(x, y, 0);
-        cp[i] ^= cc.x[0];
+        if (i == 0) 
+            cp[i] = cc.x[0];
+        else
+            cp[i] ^= cc.x[0];
         cp[i+1] = cc.x[1];
         cc.s = _mm_clmulepi64_si128(x, y, 1);
         cp[i+1] ^= cc.x[0];
@@ -108,12 +111,14 @@ gf2x_mul_1_n (unsigned long *cp, const unsigned long *bp, long sb, unsigned long
     } else { //case bp is odd
         x = (__v2di) { bp[i], 0 }; 
         cc.s = _mm_clmulepi64_si128(x, y, 0);
-        cp[i] ^= cc.x[0];
+        if (i == 0) 
+            cp[i] = cc.x[0];
+        else
+            cp[i] ^= cc.x[0];
         cy = cc.x[1];
     }
     return cy;
 }
-
 
 GF2X_STORAGE_CLASS_addmul_1_n unsigned long
 gf2x_addmul_1_n (unsigned long *dp, const unsigned long *cp, const unsigned long* bp, long sb, unsigned long a)
@@ -164,5 +169,6 @@ gf2x_addmul_1_n (unsigned long *dp, const unsigned long *cp, const unsigned long
     }
     return cy;
 }
+
 
 #endif   /* __GF2X_MUL1_H__ */
