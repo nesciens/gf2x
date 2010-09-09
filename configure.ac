@@ -18,7 +18,7 @@ AC_ARG_ENABLE([sse2],
                               [Turn on sse-2 code (default is yes)])])
 
 AC_ARG_ENABLE([pclmul],
-              [AS_HELP_STRING([--enable-pclmul=no],
+              [AS_HELP_STRING([--enable-pclmul=yes/no],
                               [Turn on pclmul code (default is no)])])
 
 AM_CONDITIONAL([ENABLE_NTL_CHECKS],[test x$enable_ntl_checks = xyes])
