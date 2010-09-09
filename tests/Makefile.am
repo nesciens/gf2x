@@ -4,9 +4,11 @@
 
 AM_CPPFLAGS = -I$(top_srcdir) -I$(top_builddir)
 
-check_PROGRAMS=check-mul
+check_PROGRAMS=check-mul check-addmul
 check_mul_SOURCES=check-mul.c
+check_addmul_SOURCES=check-addmul.c
 check_mul_LDADD=../libgf2x.la
+check_addmul_LDADD=../libgf2x.la
 
 TESTS_ENVIRONMENT=$(SHELL) 2>/dev/null
 TESTS=do-check-mul.sh
