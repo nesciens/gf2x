@@ -309,12 +309,17 @@ tune_mul1cl_SOURCES=mul1cl.c tuning_undefs_1.h
 tune_mul1cl_LDADD=libtuneup-s1.la libtiming.la ../libgf2x.la
 mul1cl.$(OBJEXT): tuning_undefs_1.h
 
-
 LOWLEVEL+=tune_mul2cl$(EXEEXT)
 tune_mul2cl_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=2
 tune_mul2cl_SOURCES=mul2cl.c tuning_undefs_2.h
 tune_mul2cl_LDADD=libtuneup-s2.la libtiming.la ../libgf2x.la
 mul2cl.$(OBJEXT): tuning_undefs_2.h
+
+LOWLEVEL+=tune_mul3cl$(EXEEXT)
+tune_mul3cl_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=3
+tune_mul3cl_SOURCES=mul3cl.c tuning_undefs_3.h
+tune_mul3cl_LDADD=libtuneup-s3.la libtiming.la ../libgf2x.la
+mul3cl.$(OBJEXT): tuning_undefs_3.h
 endif
 
 
