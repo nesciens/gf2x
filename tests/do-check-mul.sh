@@ -10,6 +10,8 @@ cat "$srcdir/check-mul.res" | while read n1 n2 v s ; do
         exit 1
     fi
 done
-rc=$?
 echo
-exit $rc
+
+./check-addmul
+
+exit $?

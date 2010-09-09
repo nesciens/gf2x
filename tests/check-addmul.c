@@ -17,6 +17,7 @@
    the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
+#define _XOPEN_SOURCE   /* lrand48 and friends */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -66,6 +67,7 @@ check_gf2x_mul_1_n (long sb)
         for (i = 0; i < sb + 1; i++)
           fprintf (stderr, " %lu", refcp[i]);
         fprintf (stderr, "\n");
+        printf(" FAILED\n");
         exit (1);
       }
 }
@@ -79,10 +81,11 @@ int main(int argc, char * argv[])
     }
 
     int sb;
-    fprintf (stderr, "Checking gf2x_mul_1_n against gf2x_addmul_1_n\n");
+    printf ("Checking gf2x_mul_1_n against gf2x_addmul_1_n...");
+    fflush(stdout);
     for (sb = 1; sb <= 1000; sb++)
       check_gf2x_mul_1_n (sb);
-    fprintf (stderr, "All tests passed\n");
+    printf ("ok\n");
 
     return 0;
 }
