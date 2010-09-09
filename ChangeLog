@@ -1,11 +1,147 @@
-commit 93c45603532ac46fe48a05282c27873de7928e4e
+commit f036acffe24582e9e8f3078a08ff4f6d69a6d9cd
 Author: Emmanuel Thomé <Emmanuel.Thome@normalesup.org>
-Date:   Mon Apr 27 21:29:00 2009 +0200
+Date:   Thu Nov 26 11:08:25 2009 +0100
+
+    release gf2x-0.9.6
+
+ trunk/ChangeLog |  137 +++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 132 insertions(+), 5 deletions(-)
+
+commit 1a505ef45eaf9dd3215dbb5a486adfd64fe51020
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Thu Nov 26 10:00:45 2009 +0000
+
+    fft2 disappeared, using new interface
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@32 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/tuning/tunefft.c |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
+
+commit 1b47e3dfd89823ba055e75e7ad4bdb0418d50f15
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Mon Nov 9 15:45:15 2009 +0000
+
+    oops
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@31 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/Makefile.am |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 3f9f8072247dcde60a6e657ea078a717be22697c
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Mon Nov 9 15:36:39 2009 +0000
+
+    prepare rev 0.9.6
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@30 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/configure.ac |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit ae0065f0f886a7df5c7f1d0e8eb06cb43cc8e00f
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Mon Nov 9 15:36:36 2009 +0000
+
+    changed license GPLv2+ --> LGPLv2+ except for apps/ which remains GPLv2+
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@29 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/COPYING                             |  662 ++++++++++++++++++-----------
+ trunk/README                              |    7 +-
+ trunk/apps/COPYING                        |  340 +++++++++++++++
+ trunk/bench.c                             |   23 +-
+ trunk/fft.c                               |   23 +-
+ trunk/gf2x.c                              |   23 +-
+ trunk/gf2x.h                              |   23 +-
+ trunk/gf2x/gf2x-impl.h                    |   23 +-
+ trunk/gf2x/gf2x-small.h                   |   23 +-
+ trunk/gf2x/gf2x-tfft.h                    |   27 +-
+ trunk/hardware/generic/gf2x-thresholds.h  |   23 +-
+ trunk/hardware/generic/gf2x_mul2.h        |   23 +-
+ trunk/hardware/generic/gf2x_mul3.h        |   23 +-
+ trunk/hardware/generic/gf2x_mul4.h        |   23 +-
+ trunk/hardware/generic32/gf2x_mul1.h      |   23 +-
+ trunk/hardware/generic64/gf2x_mul1.h      |   23 +-
+ trunk/hardware/opteron/gf2x-thresholds.h  |   23 +-
+ trunk/hardware/opteron/gf2x_mul1.h        |   23 +-
+ trunk/hardware/x86_64/gf2x-thresholds.h   |   23 +-
+ trunk/hardware/x86_64/gf2x_mul2.h         |   23 +-
+ trunk/hardware/x86_sse2/gf2x-thresholds.h |   23 +-
+ trunk/hardware/x86_sse2/gf2x_mul1.h       |   23 +-
+ trunk/hardware/x86_sse2/gf2x_mul3.h       |   23 +-
+ trunk/hardware/x86_sse2/gf2x_mul4.h       |   23 +-
+ trunk/tests/check-mul.c                   |   23 +-
+ trunk/toom.c                              |   23 +-
+ trunk/tuning/gen_bb_mul_code.c            |   23 +-
+ trunk/tuning/mul1_avx.c                   |   23 +-
+ trunk/tuning/mul2k.c                      |   23 +-
+ trunk/tuning/mul2t.c                      |   23 +-
+ trunk/tuning/mul3k.c                      |   23 +-
+ trunk/tuning/mul3t.c                      |   23 +-
+ trunk/tuning/mul4k.c                      |   23 +-
+ trunk/tuning/mul4t.c                      |   23 +-
+ trunk/tuning/replace.c                    |   23 +-
+ trunk/tuning/replace.h                    |   23 +-
+ trunk/tuning/timing.c                     |   23 +-
+ trunk/tuning/timing.h                     |   23 +-
+ trunk/tuning/tunefft.c                    |   23 +-
+ trunk/tuning/tunetoom.c                   |   23 +-
+ trunk/tuning/tuneup.c                     |   23 +-
+ trunk/tuning/tuning-common.c              |   23 +-
+ trunk/tuning/tuning-common.h              |   23 +-
+ trunk/tuning/update-thresholds.c          |   23 +-
+ 44 files changed, 1222 insertions(+), 734 deletions(-)
+
+commit b6e7e16184b5946feecf3b5eef032783c35a01e8
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Mon Nov 9 15:36:34 2009 +0000
+
+    experimental interface for fft transform caching.
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@28 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/Makefile.am      |    1 +
+ trunk/TODO             |    4 -
+ trunk/fft.c            |  830 ++++++++++++++++++++++++++++++------------------
+ trunk/gf2x.c           |   14 +-
+ trunk/gf2x/gf2x-impl.h |   19 +-
+ trunk/gf2x/gf2x-tfft.h |   44 +++
+ 6 files changed, 578 insertions(+), 334 deletions(-)
+
+commit 0fc6e16f2762da4190b9567e1cc990f0411a1b12
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Mon Nov 9 15:36:33 2009 +0000
+
+    for some reason the TODO file wasn't checked in.
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@27 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/TODO |   13 +++++++++++++
+ 1 files changed, 13 insertions(+), 0 deletions(-)
+
+commit 0d0291ccfd97d078e344a14eda765a9a0aa5f629
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Mon Nov 9 15:36:32 2009 +0000
+
+    s/echo/AC_MSG_NOTICE, for configure --silent
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@26 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/configure.ac |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+commit 40c792ce2baa493fa47db9479eccffd00b9a55be
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Mon Apr 27 19:30:20 2009 +0000
 
     release gf2x-0.9.5
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@25 e5c1114b-a573-4582-9dac-f72f410959ce
 
- trunk/ChangeLog |   67 ++++++++++++++++++++++++++++++++++++++++++++++++++-----
- 1 files changed, 61 insertions(+), 6 deletions(-)
+ trunk/ChangeLog |   74 +++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 files changed, 69 insertions(+), 5 deletions(-)
 
 commit b974195b8d7af3fb19100d53ea54a3d1291756ea
 Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
