@@ -47,6 +47,7 @@
 #define GF2X_STORAGE_CLASS_mul2 /**/
 #endif
 
+#ifndef __GNUC__
 GF2X_STORAGE_CLASS_mul2
 void gf2x_mul2(unsigned long * t, unsigned long const * s1,
         unsigned long const * s2)
@@ -56,7 +57,7 @@ void gf2x_mul2(unsigned long * t, unsigned long const * s1,
         unsigned long x[2];
     } __v2di_proxy;
 
-    __v2di ss1, ss2;
+    __v2di ss1, ss2, s1s, s2s;
     __v2di_proxy t00, t11, tk;
     ss1 = (__v2di) { s1[0], s1[1] };
     ss2 = (__v2di) { s2[0], s2[1] };
@@ -64,8 +65,11 @@ void gf2x_mul2(unsigned long * t, unsigned long const * s1,
     t00.s = _mm_clmulepi64_si128(ss1, ss2, 0);
     t11.s = _mm_clmulepi64_si128(ss1, ss2, 17);
     
-    ss1 = (__v2di) { s1[0]^s1[1], 0 };
-    ss2 = (__v2di) { s2[0]^s2[1], 0 };
+    s1s = _mm_shuffle_epi32(ss1, 78);
+    ss1 ^= s1s;
+    s2s = _mm_shuffle_epi32(ss2, 78);
+    ss2 ^= s2s;
+    
     tk.s = _mm_clmulepi64_si128(ss1, ss2, 0);
 
     tk.s ^= t00.s ^ t11.s;
@@ -76,4 +80,52 @@ void gf2x_mul2(unsigned long * t, unsigned long const * s1,
     t[2] = t11.x[0] ^ tk.x[1];
     t[3] = t11.x[1];
 }
+#else
+
+/* GCC (4.4.3) seems reluctant to use movdqu which was slow. 
+ * However, this code is for processors having pclmulqdq, ie pretty
+ * recent ones (in 2010), and for those using movdqu is fast enough and
+ * gives an overall speedup.
+ *
+ * Hopefully this piece of code will become obsolete at some point, when
+ * GCC learns how to optimize on the target cpu.
+ */
+GF2X_STORAGE_CLASS_mul2
+void gf2x_mul2(unsigned long * t, unsigned long const * s1,
+        unsigned long const * s2)
+{
+   __asm__ __volatile__(
+"movdqu (%%rsi), %%xmm1\n\t"
+"movdqu (%%rdx), %%xmm0\n\t"
+"movdqa %%xmm1, %%xmm3\n\t"
+"pclmulqdq      $0, %%xmm0, %%xmm3\n\t"
+"movdqa %%xmm1, %%xmm2\n\t"
+"pshufd $78, %%xmm1, %%xmm5\n\t"
+"pshufd $78, %%xmm0, %%xmm4\n\t"
+"pxor   %%xmm5, %%xmm1\n\t"
+"pxor   %%xmm4, %%xmm0\n\t"
+"pclmulqdq      $17, %%xmm0, %%xmm2\n\t"
+"movdqu %%xmm3, -24(%%rsp)\n\t"
+"movq   -24(%%rsp), %%rax\n\t"
+"pclmulqdq      $0, %%xmm0, %%xmm1\n\t"
+"movdqa %%xmm3, %%xmm0\n\t"
+"movdqu %%xmm2, -40(%%rsp)\n\t"
+"pxor   %%xmm2, %%xmm0\n\t"
+"movq   %%rax, (%%rdi)\n\t"
+"pxor   %%xmm1, %%xmm0\n\t"
+"movdqu %%xmm0, -56(%%rsp)\n\t"
+"movq   -56(%%rsp), %%rax\n\t"
+"xorq   -16(%%rsp), %%rax\n\t"
+"movq   %%rax, 8(%%rdi)\n\t"
+"movq   -48(%%rsp), %%rax\n\t"
+"xorq   -40(%%rsp), %%rax\n\t"
+"movq   %%rax, 16(%%rdi)\n\t"
+"movq   -32(%%rsp), %%rax\n\t"
+"movq   %%rax, 24(%%rdi)\n\t"
+: : "S" (s1), "d" (s2), "D" (t)
+: "memory", "%eax", "%xmm0", "%xmm1", "%xmm2", "%xmm3", "%xmm4", "%xmm5"
+);
+}
+
+#endif
 #endif  /* GF2X_MUL2_H_ */
