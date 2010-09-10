@@ -46,3 +46,6 @@ dist-hook:
 
 tune-lowlevel tune-toom tune-fft: all
 	cd src; $(MAKE) $@
+
+distclean-local:
+	-find already_tuned/tuned -type f -a \! -name README | xargs -r rm -f
