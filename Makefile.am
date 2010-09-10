@@ -48,4 +48,4 @@ tune-lowlevel tune-toom tune-fft: all
 	cd src; $(MAKE) $@
 
 distclean-local:
-	-find already_tuned/tuned -type f -a \! -name README | xargs -r rm -f
+	-find already_tuned/tuned -maxdepth 1 -name "gf2x*" | xargs -r rm -f
