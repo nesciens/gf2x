@@ -19,6 +19,9 @@
    Boston, MA 02110-1301, USA.
 */
 /* Tuning program for GF(2)[x] low-level multiplication. */
+/* The environment variable GF2X_TUNE_LOWLEVEL_TIME gives the time, in
+   mircroseconds, to spend benching each function. The default is 1 s
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -49,10 +52,21 @@ int main(int argc, char *argv[])
 {
     unsigned long i, *c0, *c, *a, *b;
     uint64_t st;
+    char *benchtime;
+    long btime = 1000000;
 
     char * progname = "me";
     if (argc >= 1) {
         progname = argv[0];
+    }
+    benchtime = getenv("GF2X_TUNE_LOWLEVEL_TIME");
+    if (benchtime != NULL) {
+        btime = strtol(benchtime, (char **)NULL, 10);
+        if (btime < 1000 || btime > 100000000) {
+            fprintf(stderr, "Warning: unrealistic GF2X_TUNE_LOWLEVEL_TIME,  ");
+            fprintf(stderr, "set back to default\n");
+            btime = 1000000;
+        }
     }
 
     a = (unsigned long *) malloc((N + @@SIZE@@) * sizeof(unsigned long));
@@ -95,7 +109,7 @@ int main(int argc, char *argv[])
 #endif
         }
         st += microseconds();
-        if (st >= 100000)
+        if (st >= btime)
             break;
         m *= 3;
     }
