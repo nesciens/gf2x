@@ -20,7 +20,8 @@
 */
 /* Tuning program for GF(2)[x] low-level multiplication. */
 /* The environment variable GF2X_TUNE_LOWLEVEL_TIME gives the time, in
-   mircroseconds, to spend benching each function. The default is 1 s
+   microseconds, to spend benching each function. The default is 1000000,
+   thus one second.
 */
 
 #include <stdio.h>
