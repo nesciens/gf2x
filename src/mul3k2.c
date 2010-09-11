@@ -18,7 +18,6 @@
    the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
-/* Implements 128x128 -> 256 bit product using pclmulqdq instruction. */
 
 #ifndef GF2X_MUL3_H_
 #define GF2X_MUL3_H_
@@ -38,15 +37,12 @@
 
 #include "gf2x/gf2x-config.h"
 
-#ifndef HAVE_PCLMUL_SUPPORT
-#error "This code needs pclmul support"
-#endif
-
 #ifdef  TUNING
 #undef  GF2X_STORAGE_CLASS_mul3
 #define GF2X_STORAGE_CLASS_mul3 /**/
 #endif
 
+/* uses the variant of Karatsuba with 6 multiplications */
 GF2X_STORAGE_CLASS_mul3
 void gf2x_mul3 (unsigned long *c, const unsigned long *a, const unsigned long *b)
 {
