@@ -86,7 +86,7 @@ for my $s (sort { $a <=> $b } keys %sizes) {
     mysys "rm ../$ltarget";
     if ($selected =~ /gen_/) {
         # generated file: do a copy, not a link.
-        mysys "cp -f ../../src/$selected ../$ltarget";
+        mysys "cp -f $selected ../$ltarget";
     } else {
         mysys "ln -sf ../../src/$selected ../$ltarget";
         mysys "ln -sf ../$ltarget ../$slot";
