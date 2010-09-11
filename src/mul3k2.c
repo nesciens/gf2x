@@ -23,24 +23,9 @@
 #define GF2X_MUL3_H_
 
 #include "gf2x.h"
-#include "gf2x/gf2x-impl.h"
 /* All gf2x source files for lowlevel functions must include gf2x-small.h
  * This is mandatory for the tuning mechanism. */
 #include "gf2x/gf2x-small.h"
-
-#include <stdint.h>
-#include <wmmintrin.h>
-
-#if GF2X_WORDSIZE != 64
-#error "This code is for 64-bit only"
-#endif
-
-#include "gf2x/gf2x-config.h"
-
-#ifdef  TUNING
-#undef  GF2X_STORAGE_CLASS_mul3
-#define GF2X_STORAGE_CLASS_mul3 /**/
-#endif
 
 /* uses the variant of Karatsuba with 6 multiplications */
 GF2X_STORAGE_CLASS_mul3
