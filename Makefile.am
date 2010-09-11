@@ -15,7 +15,13 @@ nobase_nodist_include_HEADERS=	\
 		gf2x/gf2x_mul1.h		\
 		gf2x/gf2x_mul2.h		\
 		gf2x/gf2x_mul3.h		\
-		gf2x/gf2x_mul4.h
+		gf2x/gf2x_mul4.h		\
+		gf2x/gf2x_mul5.h		\
+		gf2x/gf2x_mul6.h		\
+	        gf2x/gf2x_mul7.h		\
+		gf2x/gf2x_mul8.h		\
+		gf2x/gf2x_mul9.h
+
 
 libgf2x_la_LDFLAGS=-version-info @gf2x_lib_version@
 
@@ -31,7 +37,12 @@ DISTCLEANFILES=gf2x/gf2x-thresholds.h	\
 	       gf2x/gf2x_mul1.h		\
 	       gf2x/gf2x_mul2.h		\
 	       gf2x/gf2x_mul3.h		\
-	       gf2x/gf2x_mul4.h
+	       gf2x/gf2x_mul4.h		\
+	       gf2x/gf2x_mul5.h		\
+	       gf2x/gf2x_mul6.h		\
+	       gf2x/gf2x_mul7.h		\
+	       gf2x/gf2x_mul8.h		\
+	       gf2x/gf2x_mul9.h
 
 EXTRA_DIST=
 EXTRA_DIST+=config/configfsf.guess

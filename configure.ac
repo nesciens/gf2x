@@ -97,7 +97,10 @@ AC_MSG_NOTICE([      CFLAGS="$CFLAGS"])
 AC_MSG_NOTICE([      CPPFLAGS="$CPPFLAGS"])
 AC_MSG_NOTICE([      hwdir="$hwdir"])
 
-for f in gf2x-thresholds.h gf2x_mul1.h gf2x_mul2.h gf2x_mul3.h gf2x_mul4.h ; do
+for f in gf2x-thresholds.h      \
+        gf2x_mul1.h gf2x_mul2.h gf2x_mul3.h gf2x_mul4.h \
+        gf2x_mul5.h gf2x_mul6.h gf2x_mul7.h gf2x_mul8.h \
+        gf2x_mul9.h ; do
  who=tuned
  if ! test -f $srcdir/already_tuned/$who/$f ; then who=$hwdir; fi
  if ! test -f $srcdir/already_tuned/$who/$f ; then who=generic$gf2x_wordsize; fi

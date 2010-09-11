@@ -39,6 +39,11 @@
 #define GF2X_STORAGE_CLASS_mul2        static inline
 #define GF2X_STORAGE_CLASS_mul3        static
 #define GF2X_STORAGE_CLASS_mul4        static
+#define GF2X_STORAGE_CLASS_mul5        static
+#define GF2X_STORAGE_CLASS_mul6        static
+#define GF2X_STORAGE_CLASS_mul7        static
+#define GF2X_STORAGE_CLASS_mul8        static
+#define GF2X_STORAGE_CLASS_mul9        static
 
 /* First size for which KARA is used. Essentially hard-coded, since the
  * sizes up to 9 words are already karatsuba, unrolled. The unrolled
