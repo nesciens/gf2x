@@ -47,7 +47,7 @@
 #define GF2X_STORAGE_CLASS_mul2 /**/
 #endif
 
-#if 1 /* ndef __GNUC__ */
+#ifndef __GNUC__
 GF2X_STORAGE_CLASS_mul2
 void gf2x_mul2(unsigned long * t, unsigned long const * s1,
         unsigned long const * s2)
@@ -94,6 +94,11 @@ GF2X_STORAGE_CLASS_mul2
 void gf2x_mul2(unsigned long * t, unsigned long const * s1,
         unsigned long const * s2)
 {
+    typedef union {
+        __v2di s;
+        unsigned long x[2];
+    } __v2di_proxy;
+    __v2di_proxy r24, r40, r56;
    __asm__ __volatile__(
 "movdqu (%%rsi), %%xmm1\n\t"
 "movdqu (%%rdx), %%xmm0\n\t"
@@ -105,25 +110,29 @@ void gf2x_mul2(unsigned long * t, unsigned long const * s1,
 "pxor   %%xmm5, %%xmm1\n\t"
 "pclmulqdq      $17, %%xmm0, %%xmm2\n\t"
 "pxor   %%xmm4, %%xmm0\n\t"
-"movdqu %%xmm3, -24(%%rsp)\n\t"
-"movq   -24(%%rsp), %%rax\n\t"
+"movdqu %%xmm3, %0\n\t"
+"movq   %1, %%rax\n\t"
 "pclmulqdq      $0, %%xmm0, %%xmm1\n\t"
 "movdqa %%xmm3, %%xmm0\n\t"
-"movdqu %%xmm2, -40(%%rsp)\n\t"
+"movdqu %%xmm2, %3\n\t"
 "pxor   %%xmm2, %%xmm0\n\t"
 "movq   %%rax, (%%rdi)\n\t"
 "pxor   %%xmm1, %%xmm0\n\t"
-"movdqu %%xmm0, -56(%%rsp)\n\t"
-"movq   -56(%%rsp), %%rax\n\t"
-"xorq   -16(%%rsp), %%rax\n\t"
+"movdqu %%xmm0, %6\n\t"
+"movq   %7, %%rax\n\t"
+"xorq   %2, %%rax\n\t"
 "movq   %%rax, 8(%%rdi)\n\t"
-"movq   -48(%%rsp), %%rax\n\t"
-"xorq   -40(%%rsp), %%rax\n\t"
+"movq   %8, %%rax\n\t"
+"xorq   %4, %%rax\n\t"
 "movq   %%rax, 16(%%rdi)\n\t"
-"movq   -32(%%rsp), %%rax\n\t"
+"movq   %5, %%rax\n\t"
 "movq   %%rax, 24(%%rdi)\n\t"
-: : "S" (s1), "d" (s2), "D" (t)
-: "memory", "%eax", "%xmm0", "%xmm1", "%xmm2", "%xmm3", "%xmm4", "%xmm5"
+: :
+    "m" (r24.s), "m" (r24.x[0]), "m" (r24.x[1]),
+    "m" (r40.s), "m" (r40.x[0]), "m" (r40.x[1]),
+    "m" (r56.s), "m" (r56.x[0]), "m" (r56.x[1]),
+    "S" (s1), "d" (s2), "D" (t)
+: "memory", "%rax", "%xmm0", "%xmm1", "%xmm2", "%xmm3", "%xmm4", "%xmm5"
 );
 }
 
