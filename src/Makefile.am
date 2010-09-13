@@ -28,10 +28,10 @@ gen_bb_mul_code_SOURCES=gen_bb_mul_code.c
 # (in place)
 #* test_sizes 1 2 3 4 5 6 7 8 9
 #* if GF2X_32BIT_SOURCES
-#*   test gen_mul1_w32k{1..8}
+#*   test gen_mul1_w32k{2..6}
 #* endif
 #* if GF2X_64BIT_SOURCES
-#*   test gen_mul1_w64k{1..8}
+#*   test gen_mul1_w64k{2..6}
 #* endif
 #*   test mul2k
 #*   test mul3k
@@ -41,6 +41,7 @@ gen_bb_mul_code_SOURCES=gen_bb_mul_code.c
 #*   test mul5k_b
 #*   test mul6k_a
 #*   test mul6k_b
+#*   test mul6k_c
 #*   test mul7k
 #*   test mul8k
 #*   test mul9k
@@ -131,15 +132,6 @@ nodist_libtuneup_s9_la_SOURCES=tuneup_9.c tuning_undefs_9.h
 libtuneup_s9_la_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir)
 
 if GF2X_32BIT_SOURCES
-LOWLEVEL+=tune_gen_mul1_w32k1$(EXEEXT)
-tune_gen_mul1_w32k1_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=1
-nodist_tune_gen_mul1_w32k1_SOURCES=gen_mul1_w32k1.c tuning_undefs_1.h
-gen_mul1_w32k1.$(OBJEXT): tuning_undefs_1.h
-tune_gen_mul1_w32k1_LDADD=libtuneup-s1.la libtiming.la ../libgf2x.la
-gen_mul1_w32k1.c: gen_bb_mul_code$(EXEEXT) ; ./gen_bb_mul_code 32 1 > $@
-BUILT_SOURCES+=gen_mul1_w32k1.c
-
-
 LOWLEVEL+=tune_gen_mul1_w32k2$(EXEEXT)
 tune_gen_mul1_w32k2_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=1
 nodist_tune_gen_mul1_w32k2_SOURCES=gen_mul1_w32k2.c tuning_undefs_1.h
@@ -185,35 +177,8 @@ gen_mul1_w32k6.c: gen_bb_mul_code$(EXEEXT) ; ./gen_bb_mul_code 32 6 > $@
 BUILT_SOURCES+=gen_mul1_w32k6.c
 
 
-LOWLEVEL+=tune_gen_mul1_w32k7$(EXEEXT)
-tune_gen_mul1_w32k7_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=1
-nodist_tune_gen_mul1_w32k7_SOURCES=gen_mul1_w32k7.c tuning_undefs_1.h
-gen_mul1_w32k7.$(OBJEXT): tuning_undefs_1.h
-tune_gen_mul1_w32k7_LDADD=libtuneup-s1.la libtiming.la ../libgf2x.la
-gen_mul1_w32k7.c: gen_bb_mul_code$(EXEEXT) ; ./gen_bb_mul_code 32 7 > $@
-BUILT_SOURCES+=gen_mul1_w32k7.c
-
-
-LOWLEVEL+=tune_gen_mul1_w32k8$(EXEEXT)
-tune_gen_mul1_w32k8_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=1
-nodist_tune_gen_mul1_w32k8_SOURCES=gen_mul1_w32k8.c tuning_undefs_1.h
-gen_mul1_w32k8.$(OBJEXT): tuning_undefs_1.h
-tune_gen_mul1_w32k8_LDADD=libtuneup-s1.la libtiming.la ../libgf2x.la
-gen_mul1_w32k8.c: gen_bb_mul_code$(EXEEXT) ; ./gen_bb_mul_code 32 8 > $@
-BUILT_SOURCES+=gen_mul1_w32k8.c
-
-
 endif
 if GF2X_64BIT_SOURCES
-LOWLEVEL+=tune_gen_mul1_w64k1$(EXEEXT)
-tune_gen_mul1_w64k1_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=1
-nodist_tune_gen_mul1_w64k1_SOURCES=gen_mul1_w64k1.c tuning_undefs_1.h
-gen_mul1_w64k1.$(OBJEXT): tuning_undefs_1.h
-tune_gen_mul1_w64k1_LDADD=libtuneup-s1.la libtiming.la ../libgf2x.la
-gen_mul1_w64k1.c: gen_bb_mul_code$(EXEEXT) ; ./gen_bb_mul_code 64 1 > $@
-BUILT_SOURCES+=gen_mul1_w64k1.c
-
-
 LOWLEVEL+=tune_gen_mul1_w64k2$(EXEEXT)
 tune_gen_mul1_w64k2_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=1
 nodist_tune_gen_mul1_w64k2_SOURCES=gen_mul1_w64k2.c tuning_undefs_1.h
@@ -257,24 +222,6 @@ gen_mul1_w64k6.$(OBJEXT): tuning_undefs_1.h
 tune_gen_mul1_w64k6_LDADD=libtuneup-s1.la libtiming.la ../libgf2x.la
 gen_mul1_w64k6.c: gen_bb_mul_code$(EXEEXT) ; ./gen_bb_mul_code 64 6 > $@
 BUILT_SOURCES+=gen_mul1_w64k6.c
-
-
-LOWLEVEL+=tune_gen_mul1_w64k7$(EXEEXT)
-tune_gen_mul1_w64k7_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=1
-nodist_tune_gen_mul1_w64k7_SOURCES=gen_mul1_w64k7.c tuning_undefs_1.h
-gen_mul1_w64k7.$(OBJEXT): tuning_undefs_1.h
-tune_gen_mul1_w64k7_LDADD=libtuneup-s1.la libtiming.la ../libgf2x.la
-gen_mul1_w64k7.c: gen_bb_mul_code$(EXEEXT) ; ./gen_bb_mul_code 64 7 > $@
-BUILT_SOURCES+=gen_mul1_w64k7.c
-
-
-LOWLEVEL+=tune_gen_mul1_w64k8$(EXEEXT)
-tune_gen_mul1_w64k8_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=1
-nodist_tune_gen_mul1_w64k8_SOURCES=gen_mul1_w64k8.c tuning_undefs_1.h
-gen_mul1_w64k8.$(OBJEXT): tuning_undefs_1.h
-tune_gen_mul1_w64k8_LDADD=libtuneup-s1.la libtiming.la ../libgf2x.la
-gen_mul1_w64k8.c: gen_bb_mul_code$(EXEEXT) ; ./gen_bb_mul_code 64 8 > $@
-BUILT_SOURCES+=gen_mul1_w64k8.c
 
 
 endif
@@ -332,6 +279,13 @@ tune_mul6k_b_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=6
 tune_mul6k_b_SOURCES=mul6k_b.c tuning_undefs_6.h
 tune_mul6k_b_LDADD=libtuneup-s6.la libtiming.la ../libgf2x.la
 mul6k_b.$(OBJEXT): tuning_undefs_6.h
+
+
+LOWLEVEL+=tune_mul6k_c$(EXEEXT)
+tune_mul6k_c_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=6
+tune_mul6k_c_SOURCES=mul6k_c.c tuning_undefs_6.h
+tune_mul6k_c_LDADD=libtuneup-s6.la libtiming.la ../libgf2x.la
+mul6k_c.$(OBJEXT): tuning_undefs_6.h
 
 
 LOWLEVEL+=tune_mul7k$(EXEEXT)
