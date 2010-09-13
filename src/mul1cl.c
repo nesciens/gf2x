@@ -51,19 +51,9 @@
 GF2X_STORAGE_CLASS_mul1 void
 gf2x_mul1 (unsigned long *c, unsigned long a, unsigned long b)
 {
-    typedef union {
-        __v2di s;
-        unsigned long x[2];
-    } __v2di_proxy;
-    
-    __v2di aa, bb;
-    __v2di_proxy cc;
-
-    aa = (__v2di) { a, 0 };
-    bb = (__v2di) { b, 0 };
-    cc.s = _mm_clmulepi64_si128(aa, bb, 0);
-    c[0] = cc.x[0];
-    c[1] = cc.x[1];
+    __v2di aa = (__v2di) { a, 0 };
+    __v2di bb = (__v2di) { b, 0 };
+    _mm_storeu_si128((__v2di*)c, _mm_clmulepi64_si128(aa, bb, 0));
 }
 
 GF2X_STORAGE_CLASS_mul_1_n unsigned long
