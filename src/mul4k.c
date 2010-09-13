@@ -30,20 +30,25 @@
 GF2X_STORAGE_CLASS_mul4
 void gf2x_mul4 (unsigned long *c, const unsigned long *a, const unsigned long *b)
 {
-  unsigned long aa[2], bb[2], ab[4], c24, c35;
-  gf2x_mul2 (c, a, b);
-  gf2x_mul2 (c + 4, a + 2, b + 2);
+  unsigned long aa[2], bb[2], ab[4];
+  unsigned long lo[4], hi[4];
+  gf2x_mul2 (lo, a, b);
+  gf2x_mul2 (hi, a + 2, b + 2);
   aa[0] = a[0] ^ a[2];
   aa[1] = a[1] ^ a[3];
   bb[0] = b[0] ^ b[2];
   bb[1] = b[1] ^ b[3];
-  c24 = c[2] ^ c[4];
-  c35 = c[3] ^ c[5];
+  unsigned long c24 = lo[2] ^ hi[0];
+  unsigned long c35 = lo[3] ^ hi[1];
   gf2x_mul2 (ab, aa, bb);
-  c[2] = ab[0] ^ c[0] ^ c24;
-  c[3] = ab[1] ^ c[1] ^ c35;
-  c[4] = ab[2] ^ c[6] ^ c24;
-  c[5] = ab[3] ^ c[7] ^ c35;
+  c[0] = lo[0];
+  c[1] = lo[1];
+  c[2] = ab[0] ^ lo[0] ^ c24;
+  c[3] = ab[1] ^ lo[1] ^ c35;
+  c[4] = ab[2] ^ hi[2] ^ c24;
+  c[5] = ab[3] ^ hi[3] ^ c35;
+  c[6] = hi[2];
+  c[7] = hi[3];
 }
 
 #endif  /* GF2X_MUL4_H_ */
