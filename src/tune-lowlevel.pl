@@ -37,12 +37,13 @@ my @summary = ();
 
 for my $s (sort { $a <=> $b } keys %sizes) {
     print STDERR "Benching for $s words\n";
-    if (scalar @{$sizes{$s}} == 1) {
-        (my $x = $sizes{$s}->[0]) =~ s/^tune_//;
-        print STDERR "Only one possibility ($x) -- check skipped\n";
-        push @summary, "mul$s -> $x.c (only choice)\n";
-        next;
-    }
+    # Now we check everything, always.
+#    if (scalar @{$sizes{$s}} == 1 && !defined($ENV{'BENCH'})) {
+#        (my $x = $sizes{$s}->[0]) =~ s/^tune_//;
+#        print STDERR "Only one possibility ($x) -- check skipped\n";
+#        push @summary, "mul$s -> $x.c (only choice)\n";
+#        next;
+#    }
     my @results;
     for my $p (@{$sizes{$s}}) {
         mysys "make $p";
