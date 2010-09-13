@@ -26,10 +26,6 @@
  * This is mandatory for the tuning mechanism. */
 #include "gf2x/gf2x-small.h"
 
-#ifdef  TUNING
-#include "tuning_undefs_2.h"
-#endif
-
 GF2X_STORAGE_CLASS_mul2 void gf2x_mul2(unsigned long *c, const unsigned long *a, const unsigned long *b)
 {
    unsigned long t;

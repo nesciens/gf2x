@@ -66,6 +66,7 @@ gen_bb_mul_code_SOURCES=gen_bb_mul_code.c
 #*   test mul2cl
 # mul2cl2 uses psrldq, which is slightly different.
 #*   test mul2cl2
+#*   test mul6clk2
 #* endif
 # -- begin generated code --
 tuning_undefs_1.h: tuning_undefs_pre.h ; sed -e s/@@SIZE@@/1/g < $< > $@
@@ -386,6 +387,20 @@ tune_mul2cl_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=2
 tune_mul2cl_SOURCES=mul2cl.c tuning_undefs_2.h
 tune_mul2cl_LDADD=libtuneup-s2.la libtiming.la ../libgf2x.la
 mul2cl.$(OBJEXT): tuning_undefs_2.h
+
+
+LOWLEVEL+=tune_mul2cl2$(EXEEXT)
+tune_mul2cl2_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=2
+tune_mul2cl2_SOURCES=mul2cl2.c tuning_undefs_2.h
+tune_mul2cl2_LDADD=libtuneup-s2.la libtiming.la ../libgf2x.la
+mul2cl2.$(OBJEXT): tuning_undefs_2.h
+
+
+LOWLEVEL+=tune_mul6clk2$(EXEEXT)
+tune_mul6clk2_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=6
+tune_mul6clk2_SOURCES=mul6clk2.c tuning_undefs_6.h
+tune_mul6clk2_LDADD=libtuneup-s6.la libtiming.la ../libgf2x.la
+mul6clk2.$(OBJEXT): tuning_undefs_6.h
 
 
 endif

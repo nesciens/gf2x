@@ -43,11 +43,6 @@
 #error "This code needs pclmul support"
 #endif
 
-#ifdef  TUNING
-#include "tuning_undefs_1.h"
-#endif
-
-
 GF2X_STORAGE_CLASS_mul1 void
 gf2x_mul1 (unsigned long *c, unsigned long a, unsigned long b)
 {

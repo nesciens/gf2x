@@ -42,11 +42,6 @@
 #error "This code needs pclmul support"
 #endif
 
-#ifdef  TUNING
-#undef  GF2X_STORAGE_CLASS_mul2
-#define GF2X_STORAGE_CLASS_mul2 /**/
-#endif
-
 GF2X_STORAGE_CLASS_mul2
 void gf2x_mul2(unsigned long * t, unsigned long const * s1,
         unsigned long const * s2)
