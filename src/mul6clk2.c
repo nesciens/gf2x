@@ -40,10 +40,13 @@
 #error "This code needs pclmul support"
 #endif
 
+/* TODO: if somebody comes up with a neat way to improve the interface so
+ * as to remove the false dependency on pclmul, that would be nice.
+ */
 /* This specialized version avoids loads, and relies on the destination
  * being aligned, so that aligned stores are possible */
 static inline
-void reserved_local_gf2x_mul2(__v2di * t, __v2di ss1, __v2di ss2)
+void reserved_mul6clk2_gf2x_mul2(__v2di * t, __v2di ss1, __v2di ss2)
 {
     typedef union {
         __v2di s;
@@ -81,12 +84,12 @@ void gf2x_mul6 (unsigned long *c, const unsigned long *a, const unsigned long *b
     bb[0] = b1^b2;
     bb[1] = b0^b2;
     bb[2] = b0^b1;
-    reserved_local_gf2x_mul2(p0, a0, b0);
-    reserved_local_gf2x_mul2(p1, a1, b1);
-    reserved_local_gf2x_mul2(p2, a2, b2);
-    reserved_local_gf2x_mul2(pp0, aa[0], bb[0]);
-    reserved_local_gf2x_mul2(pp1, aa[1], bb[1]);
-    reserved_local_gf2x_mul2(pp2, aa[2], bb[2]);
+    reserved_mul6clk2_gf2x_mul2(p0, a0, b0);
+    reserved_mul6clk2_gf2x_mul2(p1, a1, b1);
+    reserved_mul6clk2_gf2x_mul2(p2, a2, b2);
+    reserved_mul6clk2_gf2x_mul2(pp0, aa[0], bb[0]);
+    reserved_mul6clk2_gf2x_mul2(pp1, aa[1], bb[1]);
+    reserved_mul6clk2_gf2x_mul2(pp2, aa[2], bb[2]);
     _mm_storeu_si128((__v2di*)(c + 2*0), p0[0]);
     _mm_storeu_si128((__v2di*)(c + 2*1), p0[0]^p1[0]^pp2[0]       ^ p0[1]);
     _mm_storeu_si128((__v2di*)(c + 2*2), p0[0]^p1[0]^p2[0]^pp1[0] ^ p0[1]^p1[1]^pp2[1]);
