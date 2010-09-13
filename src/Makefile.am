@@ -64,6 +64,8 @@ gen_bb_mul_code_SOURCES=gen_bb_mul_code.c
 #* if GF2X_PCLMUL_AVAILABLE
 #*   test mul1cl
 #*   test mul2cl
+# mul2cl2 uses psrldq, which is slightly different.
+#*   test mul2cl2
 #* endif
 # -- begin generated code --
 tuning_undefs_1.h: tuning_undefs_pre.h ; sed -e s/@@SIZE@@/1/g < $< > $@
