@@ -47,7 +47,6 @@
 #define GF2X_STORAGE_CLASS_mul2 /**/
 #endif
 
-#ifndef __GNUC__
 GF2X_STORAGE_CLASS_mul2
 void gf2x_mul2(unsigned long * t, unsigned long const * s1,
         unsigned long const * s2)
@@ -59,8 +58,9 @@ void gf2x_mul2(unsigned long * t, unsigned long const * s1,
 
     __v2di ss1, ss2, s1s, s2s;
     __v2di_proxy t00, t11, tk;
-    ss1 = (__v2di) { s1[0], s1[1] };
-    ss2 = (__v2di) { s2[0], s2[1] };
+    ss1 = _mm_loadu_si128((__v2di *)s1);
+    ss2 = _mm_loadu_si128((__v2di *)s2);
+
 
     t00.s = _mm_clmulepi64_si128(ss1, ss2, 0);
     t11.s = _mm_clmulepi64_si128(ss1, ss2, 17);
@@ -80,61 +80,4 @@ void gf2x_mul2(unsigned long * t, unsigned long const * s1,
     t[2] = t11.x[0] ^ tk.x[1];
     t[3] = t11.x[1];
 }
-#else
-
-/* GCC (4.4.3) seems reluctant to use movdqu which was slow. 
- * However, this code is for processors having pclmulqdq, ie pretty
- * recent ones (in 2010), and for those using movdqu is fast enough and
- * gives an overall speedup.
- *
- * Hopefully this piece of code will become obsolete at some point, when
- * GCC learns how to optimize on the target cpu.
- */
-GF2X_STORAGE_CLASS_mul2
-void gf2x_mul2(unsigned long * t, unsigned long const * s1,
-        unsigned long const * s2)
-{
-    typedef union {
-        __v2di s;
-        unsigned long x[2];
-    } __v2di_proxy;
-    __v2di_proxy r24, r40, r56;
-   __asm__ __volatile__(
-"movdqu (%%rsi), %%xmm1\n\t"
-"movdqu (%%rdx), %%xmm0\n\t"
-"pshufd $78, %%xmm1, %%xmm5\n\t"
-"movdqa %%xmm1, %%xmm3\n\t"
-"pshufd $78, %%xmm0, %%xmm4\n\t"
-"movdqa %%xmm1, %%xmm2\n\t"
-"pclmulqdq      $0, %%xmm0, %%xmm3\n\t"
-"pxor   %%xmm5, %%xmm1\n\t"
-"pclmulqdq      $17, %%xmm0, %%xmm2\n\t"
-"pxor   %%xmm4, %%xmm0\n\t"
-"movdqu %%xmm3, %0\n\t"
-"movq   %1, %%rax\n\t"
-"pclmulqdq      $0, %%xmm0, %%xmm1\n\t"
-"movdqa %%xmm3, %%xmm0\n\t"
-"movdqu %%xmm2, %3\n\t"
-"pxor   %%xmm2, %%xmm0\n\t"
-"movq   %%rax, (%%rdi)\n\t"
-"pxor   %%xmm1, %%xmm0\n\t"
-"movdqu %%xmm0, %6\n\t"
-"movq   %7, %%rax\n\t"
-"xorq   %2, %%rax\n\t"
-"movq   %%rax, 8(%%rdi)\n\t"
-"movq   %8, %%rax\n\t"
-"xorq   %4, %%rax\n\t"
-"movq   %%rax, 16(%%rdi)\n\t"
-"movq   %5, %%rax\n\t"
-"movq   %%rax, 24(%%rdi)\n\t"
-: :
-    "m" (r24.s), "m" (r24.x[0]), "m" (r24.x[1]),
-    "m" (r40.s), "m" (r40.x[0]), "m" (r40.x[1]),
-    "m" (r56.s), "m" (r56.x[0]), "m" (r56.x[1]),
-    "S" (s1), "d" (s2), "D" (t)
-: "memory", "%rax", "%xmm0", "%xmm1", "%xmm2", "%xmm3", "%xmm4", "%xmm5"
-);
-}
-
-#endif
 #endif  /* GF2X_MUL2_H_ */
