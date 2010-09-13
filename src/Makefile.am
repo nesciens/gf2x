@@ -69,6 +69,7 @@ gen_bb_mul_code_SOURCES=gen_bb_mul_code.c
 #*   test mul6k_b
 #*   test mul6k_c
 #*   test mul7k
+#*   test mul7cl
 #*   test mul8k
 #*   test mul9k
 #*   test mul9k2
@@ -347,6 +348,13 @@ tune_mul7k_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=7
 tune_mul7k_SOURCES=mul7k.c tuning_undefs_7.h
 tune_mul7k_LDADD=libtuneup-s7.la libtiming.la ../libgf2x.la
 mul7k.$(OBJEXT): tuning_undefs_7.h
+
+
+LOWLEVEL+=tune_mul7cl$(EXEEXT)
+tune_mul7cl_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=7
+tune_mul7cl_SOURCES=mul7cl.c tuning_undefs_7.h
+tune_mul7cl_LDADD=libtuneup-s7.la libtiming.la ../libgf2x.la
+mul7cl.$(OBJEXT): tuning_undefs_7.h
 
 
 LOWLEVEL+=tune_mul8k$(EXEEXT)
