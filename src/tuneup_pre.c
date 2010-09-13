@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
     unsigned long i, *c0, *c, *a, *b;
     uint64_t st;
     char *benchtime;
-    long btime = 1000000;
+    uint64_t btime = 1000000;
 
     char * progname = "me";
     if (argc >= 1) {
