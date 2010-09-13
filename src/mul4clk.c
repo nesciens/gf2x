@@ -42,8 +42,8 @@
 /* TODO: if somebody comes up with a neat way to improve the interface so
  * as to remove the false dependency on pclmul, that would be nice.
  */
-static inline __v2di
-reserved_mul4clk_gf2x_mul2(__v2di * t, __v2di ss1, __v2di ss2)
+static inline void
+GF2X_FUNC(mul4clk_mul2)(__v2di * t, __v2di ss1, __v2di ss2)
 {
     typedef union {
         __v2di s;
@@ -72,10 +72,10 @@ void gf2x_mul4 (unsigned long *c, const unsigned long *a, const unsigned long *b
   __v2di a2 = _mm_loadu_si128((__v2di*)(a+2));
   __v2di b0 = _mm_loadu_si128((__v2di*)b);
   __v2di b2 = _mm_loadu_si128((__v2di*)(b+2));
-  reserved_mul4clk_gf2x_mul2(lo, a0, b0);
-  reserved_mul4clk_gf2x_mul2(hi, a2, b2);
+  GF2X_FUNC(mul4clk_mul2)(lo, a0, b0);
+  GF2X_FUNC(mul4clk_mul2)(hi, a2, b2);
   __v2di middle = lo[1] ^ hi[0];
-  reserved_mul4clk_gf2x_mul2(ab, a0 ^ a2, b0 ^ b2);
+  GF2X_FUNC(mul4clk_mul2)(ab, a0 ^ a2, b0 ^ b2);
   _mm_storeu_si128((__v2di*)(c + 0), lo[0]);
   _mm_storeu_si128((__v2di*)(c + 2), ab[0] ^ lo[0] ^ middle);
   _mm_storeu_si128((__v2di*)(c + 4), ab[1] ^ hi[1] ^ middle);

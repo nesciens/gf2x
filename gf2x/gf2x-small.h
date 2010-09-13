@@ -82,6 +82,10 @@ gf2x_mul9(unsigned long *c, const unsigned long *a, const unsigned long *b)
 }
 #endif
 
+#ifndef GF2X_FUNC
+#define GF2X_FUNC(x)       reserved_ ## x
+#endif
+
 /* This file provides all the small-sized gf2x_mul1..gf2x_mul9 routines. It is
  * meant to be possibly included directly by applications. */
 

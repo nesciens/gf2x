@@ -54,6 +54,8 @@ extern "C" {
 
 
 #define gf2x_mul@@SIZE@@               tuning_gf2x_mul@@SIZE@@
+#undef  GF2X_FUNC
+#define GF2X_FUNC(x)    tuning_ ## x
 #undef  GF2X_STORAGE_CLASS_mul@@SIZE@@
 #define GF2X_STORAGE_CLASS_mul@@SIZE@@ /**/
 
