@@ -45,6 +45,7 @@ gen_bb_mul_code_SOURCES=gen_bb_mul_code.c
 #*   test mul7k
 #*   test mul8k
 #*   test mul9k
+#*   test mul9k2
 #* if GF2X_SSE2_AVAILABLE
 #*   if GF2X_64BIT_SOURCES
 #*     test mul2t
@@ -307,6 +308,13 @@ tune_mul9k_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=9
 tune_mul9k_SOURCES=mul9k.c tuning_undefs_9.h
 tune_mul9k_LDADD=libtuneup-s9.la libtiming.la ../libgf2x.la
 mul9k.$(OBJEXT): tuning_undefs_9.h
+
+
+LOWLEVEL+=tune_mul9k2$(EXEEXT)
+tune_mul9k2_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=9
+tune_mul9k2_SOURCES=mul9k2.c tuning_undefs_9.h
+tune_mul9k2_LDADD=libtuneup-s9.la libtiming.la ../libgf2x.la
+mul9k2.$(OBJEXT): tuning_undefs_9.h
 
 
 if GF2X_SSE2_AVAILABLE
