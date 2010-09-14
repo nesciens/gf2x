@@ -59,7 +59,6 @@ gen_bb_mul_code_SOURCES=gen_bb_mul_code.c
 #*   test mul2k
 #*   test mul3k
 #*   test mul3k2
-#*   test mul3cl
 #*   test mul4k
 #*   test mul5k_a
 #*   test mul5k_b
@@ -69,7 +68,6 @@ gen_bb_mul_code_SOURCES=gen_bb_mul_code.c
 #*   test mul6k_b
 #*   test mul6k_c
 #*   test mul7k
-#*   test mul7cl
 #*   test mul8k
 #*   test mul9k
 #*   test mul9k2
@@ -88,9 +86,11 @@ gen_bb_mul_code_SOURCES=gen_bb_mul_code.c
 #*   test mul2cl
 # mul2cl2 uses psrldq, which is slightly different.
 #*   test mul2cl2
+#*   test mul3cl
 #*   test mul4clk
 #*   test mul5clk_c
 #*   test mul6clk2
+#*   test mul7cl
 #* endif
 # -- begin generated code --
 tuning_undefs_1.h: tuning_undefs_pre.h ; sed -e s/@@SIZE@@/1/g < $< > $@
@@ -280,13 +280,6 @@ tune_mul3k2_LDADD=libtuneup-s3.la libtiming.la ../libgf2x.la
 mul3k2.$(OBJEXT): tuning_undefs_3.h
 
 
-LOWLEVEL+=tune_mul3cl$(EXEEXT)
-tune_mul3cl_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=3
-tune_mul3cl_SOURCES=mul3cl.c tuning_undefs_3.h
-tune_mul3cl_LDADD=libtuneup-s3.la libtiming.la ../libgf2x.la
-mul3cl.$(OBJEXT): tuning_undefs_3.h
-
-
 LOWLEVEL+=tune_mul4k$(EXEEXT)
 tune_mul4k_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=4
 tune_mul4k_SOURCES=mul4k.c tuning_undefs_4.h
@@ -348,13 +341,6 @@ tune_mul7k_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=7
 tune_mul7k_SOURCES=mul7k.c tuning_undefs_7.h
 tune_mul7k_LDADD=libtuneup-s7.la libtiming.la ../libgf2x.la
 mul7k.$(OBJEXT): tuning_undefs_7.h
-
-
-LOWLEVEL+=tune_mul7cl$(EXEEXT)
-tune_mul7cl_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=7
-tune_mul7cl_SOURCES=mul7cl.c tuning_undefs_7.h
-tune_mul7cl_LDADD=libtuneup-s7.la libtiming.la ../libgf2x.la
-mul7cl.$(OBJEXT): tuning_undefs_7.h
 
 
 LOWLEVEL+=tune_mul8k$(EXEEXT)
@@ -434,6 +420,13 @@ tune_mul2cl2_LDADD=libtuneup-s2.la libtiming.la ../libgf2x.la
 mul2cl2.$(OBJEXT): tuning_undefs_2.h
 
 
+LOWLEVEL+=tune_mul3cl$(EXEEXT)
+tune_mul3cl_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=3
+tune_mul3cl_SOURCES=mul3cl.c tuning_undefs_3.h
+tune_mul3cl_LDADD=libtuneup-s3.la libtiming.la ../libgf2x.la
+mul3cl.$(OBJEXT): tuning_undefs_3.h
+
+
 LOWLEVEL+=tune_mul4clk$(EXEEXT)
 tune_mul4clk_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=4
 tune_mul4clk_SOURCES=mul4clk.c tuning_undefs_4.h
@@ -453,6 +446,13 @@ tune_mul6clk2_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=6
 tune_mul6clk2_SOURCES=mul6clk2.c tuning_undefs_6.h
 tune_mul6clk2_LDADD=libtuneup-s6.la libtiming.la ../libgf2x.la
 mul6clk2.$(OBJEXT): tuning_undefs_6.h
+
+
+LOWLEVEL+=tune_mul7cl$(EXEEXT)
+tune_mul7cl_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=7
+tune_mul7cl_SOURCES=mul7cl.c tuning_undefs_7.h
+tune_mul7cl_LDADD=libtuneup-s7.la libtiming.la ../libgf2x.la
+mul7cl.$(OBJEXT): tuning_undefs_7.h
 
 
 endif
