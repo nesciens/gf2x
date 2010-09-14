@@ -50,7 +50,7 @@ check_gf2x_mul_1_n (long sb)
   /* using gf2x_addmul_1_n */
   for (i = 0; i < sb + 1; i++)
     refcp[i] = (unsigned long) 0;
-  cp[sb] += gf2x_addmul_1_n (refcp, refcp, bp, sb, a);
+  cp[sb] ^= gf2x_addmul_1_n (refcp, refcp, bp, sb, a);
 
   for (i = 0; i < sb + 1; i++)
     if (cp[i] != refcp[i])
