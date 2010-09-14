@@ -110,8 +110,8 @@ for my $s (sort { $a <=> $b } keys %sizes) {
         mysys "cp -f $selected ../$ltarget";
     } else {
         mysys "ln -sf ../../src/$selected ../$ltarget";
-        mysys "ln -sf ../$ltarget ../$slot";
     }
+    mysys "ln -sf ../$ltarget ../$slot";
 
     print STDERR "Library source has changed -- rebuilding\n";
     mysys "cd .. ; $make";
