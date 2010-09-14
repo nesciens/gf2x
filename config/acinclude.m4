@@ -152,7 +152,7 @@ AC_DEFUN([CHECK_PCLMUL_SUPPORT],[
  ac_save_CFLAGS=$CFLAGS
  AC_CACHE_CHECK([whether $CC can compile pclmulqdq and if it is supported by the hardware], [gf2x_cv_cc_supports_pclmul],[
   gf2x_cv_cc_supports_pclmul=no
-  if test "x${enable_pclmul}" != xyes ; then
+  if test "x${enable_pclmul}" = xno ; then
    echo $ECHO_N " disabled, "
   else
    AC_RUN_IFELSE([PCLMUL_EXAMPLE()],[
