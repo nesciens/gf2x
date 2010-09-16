@@ -95,6 +95,7 @@ gen_bb_mul_code_SOURCES=gen_bb_mul_code.c
 #*   test mul7cl
 #*   test mul7k3
 #*   test mul9k3
+#*   test mul9clk2
 #* endif
 # -- begin generated code --
 tuning_undefs_1.h: tuning_undefs_pre.h ; sed -e s/@@SIZE@@/1/g < $< > $@
@@ -485,6 +486,13 @@ tune_mul9k3_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=9
 tune_mul9k3_SOURCES=mul9k3.c tuning_undefs_9.h
 tune_mul9k3_LDADD=libtuneup-s9.la libtiming.la ../libgf2x.la
 mul9k3.$(OBJEXT): tuning_undefs_9.h
+
+
+LOWLEVEL+=tune_mul9clk2$(EXEEXT)
+tune_mul9clk2_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=9
+tune_mul9clk2_SOURCES=mul9clk2.c tuning_undefs_9.h
+tune_mul9clk2_LDADD=libtuneup-s9.la libtiming.la ../libgf2x.la
+mul9clk2.$(OBJEXT): tuning_undefs_9.h
 
 
 endif
