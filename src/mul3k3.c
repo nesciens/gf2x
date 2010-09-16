@@ -39,77 +39,15 @@
 #error "This code needs pclmul support"
 #endif
 
-/* {t, 4} <- {s1, 2} * {s2, 2} and {c, 2} <- {s1+1, 1} * {s2+1, 1} */
-GF2X_STORAGE_CLASS_mul2 void
-gf2x_mul2c (unsigned long *t, unsigned long const *s1, unsigned long const *s2,
-            unsigned long *c)
-{
-    typedef union {
-        __v2di s;
-        unsigned long x[2];
-    } __v2di_proxy;
+#undef GF2X_MUL2_H_
+#define CARRY
+#include "mul2cl.c"
+#undef CARRY
 
-    __v2di ss1, ss2, s1s, s2s;
-    __v2di_proxy t00, t11, tk;
-
-    ss1 = _mm_loadu_si128((__v2di *)s1);
-    ss2 = _mm_loadu_si128((__v2di *)s2);
-
-    t00.s = _mm_clmulepi64_si128(ss1, ss2, 0);
-    t11.s = _mm_clmulepi64_si128(ss1, ss2, 17);
-    
-    s1s = _mm_shuffle_epi32(ss1, 78);
-    ss1 ^= s1s;
-    s2s = _mm_shuffle_epi32(ss2, 78);
-    ss2 ^= s2s;
-    
-    tk.s = _mm_clmulepi64_si128(ss1, ss2, 0);
-
-    tk.s ^= t00.s ^ t11.s;
-
-    /* store result */
-    t[0] = t00.x[0];
-    t[1] = t00.x[1] ^ tk.x[0];
-    t[2] = t11.x[0] ^ tk.x[1];
-    t[3] = t11.x[1];
-    c[0] = t11.x[0];
-    c[1] = t11.x[1];
-}
-
-/* {t, 4} <- {s1, 2} * {s2, 2}, knowing {c, 2} = {s1+1, 1} * {s2+1, 1} */
-GF2X_STORAGE_CLASS_mul2 void
-gf2x_mul2b (unsigned long *t, unsigned long const *s1, unsigned long const *s2,
-            unsigned long const *c)
-{
-    typedef union {
-        __v2di s;
-        unsigned long x[2];
-    } __v2di_proxy;
-
-    __v2di ss1, ss2, s1s, s2s;
-    __v2di_proxy t00, /* t11, */ tk;
-
-    ss1 = _mm_loadu_si128((__v2di *)s1);
-    ss2 = _mm_loadu_si128((__v2di *)s2);
-
-    t00.s = _mm_clmulepi64_si128(ss1, ss2, 0);
-    /* t11.s = _mm_clmulepi64_si128(ss1, ss2, 17); */
-    
-    s1s = _mm_shuffle_epi32(ss1, 78);
-    ss1 ^= s1s;
-    s2s = _mm_shuffle_epi32(ss2, 78);
-    ss2 ^= s2s;
-    
-    tk.s = _mm_clmulepi64_si128(ss1, ss2, 0);
-
-    /* tk.s ^= t00.s ^ t11.s; */
-
-    /* store result */
-    t[0] = t00.x[0];
-    t[1] = t00.x[1] ^ tk.x[0] ^ t00.x[0] ^ c[0];
-    t[2] = c[0] ^ tk.x[1] ^ t00.x[1] ^ c[1];
-    t[3] = c[1];
-}
+#undef GF2X_MUL2_H_
+#define BORROW
+#include "mul2cl.c"
+#undef BORROW
 
 /* uses Montgomery's variant of Karatsuba for n=2k+1 odd,
    with M(2k+1) = M(k) + 2M(k+1) - 1, see

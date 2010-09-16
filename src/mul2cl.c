@@ -43,8 +43,20 @@
 #endif
 
 GF2X_STORAGE_CLASS_mul2
+#ifdef CARRY
+/* {t, 4} <- {s1, 2} * {s2, 2}, and {c, 2} <- {s1+1, 1} * {s2+1, 1} */
+gf2x_mul2c (unsigned long *t, unsigned long const *s1, unsigned long const *s2,
+            unsigned long *c)
+#else
+#ifdef BORROW
+/* {t, 4} <- {s1, 2} * {s2, 2}, knowing {c, 2} = {s1+1, 1} * {s2+1, 1} */
+gf2x_mul2b (unsigned long *t, unsigned long const *s1, unsigned long const *s2,
+            unsigned long const *c)
+#else
 void gf2x_mul2(unsigned long * t, unsigned long const * s1,
         unsigned long const * s2)
+#endif
+#endif
 {
     typedef union {
         __v2di s;
@@ -58,7 +70,9 @@ void gf2x_mul2(unsigned long * t, unsigned long const * s1,
 
 
     t00.s = _mm_clmulepi64_si128(ss1, ss2, 0);
+#ifndef BORROW
     t11.s = _mm_clmulepi64_si128(ss1, ss2, 17);
+#endif
     
     s1s = _mm_shuffle_epi32(ss1, 78);
     ss1 ^= s1s;
@@ -67,12 +81,24 @@ void gf2x_mul2(unsigned long * t, unsigned long const * s1,
     
     tk.s = _mm_clmulepi64_si128(ss1, ss2, 0);
 
+#ifndef BORROW
     tk.s ^= t00.s ^ t11.s;
+#endif
 
     /* store result */
     t[0] = t00.x[0];
+#ifdef BORROW
+    t[1] = t00.x[1] ^ tk.x[0] ^ t00.x[0] ^ c[0];
+    t[2] = c[0] ^ tk.x[1] ^ t00.x[1] ^ c[1];
+    t[3] = c[1];
+#else
     t[1] = t00.x[1] ^ tk.x[0];
     t[2] = t11.x[0] ^ tk.x[1];
     t[3] = t11.x[1];
+#endif
+#ifdef CARRY
+    c[0] = t11.x[0];
+    c[1] = t11.x[1];
+#endif
 }
 #endif  /* GF2X_MUL2_H_ */
