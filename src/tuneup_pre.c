@@ -94,7 +94,16 @@ int main(int argc, char *argv[])
         if (memcmp(c, c0, 2 * @@SIZE@@ * sizeof(unsigned long)) != 0)
           {
             unsigned long i;
+
             fprintf (stderr, "Error, computed test values do not match\n");
+            fprintf (stderr, "a=");
+            for (i = 0; i < @@SIZE@@; i++)
+              fprintf (stderr, "%lu ", a[i]);
+            fprintf (stderr, "\n");
+            fprintf (stderr, "b=");
+            for (i = 0; i < @@SIZE@@; i++)
+              fprintf (stderr, "%lu ", b[i]);
+            fprintf (stderr, "\n");
             fprintf (stderr, "gf2x_mul gives:\n");
             for (i = 0; i < 2 * @@SIZE@@; i++)
               fprintf (stderr, "%lu ", c0[i]);
