@@ -130,7 +130,7 @@ gf2x_mul3 (unsigned long *c, const unsigned long *a, const unsigned long *b)
   gf2x_mul2c (c, a, b, d);
   /* {c, 4} = A0 * B0 and {d, 2} = {a+1, 1} * {b+1, 1} */
 
-  gf2x_mul2c (p, aa, bb, d);
+  gf2x_mul2b (p, aa, bb, d);
   /* {p, 4} = (A0 + A1) * (B0 + B1) */
 
   gf2x_mul1 (c + 4, a[2], b[2]);
