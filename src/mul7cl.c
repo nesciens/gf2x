@@ -49,6 +49,8 @@ GF2X_FUNC(mul7clk_c_mul1) (unsigned long a, unsigned long b)
     __v2di bb = (__v2di) { b, 0 };
     return _mm_clmulepi64_si128(aa, bb, 0);
 }
+
+/* variant with 22 multiplications */
 GF2X_STORAGE_CLASS_mul7
 void gf2x_mul7 (unsigned long *c, const unsigned long *a, const unsigned long *b)
 {

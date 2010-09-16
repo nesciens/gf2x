@@ -54,7 +54,7 @@ GF2X_STORAGE_CLASS_mul5
 void gf2x_mul5 (unsigned long *c, const unsigned long *a,
         const unsigned long *b)
 {
-  /* Montgomery formulae */
+  /* Montgomery formulae with 13 multiplications */
   unsigned long ta[3], tb[3], pa[8], pb[8];
   __v2di p0, p2, p4, p6, p8, p10, p12, p14, p16, p18, p20, p22, p24;
   __v2di t0, t2, t4, t6, t8, t10, t12;

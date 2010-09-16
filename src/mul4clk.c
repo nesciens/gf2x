@@ -62,7 +62,7 @@ GF2X_FUNC(mul4clk_mul2)(__v2di * t, __v2di ss1, __v2di ss2)
     t[0] = t00.s;
     t[1] = t11.s;
 }
-/* specialized Karatsuba */
+/* specialized Karatsuba with 3 calls to mul2, i.e., 9 multiplications */
 GF2X_STORAGE_CLASS_mul4
 void gf2x_mul4 (unsigned long *c, const unsigned long *a, const unsigned long *b)
 {

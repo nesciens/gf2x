@@ -65,6 +65,7 @@ gen_bb_mul_code_SOURCES=gen_bb_mul_code.c
 #*   test mul5k_b
 #*   test mul5k_c
 #*   test mul5k_d
+#*   test mul5k3
 #*   test mul6k_a
 #*   test mul6k_b
 #*   test mul6k_c
@@ -321,6 +322,13 @@ tune_mul5k_d_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=5
 tune_mul5k_d_SOURCES=mul5k_d.c tuning_undefs_5.h
 tune_mul5k_d_LDADD=libtuneup-s5.la libtiming.la ../libgf2x.la
 mul5k_d.$(OBJEXT): tuning_undefs_5.h
+
+
+LOWLEVEL+=tune_mul5k3$(EXEEXT)
+tune_mul5k3_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=5
+tune_mul5k3_SOURCES=mul5k3.c tuning_undefs_5.h
+tune_mul5k3_LDADD=libtuneup-s5.la libtiming.la ../libgf2x.la
+mul5k3.$(OBJEXT): tuning_undefs_5.h
 
 
 LOWLEVEL+=tune_mul6k_a$(EXEEXT)

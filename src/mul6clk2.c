@@ -66,6 +66,7 @@ GF2X_FUNC(mul6clk2_mul2)(__v2di * t, __v2di ss1, __v2di ss2)
     t[1] = t11.s;
 }
 
+/* variant with 6 calls to mul2, i.e., 18 multiplications */
 GF2X_STORAGE_CLASS_mul6
 void gf2x_mul6 (unsigned long *c, const unsigned long *a, const unsigned long *b)
 {

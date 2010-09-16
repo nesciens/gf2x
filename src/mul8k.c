@@ -26,6 +26,7 @@
  * This is mandatory for the tuning mechanism. */
 #include "gf2x/gf2x-small.h"
 
+/* 3 calls to mul4, i.e., 27 multiplications */
 GF2X_STORAGE_CLASS_mul8
 void gf2x_mul8 (unsigned long *c, const unsigned long *a, const unsigned long *b)
 {

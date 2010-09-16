@@ -42,6 +42,7 @@
 #error "This code needs pclmul support"
 #endif
 
+/* Karatsuba with 3 multiplications */
 GF2X_STORAGE_CLASS_mul2
 void gf2x_mul2(unsigned long * t, unsigned long const * s1,
         unsigned long const * s2)
