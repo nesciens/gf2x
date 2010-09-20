@@ -26,6 +26,7 @@
  * This is mandatory for the tuning mechanism. */
 #include "gf2x/gf2x-small.h"
 
+/* Karatsuba-3 applied to chunks of size 3 */
 GF2X_STORAGE_CLASS_mul9
 void gf2x_mul9 (unsigned long *c, const unsigned long *a, const unsigned long *b)
 {

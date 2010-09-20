@@ -54,7 +54,9 @@ GF2X_FUNC(mul7clk_c_mul1) (unsigned long a, unsigned long b)
 GF2X_STORAGE_CLASS_mul7
 void gf2x_mul7 (unsigned long *c, const unsigned long *a, const unsigned long *b)
 {
-    /* Montgomery formulae */
+    /* Montgomery formulae with 22 multiplications, see
+     Five, Six, and Seven-Term {K}aratsuba-Like Formulae,
+     IEEE Transactions on Computers, volume 54, number 3, p. 362-369, 2005 */
     unsigned long ta[5], tb[5], pa[22], pb[22];
     ta[0] = a[0] ^ a[4];
     ta[1] = a[3] ^ a[5];

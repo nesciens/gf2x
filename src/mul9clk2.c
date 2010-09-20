@@ -75,6 +75,9 @@ static void GF2X_FUNC(mul9clk_mul3) (__v2di *ce, __v2di *co, const unsigned long
   co[0] = p0^p1^pp2;
   co[1] = pp0^p1^p2;
 }
+
+/* recursive application of the Karatsuba-3 algorithm with 6 multiplies,
+   i.e., with a total of 6*6=36 multiplies */
 GF2X_STORAGE_CLASS_mul9
 void gf2x_mul9 (unsigned long *c, const unsigned long *a, const unsigned long *b)
 {
