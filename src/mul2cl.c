@@ -45,10 +45,12 @@
 GF2X_STORAGE_CLASS_mul2
 #ifdef CARRY
 /* {t, 4} <- {s1, 2} * {s2, 2}, and {c, 2} <- {s1+1, 1} * {s2+1, 1} */
+void
 gf2x_mul2c (unsigned long *t, unsigned long const *s1, unsigned long const *s2,
             unsigned long *c)
 #else
 #ifdef BORROW
+void
 /* {t, 4} <- {s1, 2} * {s2, 2}, knowing {c, 2} = {s1+1, 1} * {s2+1, 1} */
 gf2x_mul2b (unsigned long *t, unsigned long const *s1, unsigned long const *s2,
             unsigned long const *c)
@@ -64,7 +66,10 @@ void gf2x_mul2(unsigned long * t, unsigned long const * s1,
     } __v2di_proxy;
 
     __v2di ss1, ss2, s1s, s2s;
-    __v2di_proxy t00, t11, tk;
+    __v2di_proxy t00, tk;
+#ifndef BORROW
+    __v2di_proxy t11;
+#endif
     ss1 = _mm_loadu_si128((__v2di *)s1);
     ss2 = _mm_loadu_si128((__v2di *)s2);
 
