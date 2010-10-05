@@ -87,7 +87,7 @@ gen_bb_mul_code_SOURCES=gen_bb_mul_code.c
 # mul2cl2 uses psrldq, which is slightly different.
 #*   test mul2cl2
 #*   test mul3cl
-#*   test mul3k3
+## (disabled)   test mul3k3
 #*   test mul4clk
 #*   test mul5clk_c
 #*   test mul5k3
@@ -431,13 +431,6 @@ tune_mul3cl_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=3
 tune_mul3cl_SOURCES=mul3cl.c tuning_undefs_3.h
 tune_mul3cl_LDADD=libtuneup-s3.la libtiming.la ../libgf2x.la
 mul3cl.$(OBJEXT): tuning_undefs_3.h
-
-
-LOWLEVEL+=tune_mul3k3$(EXEEXT)
-tune_mul3k3_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=3
-tune_mul3k3_SOURCES=mul3k3.c tuning_undefs_3.h
-tune_mul3k3_LDADD=libtuneup-s3.la libtiming.la ../libgf2x.la
-mul3k3.$(OBJEXT): tuning_undefs_3.h
 
 
 LOWLEVEL+=tune_mul4clk$(EXEEXT)
