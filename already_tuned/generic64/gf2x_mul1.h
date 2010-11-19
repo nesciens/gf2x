@@ -28,7 +28,7 @@
 #include "gf2x.h"
 /* All gf2x source files for lowlevel functions must include gf2x-small.h
  * This is mandatory for the tuning mechanism. */
-#include "gf2x-small.h"
+#include "gf2x/gf2x-small.h"
 
 GF2X_STORAGE_CLASS_mul1 void
 gf2x_mul1 (unsigned long *c, unsigned long a, unsigned long b)

@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
         "#include \"gf2x.h\"\n"
 "/* All gf2x source files for lowlevel functions must include gf2x-small.h\n"
 " * This is mandatory for the tuning mechanism. */\n"
-        "#include \"gf2x-small.h\"\n"
+        "#include \"gf2x/gf2x-small.h\"\n"
         "\n");
 
     for (fn = 0; fn < 3; fn++) {

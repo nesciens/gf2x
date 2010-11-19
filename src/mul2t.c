@@ -26,7 +26,7 @@
 #include "gf2x.h"
 /* All gf2x source files for lowlevel functions must include gf2x-small.h
  * This is mandatory for the tuning mechanism. */
-#include "gf2x-small.h"
+#include "gf2x/gf2x-small.h"
 
 #include "gf2x/gf2x-impl.h"
 

@@ -19,6 +19,8 @@
 # Boston, MA 02110-1301, USA.
 
 ACLOCAL_AMFLAGS=-I config --install
+AM_CPPFLAGS = -I$(top_srcdir) -I$(top_builddir)
+
 
 lib_LTLIBRARIES=libgf2x.la
 libgf2x_la_SOURCES=gf2x.c toom.c fft.c
