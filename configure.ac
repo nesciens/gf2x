@@ -19,7 +19,7 @@
 #  Boston, MA 02110-1301, USA.
 
 
-AC_INIT([gf2x], [0.9.6])
+AC_INIT([gf2x], [1.0])
 : ${CFLAGS=-g -O4}
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([config])
