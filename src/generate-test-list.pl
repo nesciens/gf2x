@@ -49,12 +49,14 @@ while (<>) {
         for my $x (@sizes) {
             $fragment .= <<EOF;
 tuning_undefs_$x.h: tuning_undefs_pre.h ; sed -e s/\@\@SIZE\@\@/$x/g < \$< > \$\@
-tuneup_$x.c: tuneup_pre.c ; sed -e s/\@\@SIZE\@\@/$x/g < \$< > \$\@
+tuneup_$x.c: \$(srcdir)/tuneup_pre.c ; sed -e s/\@\@SIZE\@\@/$x/g < \$< > \$\@
 tuneup_$x.\$(OBJEXT): tuning_undefs_$x.h
 BUILT_SOURCES +=tuneup_$x.c tuning_undefs_$x.h
 EXTRA_LTLIBRARIES+=libtuneup-s$x.la
 nodist_libtuneup_s${x}_la_SOURCES=tuneup_$x.c tuning_undefs_$x.h
 libtuneup_s${x}_la_CPPFLAGS=-I\$(top_builddir) -I\$(top_srcdir)
+CLEANFILES+=tuning_undefs_$x.h
+DISTCLEANFILES+=tuning_undefs_$x.h
 EOF
             $fragment .= "\n";
         }
@@ -81,7 +83,8 @@ EOF
                 $fragment .= <<EOF;
 LOWLEVEL+=tune_${code}\$(EXEEXT)
 tune_${code}_CPPFLAGS=-I\$(top_builddir) -I\$(top_srcdir) -DTUNING=$size
-tune_${code}_SOURCES=$code.c tuning_undefs_$size.h
+tune_${code}_SOURCES=$code.c
+nodist_tune_${code}_SOURCES=tuning_undefs_$size.h
 tune_${code}_LDADD=libtuneup-s$size.la libtiming.la ../libgf2x.la
 $code.\$(OBJEXT): tuning_undefs_$size.h
 EOF
