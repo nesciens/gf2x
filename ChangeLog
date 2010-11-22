@@ -1,11 +1,34 @@
-commit dfce9a378f271664cd0696711eb20cb36f10374d
+commit 38488ce4b3466b255c0184c7c39bbab29a65ea41
 Author: Emmanuel Thomé <Emmanuel.Thome@gmail.com>
-Date:   Fri Nov 19 14:49:48 2010 +0100
+Date:   Mon Nov 22 13:31:25 2010 +0100
 
     release gf2x-1.0
 
- trunk/ChangeLog |   52 +++++++++++++++++++++++++++++++++++++++++++++++-----
- 1 files changed, 47 insertions(+), 5 deletions(-)
+ trunk/ChangeLog |   24 +++++++++++++++++++-----
+ 1 files changed, 19 insertions(+), 5 deletions(-)
+
+commit 18bc40998fd1b8d2d549966c2f176e241a6b190a
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Mon Nov 22 12:30:22 2010 +0000
+
+    silenced last warnings.
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@116 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/fft.c                |    2 +-
+ trunk/tests/check-addmul.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 091bc4366b979e7389069eb11cb46f224b828a36
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Mon Nov 22 12:30:21 2010 +0000
+
+    release gf2x-1.0
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@115 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/ChangeLog |   59 +++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 files changed, 55 insertions(+), 4 deletions(-)
 
 commit 6c95f0823778dfb87838ba37ecdf9e7a726a937a
 Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
