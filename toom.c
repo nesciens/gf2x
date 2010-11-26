@@ -157,13 +157,14 @@ void gf2x_mul_toom(unsigned long *c, const unsigned long *a,
     case 0:
 	gf2x_mul_kara(c, a, b, n, stk);
 	break;
+        /* 1 2 3 are GPL'ed code */
     case 1:
 	gf2x_mul_tc3(c, a, b, n, stk);
 	break;
     case 2:
 	gf2x_mul_tc3w(c, a, b, n, stk);
 	break;
-    default:
+    case 3:
 	gf2x_mul_tc4(c, a, b, n, stk);
 	break;
     }
@@ -239,100 +240,4 @@ void gf2x_mul_kara(unsigned long * c, const unsigned long * a, const unsigned lo
 	c2[j] ^= cc[j];
     }
 }
-
-/* the following routines come from the irred-ntl package from Paul Zimmermann,
-   (http://webloria.loria.fr/~zimmerma/irred/), who contributes them under
-   LGPL for gf2x */
-
-/* c <- a + b */
-static
-void Add (unsigned long *c, const unsigned long *a, const unsigned long *b,
-          long n)
-{
-    long i;
-    for (i = 0; i < n; i++)
-	c[i] = a[i] ^ b[i];
-}
-
-/* c <- c + a + b */
-static
-void Add3(unsigned long *c, const unsigned long *a, const unsigned long *b,
-	  long n)
-{
-    long i;
-    for (i = 0; i < n; i++)
-	c[i] ^= a[i] ^ b[i];
-}
-
-/* c <- a + x * b, return carry out */
-static
-unsigned long AddLsh1(unsigned long *c, const unsigned long *a,
-		      const unsigned long *b, long n)
-{
-    unsigned long cy = 0UL, t;
-    long i;
-    for (i = 0; i < n; i++) {
-	t = a[i] ^ ((b[i] << 1) | cy);
-	cy = b[i] >> (GF2X_WORDSIZE - 1);
-	c[i] = t;
-    }
-    return cy;
-}
-
-/* c <- x * c, return carry out */
-static
-unsigned long Lsh1(unsigned long *c, long n, unsigned long cy)
-{
-    unsigned long t;
-    long i;
-    for (i = 0; i < n; i++) {
-	t = (c[i] << 1) | cy;
-	cy = c[i] >> (GF2X_WORDSIZE - 1);
-	c[i] = t;
-    }
-    return cy;
-}
-
-/* c <- a + cy, return carry out (0 for n > 0, cy for n=0) */
-static
-unsigned long Add1(unsigned long *c, const unsigned long *a, long n,
-		   unsigned long cy)
-{
-    if (n) {
-	long i;
-	c[0] = a[0] ^ cy;
-	for (i = 1; i < n; i++)
-	    c[i] = a[i];
-	return 0;
-    } else
-	return cy;
-}
-
-/* let c = q*(1+x^2) + X^n*r with X = x^GF2X_WORDSIZE and deg(r) < 2
-   then c <- q, returns r.
-   (Algorithm from Michel Quercia.)
-*/
-static unsigned long DivOnePlusX2(unsigned long * c, long n)
-{
-    unsigned long t = 0;
-    long i;
-
-    for (i = 0; i < n; i++) {
-	t ^= c[i];
-	t ^= t << 2;
-	t ^= t << 4;
-	t ^= t << 8;
-	t ^= t << 16;
-#if (GF2X_WORDSIZE == 64)
-	t ^= t << 32;
-#elif (GF2X_WORDSIZE != 32)
-#error "GF2X_WORDSIZE should be 32 or 64"
-#endif
-	c[i] = t;
-	t >>= (GF2X_WORDSIZE - 2);
-    }
-    return t;
-}
-
-
 

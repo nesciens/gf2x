@@ -23,7 +23,7 @@ AM_CPPFLAGS = -I$(top_srcdir) -I$(top_builddir)
 
 
 lib_LTLIBRARIES=libgf2x.la
-libgf2x_la_SOURCES=gf2x.c toom.c fft.c
+libgf2x_la_SOURCES=gf2x.c toom.c toom2.c fft.c
 nobase_include_HEADERS=gf2x.h	\
 		gf2x/gf2x-impl.h		\
 		gf2x/gf2x-tfft.h		\

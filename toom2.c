@@ -1,3 +1,133 @@
+/* This file is part of the gf2x library.
+
+   Copyright 2007, 2008, 2009
+   Richard Brent, Pierrick Gaudry, Emmanuel Thome', Paul Zimmermann
+
+   This program is free software; you can redistribute it and/or modify it
+   under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or (at
+   your option) any later version.
+   
+   This program is distributed in the hope that it will be useful, but WITHOUT
+   ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+   License for more details.
+   
+   You should have received a copy of the GNU Lesser General Public
+   License along with CADO-NFS; see the file COPYING.  If not, write to
+   the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+   Boston, MA 02110-1301, USA.
+*/
+/* General Toom_Cook multiplication, calls KarMul, Toom3Mul, Toom3WMul
+   or Toom4Mul depending on which is expected to be the fastest. */
+
+#include <limits.h>
+#include <string.h>
+
+#include "gf2x.h"
+#include "gf2x/gf2x-impl.h"
+
+/* We need gf2x_addmul_1_n */
+#include "gf2x/gf2x-small.h"
+
+#include "gf2x/gf2x-config.h"
+
+/* the following routines come from the irred-ntl package from Paul Zimmermann,
+   (http://webloria.loria.fr/~zimmerma/irred/), who contributes them under
+   LGPL for gf2x */
+
+/* c <- a + b */
+static
+void Add (unsigned long *c, const unsigned long *a, const unsigned long *b,
+          long n)
+{
+    long i;
+    for (i = 0; i < n; i++)
+	c[i] = a[i] ^ b[i];
+}
+
+/* c <- c + a + b */
+static
+void Add3(unsigned long *c, const unsigned long *a, const unsigned long *b,
+	  long n)
+{
+    long i;
+    for (i = 0; i < n; i++)
+	c[i] ^= a[i] ^ b[i];
+}
+
+/* c <- a + x * b, return carry out */
+static
+unsigned long AddLsh1(unsigned long *c, const unsigned long *a,
+		      const unsigned long *b, long n)
+{
+    unsigned long cy = 0UL, t;
+    long i;
+    for (i = 0; i < n; i++) {
+	t = a[i] ^ ((b[i] << 1) | cy);
+	cy = b[i] >> (GF2X_WORDSIZE - 1);
+	c[i] = t;
+    }
+    return cy;
+}
+
+/* c <- x * c, return carry out */
+static
+unsigned long Lsh1(unsigned long *c, long n, unsigned long cy)
+{
+    unsigned long t;
+    long i;
+    for (i = 0; i < n; i++) {
+	t = (c[i] << 1) | cy;
+	cy = c[i] >> (GF2X_WORDSIZE - 1);
+	c[i] = t;
+    }
+    return cy;
+}
+
+/* c <- a + cy, return carry out (0 for n > 0, cy for n=0) */
+static
+unsigned long Add1(unsigned long *c, const unsigned long *a, long n,
+		   unsigned long cy)
+{
+    if (n) {
+	long i;
+	c[0] = a[0] ^ cy;
+	for (i = 1; i < n; i++)
+	    c[i] = a[i];
+	return 0;
+    } else
+	return cy;
+}
+
+/* let c = q*(1+x^2) + X^n*r with X = x^GF2X_WORDSIZE and deg(r) < 2
+   then c <- q, returns r.
+   (Algorithm from Michel Quercia.)
+*/
+static unsigned long DivOnePlusX2(unsigned long * c, long n)
+{
+    unsigned long t = 0;
+    long i;
+
+    for (i = 0; i < n; i++) {
+	t ^= c[i];
+	t ^= t << 2;
+	t ^= t << 4;
+	t ^= t << 8;
+	t ^= t << 16;
+#if (GF2X_WORDSIZE == 64)
+	t ^= t << 32;
+#elif (GF2X_WORDSIZE != 32)
+#error "GF2X_WORDSIZE should be 32 or 64"
+#endif
+	c[i] = t;
+	t >>= (GF2X_WORDSIZE - 2);
+    }
+    return t;
+}
+
+
+
 /********************************************************************
  * Below this line, experimental code
  * (C) 2007 Marco Bodrato <optimaltoom@bodrato.it>
