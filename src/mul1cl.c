@@ -1,23 +1,24 @@
 /* This file is part of the gf2x library.
 
-   Copyright 2007, 2008, 2009, 2010
+   Copyright 2007, 2008, 2009
    Richard Brent, Pierrick Gaudry, Emmanuel Thome', Paul Zimmermann
 
    This program is free software; you can redistribute it and/or modify it
-   under the terms of the GNU Lesser General Public License as published by
-   the Free Software Foundation; either version 2.1 of the License, or (at
-   your option) any later version.
-   
+   under the terms of the GNU General Public License as published by the
+   Free Software Foundation; either version 2 of the License, or (at your
+   option) any later version.
+
    This program is distributed in the hope that it will be useful, but WITHOUT
    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
-   License for more details.
-   
-   You should have received a copy of the GNU Lesser General Public
-   License along with CADO-NFS; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+   more details.
+
+   You should have received a copy of the GNU General Public License along
+   with this program; see the file COPYING.  If not, write to the Free
+   Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+   02111-1307, USA.
 */
+
 
 
 #ifndef GF2X_MUL1_H_
@@ -66,12 +67,12 @@ gf2x_mul_1_n (unsigned long *cp, const unsigned long *bp, long sb, unsigned long
 
 
     // do two at a time
-    for (i = 0; i + 2 < sb; i += 2) { 
+    for (i = 0; i + 2 < sb; i += 2) {
         x = (__v2di) { bp[i], bp[i+1] };
         cc.s = _mm_clmulepi64_si128(x, y, 0);
-        if (i == 0) 
+        if (i == 0)
             cp[i] = cc.x[0];
-        else 
+        else
             cp[i] ^= cc.x[0];
         cp[i+1] = cc.x[1];
         cc.s = _mm_clmulepi64_si128(x, y, 1);
@@ -81,9 +82,9 @@ gf2x_mul_1_n (unsigned long *cp, const unsigned long *bp, long sb, unsigned long
     // last is different, to handle carry out
     unsigned long cy;
     if (i == sb - 2) {  // case bp is even
-        x = (__v2di) { bp[i], bp[i+1] }; 
+        x = (__v2di) { bp[i], bp[i+1] };
         cc.s = _mm_clmulepi64_si128(x, y, 0);
-        if (i == 0) 
+        if (i == 0)
             cp[i] = cc.x[0];
         else
             cp[i] ^= cc.x[0];
@@ -92,9 +93,9 @@ gf2x_mul_1_n (unsigned long *cp, const unsigned long *bp, long sb, unsigned long
         cp[i+1] ^= cc.x[0];
         cy = cc.x[1];
     } else { //case bp is odd
-        x = (__v2di) { bp[i], 0 }; 
+        x = (__v2di) { bp[i], 0 };
         cc.s = _mm_clmulepi64_si128(x, y, 0);
-        if (i == 0) 
+        if (i == 0)
             cp[i] = cc.x[0];
         else
             cp[i] ^= cc.x[0];
@@ -117,12 +118,12 @@ gf2x_addmul_1_n (unsigned long *dp, const unsigned long *cp, const unsigned long
     __v2di_proxy dd;
 
     // do two at a time
-    for (i = 0; i + 2 < sb; i += 2) { 
+    for (i = 0; i + 2 < sb; i += 2) {
         x = (__v2di) { bp[i], bp[i+1] };
         dd.s = _mm_clmulepi64_si128(x, y, 0);
-        if (i == 0) 
+        if (i == 0)
             dp[i] = cp[i] ^ dd.x[0];
-        else 
+        else
             dp[i] ^= dd.x[0];
         dp[i+1] = cp[i+1] ^ dd.x[1];
         dd.s = _mm_clmulepi64_si128(x, y, 1);
@@ -131,11 +132,11 @@ gf2x_addmul_1_n (unsigned long *dp, const unsigned long *cp, const unsigned long
     }
     unsigned long cy;
     if (i == sb - 2) {  // case bp is even
-        x = (__v2di) { bp[i], bp[i+1] }; 
+        x = (__v2di) { bp[i], bp[i+1] };
         dd.s = _mm_clmulepi64_si128(x, y, 0);
-        if (i == 0) 
+        if (i == 0)
             dp[i] = cp[i] ^ dd.x[0];
-        else 
+        else
             dp[i] ^= dd.x[0];
         dp[i+1] = cp[i+1] ^ dd.x[1];
         dd.s = _mm_clmulepi64_si128(x, y, 1);
@@ -144,7 +145,7 @@ gf2x_addmul_1_n (unsigned long *dp, const unsigned long *cp, const unsigned long
     } else {
         x = (__v2di) { bp[i], 0 };
         dd.s = _mm_clmulepi64_si128(x, y, 0);
-        if (i == 0) 
+        if (i == 0)
             dp[i] = cp[i] ^ dd.x[0];
         else
             dp[i] ^= dd.x[0];

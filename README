@@ -1,7 +1,6 @@
 Authors: Richard Brent, Pierrick Gaudry, Emmanuel Thomé, Paul Zimmermann.
 License:
- library: GNU Lesser General Public License (version 2.1 or any later version).
- apps: GNU general Public License (version 2 or any later version).
+ GNU general Public License (version 2 or any later version).
 
 This package contains routines for fast arithmetic in GF(2)[x]
 (multiplication, squaring, gcd).
@@ -113,7 +112,7 @@ Cautious users follow steps 1 to 5 below. Urged users follow only 1 and 5.
    additional parameters to the configure script:
 
       ./configure ABI=<bit width of unsigned long> CFLAGS=<corresponding CFLAGS> && make
-   
+
    For example on a Mac OS X computer with an Intel Core 2 processor
    using gcc, one may use: ./configure ABI=64 CFLAGS="-O2 -m64" && make
 
@@ -145,7 +144,7 @@ Cautious users follow steps 1 to 5 below. Urged users follow only 1 and 5.
    The default values for TOOM_TUNING_LIMIT and FFT_TUNING_LIMIT are 2048
    and 8000000, respectively. TOOM_TUNING_LIMIT must not exceed 2048,
    while FFT_TUNING_LIMIT is only limited by the available memory.
-   
+
    More detailed information on tuning can be found in the
    tuning/tunetoom.c and tuning/tunefft.c files, as well as
    tuning/README.
@@ -164,7 +163,7 @@ Cautious users follow steps 1 to 5 below. Urged users follow only 1 and 5.
 5) Either run:
 
       make install
-   
+
    Or, if you prefer, keep your build tree, and have your programs
    include <buildtree>/gf2x.h, and link against the library
    <buildtree>/.libs/libgf2x.a (static) or <buildtree>/.libs/libgf2x.so

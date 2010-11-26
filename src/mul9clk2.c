@@ -1,23 +1,24 @@
 /* This file is part of the gf2x library.
 
-   Copyright 2007, 2008, 2009, 2010
+   Copyright 2007, 2008, 2009
    Richard Brent, Pierrick Gaudry, Emmanuel Thome', Paul Zimmermann
 
    This program is free software; you can redistribute it and/or modify it
-   under the terms of the GNU Lesser General Public License as published by
-   the Free Software Foundation; either version 2.1 of the License, or (at
-   your option) any later version.
-   
+   under the terms of the GNU General Public License as published by the
+   Free Software Foundation; either version 2 of the License, or (at your
+   option) any later version.
+
    This program is distributed in the hope that it will be useful, but WITHOUT
    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
-   License for more details.
-   
-   You should have received a copy of the GNU Lesser General Public
-   License along with CADO-NFS; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+   more details.
+
+   You should have received a copy of the GNU General Public License along
+   with this program; see the file COPYING.  If not, write to the Free
+   Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+   02111-1307, USA.
 */
+
 #ifndef GF2X_MUL9_H_
 #define GF2X_MUL9_H_
 
@@ -121,7 +122,7 @@ void gf2x_mul9 (unsigned long *c, const unsigned long *a, const unsigned long *b
   GF2X_FUNC(mul9clk_mul3) (q0e, q0o, aa+0, bb+0);
   GF2X_FUNC(mul9clk_mul3) (q1e, q1o, aa+3, bb+3);
   GF2X_FUNC(mul9clk_mul3) (q2e, q2o, aa+6, bb+6);
- 
+
   __v2di e,h,l;
   e = p0e[0];
   l = p0o[0];
@@ -171,6 +172,6 @@ void gf2x_mul9 (unsigned long *c, const unsigned long *a, const unsigned long *b
   c[16] = p2e[4]                                     ^                   p2o[3]                  ;
   c[17] = p2e[5]                                     ^                                           ;
   */
-}                          
+}
 
 #endif  /* GF2X_MUL9_H_ */

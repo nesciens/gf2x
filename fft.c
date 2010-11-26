@@ -4,20 +4,21 @@
    Richard Brent, Pierrick Gaudry, Emmanuel Thome', Paul Zimmermann
 
    This program is free software; you can redistribute it and/or modify it
-   under the terms of the GNU Lesser General Public License as published by
-   the Free Software Foundation; either version 2.1 of the License, or (at
-   your option) any later version.
-   
+   under the terms of the GNU General Public License as published by the
+   Free Software Foundation; either version 2 of the License, or (at your
+   option) any later version.
+
    This program is distributed in the hope that it will be useful, but WITHOUT
    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
-   License for more details.
-   
-   You should have received a copy of the GNU Lesser General Public
-   License along with CADO-NFS; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+   more details.
+
+   You should have received a copy of the GNU General Public License along
+   with this program; see the file COPYING.  If not, write to the Free
+   Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+   02111-1307, USA.
 */
+
 /* Multiplication over GF(2)[x] using Fast Fourier Transform.
  * Bit-aligned version. */
 
@@ -947,7 +948,7 @@ void gf2x_tfft_ift_inner(gf2x_tfft_info_srcptr o, unsigned long * a, size_t bits
     for (i = 0; i < K; i++) A[i] = tr + 2 * i * np;
     unsigned long ** Ap = malloc_or_die(K * sizeof(unsigned long *));
 
-    for (i = 0; i < K; i++) Ap[i] = A[o->perm[i]]; 
+    for (i = 0; i < K; i++) Ap[i] = A[o->perm[i]];
     fft(Ap, K, 3 * Np - Mp, Np, 1, tmp1, tmp2, tmp3, o->perm);
     for (i = 0; i < K; i++) ASSERT(A[i] == Ap[o->perm[i]]);
 
@@ -1086,7 +1087,7 @@ void gf2x_mul_fft(unsigned long *c, const unsigned long *a, size_t an,
 {
     gf2x_tfft_info_t o;
     gf2x_tfft_init(o, an * WLEN, bn * WLEN, K);
-    
+
     if (o->K == 0) {
 	printf("gf2x_mul_fft: arguments (%zu, %zu) too small\n", an, bn);
         /* Note that actually the routines below do work, because they're

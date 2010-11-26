@@ -1,23 +1,24 @@
 /* This file is part of the gf2x library.
 
-   Copyright 2007, 2008, 2009, 2010
+   Copyright 2007, 2008, 2009
    Richard Brent, Pierrick Gaudry, Emmanuel Thome', Paul Zimmermann
 
    This program is free software; you can redistribute it and/or modify it
-   under the terms of the GNU Lesser General Public License as published by
-   the Free Software Foundation; either version 2.1 of the License, or (at
-   your option) any later version.
-   
+   under the terms of the GNU General Public License as published by the
+   Free Software Foundation; either version 2 of the License, or (at your
+   option) any later version.
+
    This program is distributed in the hope that it will be useful, but WITHOUT
    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
-   License for more details.
-   
-   You should have received a copy of the GNU Lesser General Public
-   License along with CADO-NFS; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+   more details.
+
+   You should have received a copy of the GNU General Public License along
+   with this program; see the file COPYING.  If not, write to the Free
+   Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+   02111-1307, USA.
 */
+
 /* Implements 128x128 -> 256 bit product using pclmulqdq instruction. */
 
 #ifndef GF2X_MUL2_H_
@@ -78,12 +79,12 @@ void gf2x_mul2(unsigned long * t, unsigned long const * s1,
 #ifndef BORROW
     t11.s = _mm_clmulepi64_si128(ss1, ss2, 17);
 #endif
-    
+
     s1s = _mm_shuffle_epi32(ss1, 78);
     ss1 ^= s1s;
     s2s = _mm_shuffle_epi32(ss2, 78);
     ss2 ^= s2s;
-    
+
     tk.s = _mm_clmulepi64_si128(ss1, ss2, 0);
 
 #ifndef BORROW

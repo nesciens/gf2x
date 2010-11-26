@@ -5,19 +5,19 @@
    Nicolas Estibals (for this file)
 
    This program is free software; you can redistribute it and/or modify it
-   under the terms of the GNU Lesser General Public License as published by
-   the Free Software Foundation; either version 2.1 of the License, or (at
-   your option) any later version.
-   
+   under the terms of the GNU General Public License as published by the
+   Free Software Foundation; either version 2 of the License, or (at your
+   option) any later version.
+
    This program is distributed in the hope that it will be useful, but WITHOUT
    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
-   License for more details.
-   
-   You should have received a copy of the GNU Lesser General Public
-   License along with CADO-NFS; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+   more details.
+
+   You should have received a copy of the GNU General Public License along
+   with this program; see the file COPYING.  If not, write to the Free
+   Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+   02111-1307, USA.
 */
 #ifndef GF2X_MUL5_H_
 #define GF2X_MUL5_H_
@@ -45,11 +45,11 @@
  */
 static inline __v2di
 GF2X_FUNC(mul5clk_c_mul1) (unsigned long a, unsigned long b)
-{   
+{
     __v2di aa = (__v2di) { a, 0 };
     __v2di bb = (__v2di) { b, 0 };
     return _mm_clmulepi64_si128(aa, bb, 0);
-}   
+}
 GF2X_STORAGE_CLASS_mul5
 void gf2x_mul5 (unsigned long *c, const unsigned long *a,
         const unsigned long *b)

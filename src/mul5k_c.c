@@ -5,19 +5,19 @@
    Nicolas Estibals (for this file)
 
    This program is free software; you can redistribute it and/or modify it
-   under the terms of the GNU Lesser General Public License as published by
-   the Free Software Foundation; either version 2.1 of the License, or (at
-   your option) any later version.
-   
+   under the terms of the GNU General Public License as published by the
+   Free Software Foundation; either version 2 of the License, or (at your
+   option) any later version.
+
    This program is distributed in the hope that it will be useful, but WITHOUT
    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
-   License for more details.
-   
-   You should have received a copy of the GNU Lesser General Public
-   License along with CADO-NFS; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+   more details.
+
+   You should have received a copy of the GNU General Public License along
+   with this program; see the file COPYING.  If not, write to the Free
+   Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+   02111-1307, USA.
 */
 #ifndef GF2X_MUL5_H_
 #define GF2X_MUL5_H_
@@ -59,7 +59,7 @@ void gf2x_mul5 (unsigned long *c, const unsigned long *a,
   gf2x_mul1(p + 20, a[3],  b[3]);
   gf2x_mul1(p + 22, a[1],  b[1]);
   gf2x_mul1(p + 24, a[0],  b[0]);
-  t[0]  = p[14] ^ p[24];   t[1]  = p[15] ^ p[25]; 
+  t[0]  = p[14] ^ p[24];   t[1]  = p[15] ^ p[25];
   t[2]  = p[12] ^ p[18];   t[3]  = p[13] ^ p[19];
   t[4]  = p[2]  ^ p[16];   t[5]  = p[3]  ^ p[17];
   t[6]  = p[0]  ^ p[6];    t[7]  = p[1]  ^ p[7];
@@ -68,14 +68,14 @@ void gf2x_mul5 (unsigned long *c, const unsigned long *a,
   t[12] = p[8]  ^ t[2];    t[13] = p[9]  ^ t[3];
   c[0] = p[24];
   c[1] = p[22] ^ t[0]                          ^ p[25];
-  c[2] = p[18] ^ t[8]  ^ t[10]                 ^ p[23] ^ t[1]; 
+  c[2] = p[18] ^ t[8]  ^ t[10]                 ^ p[23] ^ t[1];
   c[3] = t[2]  ^ t[4]  ^ t[6]                  ^ p[19] ^ t[9]  ^ t[11];
-  c[4] = p[0]  ^ p[20] ^ p[22] ^ t[10] ^ t[12] ^ t[3]  ^ t[5]  ^ t[7];               
+  c[4] = p[0]  ^ p[20] ^ p[22] ^ t[10] ^ t[12] ^ t[3]  ^ t[5]  ^ t[7];
   c[5] = t[0]  ^ t[6]  ^ t[8]                  ^ p[1]  ^ p[21] ^ p[23] ^ t[11] ^ t[13];
   c[6] = p[24] ^ t[4]  ^ t[12]                 ^ t[1]  ^ t[7]  ^ t[9];
-  c[7] = p[20] ^ t[2]                          ^ p[25] ^ t[5]  ^ t[13];                
-  c[8] = p[18]                                 ^ p[21] ^ t[3];               
-  c[9] =                                        p[19];                        
+  c[7] = p[20] ^ t[2]                          ^ p[25] ^ t[5]  ^ t[13];
+  c[8] = p[18]                                 ^ p[21] ^ t[3];
+  c[9] =                                        p[19];
 }
 
 
