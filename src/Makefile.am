@@ -100,6 +100,7 @@ EXTRA_DIST += gen_bb_mul_code.c
 #*   test mul2cl2
 #*   test mul3cl
 ## (disabled)   test mul3k3
+#*   test mul4cl1
 #*   test mul4clk
 #*   test mul5clk_c
 #*   test mul5k3
@@ -488,6 +489,14 @@ tune_mul3cl_SOURCES=mul3cl.c
 nodist_tune_mul3cl_SOURCES=tuning_undefs_3.h
 tune_mul3cl_LDADD=libtuneup-s3.la libtiming.la ../libgf2x.la
 mul3cl.$(OBJEXT): tuning_undefs_3.h
+
+
+LOWLEVEL+=tune_mul4cl1$(EXEEXT)
+tune_mul4cl1_CPPFLAGS=-I$(top_builddir) -I$(top_srcdir) -DTUNING=4
+tune_mul4cl1_SOURCES=mul4cl1.c
+nodist_tune_mul4cl1_SOURCES=tuning_undefs_4.h
+tune_mul4cl1_LDADD=libtuneup-s4.la libtiming.la ../libgf2x.la
+mul4cl1.$(OBJEXT): tuning_undefs_4.h
 
 
 LOWLEVEL+=tune_mul4clk$(EXEEXT)
