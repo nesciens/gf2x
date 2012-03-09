@@ -614,9 +614,10 @@ tunefft_SOURCES=tunefft.c tuning-common.c
 tunefft_LDADD=libtiming.la ../libgf2x.la
 
 FFT_TUNING_LIMIT=8000000
+FFT_TUNING_SCALE=1.02
 
 tunefft.res: tunefft$(EXEEXT)
-	./tunefft -s 1.02 $(FFT_TUNING_LIMIT) -o tunefft.res
+	./tunefft -s $(FFT_TUNING_SCALE) $(FFT_TUNING_LIMIT) -o tunefft.res
 
 tune-fft: tunefft.res update-thresholds$(EXEEXT)
 	cd $(top_builddir) ; $(MAKE)
