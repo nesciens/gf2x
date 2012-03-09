@@ -24,6 +24,8 @@ AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([config])
 AC_CANONICAL_TARGET
 
+AC_LANG([C])
+
 AC_SUBST([gf2x_lib_version], [1:0:0])
 
 AM_INIT_AUTOMAKE
