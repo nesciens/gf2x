@@ -110,8 +110,8 @@ for my $s (sort { $a <=> $b } keys %sizes) {
     mkdir "../already_tuned" unless -d "../already_tuned";
     mkdir "../already_tuned/tuned" unless -d "../already_tuned/tuned";
     # Show the commands at the same time as we execute them.
-    mysys "rm ../$slot";
-    mysys "rm ../$ltarget";
+    mysys "rm -f ../$slot";
+    mysys "rm -f ../$ltarget";
     if ($selected =~ /gen_/) {
         # generated file: do a copy, not a link.
         mysys "cp -f $selected ../$ltarget";
