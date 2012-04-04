@@ -128,7 +128,8 @@ Cautious users follow steps 1 to 5 below. Urged users follow only 1 and 5.
    To guard against possible bugs (either from gf2x or from the
    compiler).
 
-3) Optional, but recommended: tune Karatsuba/Toom-Cook and FFT multiplication
+3) Optional, but recommended: tune low-level routines, Karatsuba/Toom-Cook and
+   FFT multiplication:
 
       make tune-lowlevel
       make tune-toom
