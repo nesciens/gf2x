@@ -18,7 +18,7 @@
 #  Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 #  02111-1307, USA.
 
-AC_INIT([gf2x], [1.0])
+AC_INIT([gf2x], [1.1])
 : ${CFLAGS=-g -O4}
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([config])
