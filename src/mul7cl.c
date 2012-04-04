@@ -43,7 +43,7 @@
  * as to remove the false dependency on pclmul, that would be nice.
  */
 static inline __v2di
-GF2X_FUNC(mul7clk_c_mul1) (unsigned long a, unsigned long b)
+GF2X_FUNC(mul7cl_mul1) (unsigned long a, unsigned long b)
 {
     __v2di aa = (__v2di) { a, 0 };
     __v2di bb = (__v2di) { b, 0 };
@@ -116,28 +116,28 @@ void gf2x_mul7 (unsigned long *c, const unsigned long *a, const unsigned long *b
 
     __v2di p[22];
 
-    p[0] = GF2X_FUNC(mul7clk_c_mul1)(pa[0], pb[0]);
-    p[1] = GF2X_FUNC(mul7clk_c_mul1)(pa[1], pb[1]);
-    p[2] = GF2X_FUNC(mul7clk_c_mul1)(pa[2], pb[2]);
-    p[3] = GF2X_FUNC(mul7clk_c_mul1)(pa[3], pb[3]);
-    p[4] = GF2X_FUNC(mul7clk_c_mul1)(pa[4], pb[4]);
-    p[5] = GF2X_FUNC(mul7clk_c_mul1)(pa[5], pb[5]);
-    p[6] = GF2X_FUNC(mul7clk_c_mul1)(pa[6], pb[6]);
-    p[7] = GF2X_FUNC(mul7clk_c_mul1)(pa[7], pb[7]);
-    p[8] = GF2X_FUNC(mul7clk_c_mul1)(pa[8], pb[8]);
-    p[9] = GF2X_FUNC(mul7clk_c_mul1)(pa[9], pb[9]);
-    p[10]= GF2X_FUNC(mul7clk_c_mul1)(pa[10], pb[10]);
-    p[11]= GF2X_FUNC(mul7clk_c_mul1)(pa[11], pb[11]);
-    p[12]= GF2X_FUNC(mul7clk_c_mul1)(pa[12], pb[12]);
-    p[13]= GF2X_FUNC(mul7clk_c_mul1)(pa[13], pb[13]);
-    p[14]= GF2X_FUNC(mul7clk_c_mul1)(pa[14], pb[14]);
-    p[15]= GF2X_FUNC(mul7clk_c_mul1)(pa[15], pb[15]);
-    p[16]= GF2X_FUNC(mul7clk_c_mul1)(pa[16], pb[16]);
-    p[17]= GF2X_FUNC(mul7clk_c_mul1)(pa[17], pb[17]);
-    p[18]= GF2X_FUNC(mul7clk_c_mul1)(pa[18], pb[18]);
-    p[19]= GF2X_FUNC(mul7clk_c_mul1)(pa[19], pb[19]);
-    p[20]= GF2X_FUNC(mul7clk_c_mul1)(pa[20], pb[20]);
-    p[21]= GF2X_FUNC(mul7clk_c_mul1)(pa[21], pb[21]);
+    p[0] = GF2X_FUNC(mul7cl_mul1)(pa[0], pb[0]);
+    p[1] = GF2X_FUNC(mul7cl_mul1)(pa[1], pb[1]);
+    p[2] = GF2X_FUNC(mul7cl_mul1)(pa[2], pb[2]);
+    p[3] = GF2X_FUNC(mul7cl_mul1)(pa[3], pb[3]);
+    p[4] = GF2X_FUNC(mul7cl_mul1)(pa[4], pb[4]);
+    p[5] = GF2X_FUNC(mul7cl_mul1)(pa[5], pb[5]);
+    p[6] = GF2X_FUNC(mul7cl_mul1)(pa[6], pb[6]);
+    p[7] = GF2X_FUNC(mul7cl_mul1)(pa[7], pb[7]);
+    p[8] = GF2X_FUNC(mul7cl_mul1)(pa[8], pb[8]);
+    p[9] = GF2X_FUNC(mul7cl_mul1)(pa[9], pb[9]);
+    p[10]= GF2X_FUNC(mul7cl_mul1)(pa[10], pb[10]);
+    p[11]= GF2X_FUNC(mul7cl_mul1)(pa[11], pb[11]);
+    p[12]= GF2X_FUNC(mul7cl_mul1)(pa[12], pb[12]);
+    p[13]= GF2X_FUNC(mul7cl_mul1)(pa[13], pb[13]);
+    p[14]= GF2X_FUNC(mul7cl_mul1)(pa[14], pb[14]);
+    p[15]= GF2X_FUNC(mul7cl_mul1)(pa[15], pb[15]);
+    p[16]= GF2X_FUNC(mul7cl_mul1)(pa[16], pb[16]);
+    p[17]= GF2X_FUNC(mul7cl_mul1)(pa[17], pb[17]);
+    p[18]= GF2X_FUNC(mul7cl_mul1)(pa[18], pb[18]);
+    p[19]= GF2X_FUNC(mul7cl_mul1)(pa[19], pb[19]);
+    p[20]= GF2X_FUNC(mul7cl_mul1)(pa[20], pb[20]);
+    p[21]= GF2X_FUNC(mul7cl_mul1)(pa[21], pb[21]);
 
     __v2di t[13];
 

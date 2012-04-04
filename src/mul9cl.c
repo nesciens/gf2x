@@ -43,7 +43,7 @@
  * as to remove the false dependency on pclmul, that would be nice.
  */
 static inline __v2di
-GF2X_FUNC(mul9clk_c_mul1) (unsigned long a, unsigned long b)
+GF2X_FUNC(mul9cl_mul1) (unsigned long a, unsigned long b)
 {
     __v2di aa = (__v2di) { a, 0 };
     __v2di bb = (__v2di) { b, 0 };

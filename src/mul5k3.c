@@ -43,7 +43,7 @@
  * as to remove the false dependency on pclmul, that would be nice.
  */
 static inline __v2di
-GF2X_FUNC(mul5k3_c_gf2x_mul1) (unsigned long a, unsigned long b)
+GF2X_FUNC(mul5k3_mul1) (unsigned long a, unsigned long b)
 {
     __v2di aa = (__v2di) { a, 0 };
     __v2di bb = (__v2di) { b, 0 };
@@ -53,7 +53,7 @@ GF2X_FUNC(mul5k3_c_gf2x_mul1) (unsigned long a, unsigned long b)
 /* uses the variant of Karatsuba with 6 multiplications
    {d, 2} <- {a+2,1} * {b+2,1} */
 GF2X_STORAGE_CLASS_mul3 void
-GF2X_FUNC(mul5k3_c_gf2x_mul3c) (unsigned long *c, const unsigned long *a, const unsigned long *b,
+GF2X_FUNC(mul5k3_mul3c) (unsigned long *c, const unsigned long *a, const unsigned long *b,
             unsigned long *d)
 {
   unsigned long aa[3], bb[3];
@@ -66,12 +66,12 @@ GF2X_FUNC(mul5k3_c_gf2x_mul3c) (unsigned long *c, const unsigned long *a, const 
   bb[0] = b[1]^b[2];
   bb[1] = b[0]^b[2];
   bb[2] = b[0]^b[1];
-  p0  = GF2X_FUNC(mul5k3_c_gf2x_mul1)(a[0], b[0]);
-  p1  = GF2X_FUNC(mul5k3_c_gf2x_mul1)(a[1], b[1]);
-  p2  = GF2X_FUNC(mul5k3_c_gf2x_mul1)(a[2], b[2]);
-  pp0 = GF2X_FUNC(mul5k3_c_gf2x_mul1)(aa[0], bb[0]);
-  pp1 = GF2X_FUNC(mul5k3_c_gf2x_mul1)(aa[1], bb[1]);
-  pp2 = GF2X_FUNC(mul5k3_c_gf2x_mul1)(aa[2], bb[2]);
+  p0  = GF2X_FUNC(mul5k3_mul1)(a[0], b[0]);
+  p1  = GF2X_FUNC(mul5k3_mul1)(a[1], b[1]);
+  p2  = GF2X_FUNC(mul5k3_mul1)(a[2], b[2]);
+  pp0 = GF2X_FUNC(mul5k3_mul1)(aa[0], bb[0]);
+  pp1 = GF2X_FUNC(mul5k3_mul1)(aa[1], bb[1]);
+  pp2 = GF2X_FUNC(mul5k3_mul1)(aa[2], bb[2]);
 
   __v2di ce0, ce2, ce4;
   __v2di co1, co3;
@@ -92,7 +92,7 @@ GF2X_FUNC(mul5k3_c_gf2x_mul3c) (unsigned long *c, const unsigned long *a, const 
 /* uses the variant of Karatsuba with 6 multiplications,
    assumes {d, 2} = {a+2,1} * {b+2,1} */
 GF2X_STORAGE_CLASS_mul3 void
-GF2X_FUNC(mul5k3_c_gf2x_mul3b) (unsigned long *c, const unsigned long *a, const unsigned long *b,
+GF2X_FUNC(mul5k3_mul3b) (unsigned long *c, const unsigned long *a, const unsigned long *b,
             const unsigned long *d)
 {
   unsigned long aa[3], bb[3];
@@ -105,12 +105,12 @@ GF2X_FUNC(mul5k3_c_gf2x_mul3b) (unsigned long *c, const unsigned long *a, const 
   bb[0] = b[1]^b[2];
   bb[1] = b[0]^b[2];
   bb[2] = b[0]^b[1];
-  p0  = GF2X_FUNC(mul5k3_c_gf2x_mul1)(a[0], b[0]);
-  p1  = GF2X_FUNC(mul5k3_c_gf2x_mul1)(a[1], b[1]);
+  p0  = GF2X_FUNC(mul5k3_mul1)(a[0], b[0]);
+  p1  = GF2X_FUNC(mul5k3_mul1)(a[1], b[1]);
   p2  = _mm_loadu_si128((__v2di *) d);
-  pp0 = GF2X_FUNC(mul5k3_c_gf2x_mul1)(aa[0], bb[0]);
-  pp1 = GF2X_FUNC(mul5k3_c_gf2x_mul1)(aa[1], bb[1]);
-  pp2 = GF2X_FUNC(mul5k3_c_gf2x_mul1)(aa[2], bb[2]);
+  pp0 = GF2X_FUNC(mul5k3_mul1)(aa[0], bb[0]);
+  pp1 = GF2X_FUNC(mul5k3_mul1)(aa[1], bb[1]);
+  pp2 = GF2X_FUNC(mul5k3_mul1)(aa[2], bb[2]);
 
   __v2di ce0, ce2, ce4;
   __v2di co1, co3;
@@ -134,14 +134,14 @@ void gf2x_mul5 (unsigned long *c, const unsigned long *a, const unsigned long *b
   unsigned long aa[3], bb[3], ab[6], ab3, ab4, ab5, d[2];
 
     gf2x_mul2 (c+6, a+3, b+3);
-    GF2X_FUNC(mul5k3_c_gf2x_mul3c) (c, a, b, d);
+    GF2X_FUNC(mul5k3_mul3c) (c, a, b, d);
     aa[0] = a[0] ^ a[3];
     aa[1] = a[1] ^ a[4];
     aa[2] = a[2];
     bb[0] = b[0] ^ b[3];
     bb[1] = b[1] ^ b[4];
     bb[2] = b[2];
-    GF2X_FUNC(mul5k3_c_gf2x_mul3b) (ab, aa, bb, d);
+    GF2X_FUNC(mul5k3_mul3b) (ab, aa, bb, d);
     ab3 = ab[3] ^ c[3];
     ab4 = ab[4] ^ c[4];
     ab5 = ab[5] ^ c[5];

@@ -44,7 +44,7 @@
  * as to remove the false dependency on pclmul, that would be nice.
  */
 static inline __v2di
-GF2X_FUNC(mul4clk_c_mul1) (unsigned long a, unsigned long b)
+GF2X_FUNC(mul4cl1_mul1) (unsigned long a, unsigned long b)
 {
     __v2di aa = (__v2di) { a, 0 };
     __v2di bb = (__v2di) { b, 0 };
@@ -64,15 +64,15 @@ void gf2x_mul4 (unsigned long *c, const unsigned long *a, const unsigned long *b
   aa7 = a[1] ^ a[3]; bb7 = b[1] ^ b[3];
   aa8 = aa4 ^ aa5;   bb8 = bb4 ^ bb5;
 
-  m0 = GF2X_FUNC(mul4clk_c_mul1)( a[0],  b[0]);
-  m1 = GF2X_FUNC(mul4clk_c_mul1)( a[1],  b[1]);
-  m2 = GF2X_FUNC(mul4clk_c_mul1)( a[2],  b[2]);
-  m3 = GF2X_FUNC(mul4clk_c_mul1)( a[3],  b[3]);
-  m4 = GF2X_FUNC(mul4clk_c_mul1)(aa4, bb4);
-  m5 = GF2X_FUNC(mul4clk_c_mul1)(aa5, bb5);
-  m6 = GF2X_FUNC(mul4clk_c_mul1)(aa6, bb6);
-  m7 = GF2X_FUNC(mul4clk_c_mul1)(aa7, bb7);
-  m8 = GF2X_FUNC(mul4clk_c_mul1)(aa8, bb8);
+  m0 = GF2X_FUNC(mul4cl1_mul1)( a[0],  b[0]);
+  m1 = GF2X_FUNC(mul4cl1_mul1)( a[1],  b[1]);
+  m2 = GF2X_FUNC(mul4cl1_mul1)( a[2],  b[2]);
+  m3 = GF2X_FUNC(mul4cl1_mul1)( a[3],  b[3]);
+  m4 = GF2X_FUNC(mul4cl1_mul1)(aa4, bb4);
+  m5 = GF2X_FUNC(mul4cl1_mul1)(aa5, bb5);
+  m6 = GF2X_FUNC(mul4cl1_mul1)(aa6, bb6);
+  m7 = GF2X_FUNC(mul4cl1_mul1)(aa7, bb7);
+  m8 = GF2X_FUNC(mul4cl1_mul1)(aa8, bb8);
 
   t0 = m0 ^ m1;
   t1 = m2 ^ m3;

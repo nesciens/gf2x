@@ -44,7 +44,7 @@
  * as to remove the false dependency on pclmul, that would be nice.
  */
 static inline __v2di
-GF2X_FUNC(mul3cl_c_gf2x_mul1) (unsigned long a, unsigned long b)
+GF2X_FUNC(mul3cl_mul1) (unsigned long a, unsigned long b)
 {
     __v2di aa = (__v2di) { a, 0 };
     __v2di bb = (__v2di) { b, 0 };
@@ -64,12 +64,12 @@ void gf2x_mul3 (unsigned long *c, const unsigned long *a, const unsigned long *b
   bb[0] = b[1]^b[2];
   bb[1] = b[0]^b[2];
   bb[2] = b[0]^b[1];
-  p0  = GF2X_FUNC(mul3cl_c_gf2x_mul1)(a[0], b[0]);
-  p1  = GF2X_FUNC(mul3cl_c_gf2x_mul1)(a[1], b[1]);
-  p2  = GF2X_FUNC(mul3cl_c_gf2x_mul1)(a[2], b[2]);
-  pp0 = GF2X_FUNC(mul3cl_c_gf2x_mul1)(aa[0], bb[0]);
-  pp1 = GF2X_FUNC(mul3cl_c_gf2x_mul1)(aa[1], bb[1]);
-  pp2 = GF2X_FUNC(mul3cl_c_gf2x_mul1)(aa[2], bb[2]);
+  p0  = GF2X_FUNC(mul3cl_mul1)(a[0], b[0]);
+  p1  = GF2X_FUNC(mul3cl_mul1)(a[1], b[1]);
+  p2  = GF2X_FUNC(mul3cl_mul1)(a[2], b[2]);
+  pp0 = GF2X_FUNC(mul3cl_mul1)(aa[0], bb[0]);
+  pp1 = GF2X_FUNC(mul3cl_mul1)(aa[1], bb[1]);
+  pp2 = GF2X_FUNC(mul3cl_mul1)(aa[2], bb[2]);
 
   __v2di ce0, ce2, ce4;
   __v2di co1, co3;
