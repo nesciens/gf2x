@@ -56,7 +56,7 @@ mysys "cd .. ; $make";
 my @summary = ();
 
 for my $s (sort { $a <=> $b } keys %sizes) {
-    print STDERR "Benching for $s words\n";
+    print STDERR "Tuning for $s word(s)\n";
     # Now we check everything, always.
 #    if (scalar @{$sizes{$s}} == 1 && !defined($ENV{'BENCH'})) {
 #        (my $x = $sizes{$s}->[0]) =~ s/^tune_//;
