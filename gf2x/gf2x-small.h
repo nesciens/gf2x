@@ -83,6 +83,13 @@ gf2x_mul9(unsigned long *c, const unsigned long *a, const unsigned long *b)
 }
 #endif
 
+/* This seems rather useless. The point here is that for tuning, we must
+ * define the sub-functions of the to-be-tuned implementation differently
+ * from the ones of the currently enabled implementation (we use tuning_
+ * as a prefix). That implementation might happen to be actually the same
+ * code. If we don't do this, we end up with duplicate static functions
+ * in the compilation units.
+ */
 #ifndef GF2X_FUNC
 #define GF2X_FUNC(x)       reserved_ ## x
 #endif
