@@ -78,15 +78,22 @@ for my $s (sort { $a <=> $b } keys %sizes) {
     $best->[0] =~ /tune_(.*)$/ or die;
     my $selected="$1.c";
     my $msg = "mul$s -> $selected [ $best->[1] ns ]";
+    print STDERR "Selected $selected\n";
+    my $link_target_in_already_tuned_subdir = "../../src/$selected";
+    # Arrange so that $selected is something reachable for us, and also
+    # so that $link_target_in_already_tuned_subdir is reachable from the
+    # already_tuned/tuned subdirectory.
     if (! -f $selected) {
         my $e;
         if (defined($e=$ENV{'srcdir'}) && -f "$e/$selected") {
+            # We are building out of source, so we resort to putting an
+            # absolute path in the link target.
+            $link_target_in_already_tuned_subdir="$e/$selected";
             $selected="$e/$selected";
         } else {
             die "Cannot find $selected anywhere !"
         }
     }
-    print STDERR "Selected $selected\n";
     my $ltarget="already_tuned/tuned/gf2x_mul$s.h";
     my $slot="gf2x/gf2x_mul$s.h";
     # my $prepared="ready_gf2x_mul$s.c";
@@ -109,7 +116,7 @@ for my $s (sort { $a <=> $b } keys %sizes) {
         # generated file: do a copy, not a link.
         mysys "cp -f $selected ../$ltarget";
     } else {
-        mysys "ln -sf ../../src/$selected ../$ltarget";
+        mysys "ln -sf $link_target_in_already_tuned_subdir ../$ltarget";
     }
     mysys "ln -sf ../$ltarget ../$slot";
 
