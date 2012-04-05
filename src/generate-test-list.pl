@@ -48,8 +48,8 @@ while (<>) {
         my @sizes = split(' ', $1);
         for my $x (@sizes) {
             $fragment .= <<EOF;
-tuning_undefs_$x.h: tuning_undefs_pre.h ; sed -e s/\@\@SIZE\@\@/$x/g < \$< > \$\@
-tuneup_$x.c: \$(srcdir)/tuneup_pre.c ; sed -e s/\@\@SIZE\@\@/$x/g < \$< > \$\@
+tuning_undefs_$x.h: \$(srcdir)/tuning_undefs_pre.h ; sed -e s/\@\@SIZE\@\@/$x/g < \$(srcdir)/tuning_undefs_pre.h > tuning_undefs_$x.h
+tuneup_$x.c: \$(srcdir)/tuneup_pre.c ; sed -e s/\@\@SIZE\@\@/$x/g < \$(srcdir)/tuneup_pre.c > tuneup_$x.c
 tuneup_$x.\$(OBJEXT): tuning_undefs_$x.h
 BUILT_SOURCES +=tuneup_$x.c tuning_undefs_$x.h
 EXTRA_LTLIBRARIES+=libtuneup-s$x.la
