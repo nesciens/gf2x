@@ -1,3 +1,12 @@
+commit 0d39d3e853f77e309175cd0714d5c13ec07e2abe
+Author: Emmanuel Thomé <Emmanuel.Thome@inria.fr>
+Date:   Thu May 31 22:53:47 2012 +0200
+
+    release gf2x-1.1
+
+ trunk/ChangeLog |  277 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 272 insertions(+), 5 deletions(-)
+
 commit 99a2b4bc86f123316c10cd85e8383127defa6e4f
 Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
 Date:   Thu Apr 5 07:52:35 2012 +0000
