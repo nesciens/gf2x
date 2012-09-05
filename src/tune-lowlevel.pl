@@ -77,36 +77,54 @@ for my $s (sort { $a <=> $b } keys %sizes) {
     my $best = $results[0];
     $best->[0] =~ /tune_(.*)$/ or die;
     my $selected="$1.c";
-    my $msg = "mul$s -> $selected [ $best->[1] ns ]";
     print STDERR "Selected $selected\n";
-    my $link_target_in_already_tuned_subdir = "../../src/$selected";
-    # Arrange so that $selected is something reachable for us, and also
-    # so that $link_target_in_already_tuned_subdir is reachable from the
-    # already_tuned/tuned subdirectory.
-    if (! -f $selected) {
-        my $e;
-        if (defined($e=$ENV{'srcdir'}) && -f "$e/$selected") {
-            # We are building out of source, so we resort to putting an
-            # absolute path in the link target.
-            $link_target_in_already_tuned_subdir="$e/$selected";
-            $selected="$e/$selected";
-        } else {
-            die "Cannot find $selected anywhere !"
-        }
-    }
+    my $keep_already_selected;
     my $ltarget="already_tuned/tuned/gf2x_mul$s.h";
     my $slot="gf2x/gf2x_mul$s.h";
-    # my $prepared="ready_gf2x_mul$s.c";
-    # mysys "sed -e s///g $selected > $prepared";
-    my $rc=system "diff ../$slot $selected > /dev/null";
+    my $link_target_in_already_tuned_subdir;
+    for my $r (@results) {
+        $r->[0] =~ /tune_(.*)$/ or die;
+        my $cfile = $1 . ".c";
+        my $msg = "mul$s -> $cfile [ $r->[1] ns ]";
+        if ($r == $best) {
+            $msg .= " **BEST**";
+        }
+        my $xxlink_target_in_already_tuned_subdir = "../../src/$cfile";
+        # Arrange so that $cfile is something reachable for us, and also
+        # so that $xxlink_target_in_already_tuned_subdir is reachable from the
+        # already_tuned/tuned subdirectory.
+        if (! -f $cfile) {
+            my $e;
+            if (defined($e=$ENV{'srcdir'}) && -f "$e/$cfile") {
+                # We are building out of source, so we resort to putting an
+                # absolute path in the link target.
+                $xxlink_target_in_already_tuned_subdir="$e/$cfile";
+                $cfile="$e/$cfile";
+            } else {
+                die "Cannot find $cfile anywhere !"
+            }
+        }
+        # my $prepared="ready_gf2x_mul$s.c";
+        # mysys "sed -e s///g $selected > $prepared";
+        my $rc=system "diff ../$slot $cfile > /dev/null";
+        if ($rc == 0) {
+            $msg .= " (previous)";
+            if ($r == $best) {
+                $msg .= " -> no change";
+                $keep_already_selected = 1;
+            }
+        }
+        if ($r == $best) {
+            $selected = $cfile;
+            $link_target_in_already_tuned_subdir = $xxlink_target_in_already_tuned_subdir;
+        }
+        push @summary, $msg . "\n";
+    }
 
-    if ($rc == 0) {
-        print STDERR "Choice identical to the selected file\n";
-        push @summary, "$msg (unchanged)\n";
-        # unlink $prepared;
+
+    if ($keep_already_selected) {
         next;
     }
-    push @summary, "$msg\n";
     mkdir "../already_tuned" unless -d "../already_tuned";
     mkdir "../already_tuned/tuned" unless -d "../already_tuned/tuned";
     # Show the commands at the same time as we execute them.
