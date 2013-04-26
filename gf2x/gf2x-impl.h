@@ -74,12 +74,12 @@ extern void gf2x_mul_tc3w(unsigned long *c, const unsigned long *a, const unsign
 		        long n, unsigned long *stk);
 extern void gf2x_mul_tc4(unsigned long *c, const unsigned long *a, const unsigned long *b,
 			long n, unsigned long *stk);
-extern short gf2x_best_toom(unsigned int);
+extern short gf2x_best_toom(unsigned long);
 extern long gf2x_toomspace(long);
 
 extern void gf2x_mul_tc3u(unsigned long * c, const unsigned long * a, long sa,
 	      const unsigned long * b, unsigned long * stk);
-extern short gf2x_best_utoom(unsigned int);
+extern short gf2x_best_utoom(unsigned long);
 extern long gf2x_toomuspace(long);
 
 

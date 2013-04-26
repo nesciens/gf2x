@@ -40,7 +40,7 @@ void set_hash_define(struct hash_define * ptr, const char * name, const char *v)
 {
     ptr->identifier = strdup(name);
     ptr->string = strdup(v);
-    unsigned int l = strlen(ptr->string);
+    unsigned long l = strlen(ptr->string);
     for( ; l && isspace(ptr->string[l-1]) ; l--);
     ptr->string[l] = '\0';
 }
@@ -57,7 +57,7 @@ int search_hash_define(const char * a, struct hash_define * b)
 }
 
 
-void replace(struct hash_define * ptr, unsigned int n, const char * fname)
+void replace(struct hash_define * ptr, unsigned long n, const char * fname)
 {
 
     qsort(ptr, n, sizeof(struct hash_define), (sortfunc_t) & cmp_hash_define);
@@ -123,7 +123,7 @@ void replace(struct hash_define * ptr, unsigned int n, const char * fname)
         fprintf(fo,"#define %s\t\t%s\n", id, loc->string);
         loc->string[0]='\0';
     }
-    for(unsigned int i = 0 ; i < n ; i++) {
+    for(unsigned long i = 0 ; i < n ; i++) {
         struct hash_define * loc = ptr + i;
         if (loc->string[0] != '\0') {
             fprintf(stderr, "Warning: replacement string %s not used ; value:\n%s\n", loc->identifier, loc->string);

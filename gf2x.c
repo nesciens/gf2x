@@ -89,17 +89,17 @@ void gf2x_mul_pool_clear(gf2x_mul_pool_t p)
 }
 
 void gf2x_mul(unsigned long * c,
-        const unsigned long * a, unsigned int sa,
-        const unsigned long * b, unsigned int sb)
+        const unsigned long * a, unsigned long sa,
+        const unsigned long * b, unsigned long sb)
 {
     gf2x_mul_r(c, a, sa, b, sb, global_pool);
 }
 
 void gf2x_mul_r(unsigned long * c,
-        const unsigned long * a, unsigned int sa,
-        const unsigned long * b, unsigned int sb, gf2x_mul_pool_t pool)
+        const unsigned long * a, unsigned long sa,
+        const unsigned long * b, unsigned long sb, gf2x_mul_pool_t pool)
 {
-    unsigned int sc = sa + sb;
+    unsigned long sc = sa + sb;
     /* As a starting guess, assume that c may alias a or b */
     unsigned long * dst = c;
 
@@ -138,7 +138,7 @@ void gf2x_mul_r(unsigned long * c,
     }
 #endif
 
-    unsigned int sp1, sp2, sp3, sp;
+    unsigned long sp1, sp2, sp3, sp;
     sp1 = gf2x_toomspace(sa);	// Space for balanced TC routines
     sp2 = gf2x_toomuspace(2 * sa);	// Space for unbalanced TC routines
     sp3 = 2 * sa + gf2x_toomspace(sa);	// Space for unbalanced TC routines w/ lazy cut
@@ -168,7 +168,7 @@ void gf2x_mul_r(unsigned long * c,
     } else {
         unsigned long *v = pool->stk + gf2x_toomspace(sa);
 
-        unsigned int i, j;
+        unsigned long i, j;
 
         memset(dst, 0, sc * sizeof(unsigned long));
 
@@ -193,7 +193,7 @@ void gf2x_mul_r(unsigned long * c,
 
             {
                 const unsigned long *t;
-                unsigned int st;
+                unsigned long st;
 
                 /* Swap a and b, and go for the next spin */
                 t = a;

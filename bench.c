@@ -37,7 +37,7 @@ double runtime(void)
 
 int main(int argc, char * argv[])
 {
-    unsigned int i;
+    unsigned long i;
     unsigned long n0 = 1;
     unsigned long n = 200;
     if (argc > 1) {
@@ -61,7 +61,7 @@ int main(int argc, char * argv[])
         b[i] = rand();
     }
 
-    unsigned int jmax = 100000;
+    unsigned long jmax = 100000;
 
     for(i = n0 ; i < n ; i++) {
         /* warm up */
@@ -69,7 +69,7 @@ int main(int argc, char * argv[])
         gf2x_mul(c,a,i,b,i);
         gf2x_mul(c,a,i,b,i);
         double t = runtime();
-        unsigned int j;
+        unsigned long j;
         double d;
 #if 0
         for(j = 0 ; j < jmax ; j++) {

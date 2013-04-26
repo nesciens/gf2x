@@ -52,13 +52,13 @@
 const char * thresholds_file = "thresholds.h";
 
 struct hash_define replacements[100];
-unsigned int nrepl=0;
+unsigned long nrepl=0;
 
 /* We build our private table here */
 short best_tab[GF2X_TOOM_TUNING_LIMIT];
 short best_utab[GF2X_TOOM_TUNING_LIMIT];
-unsigned int blim = 0;
-unsigned int ulim = 0;
+unsigned long blim = 0;
+unsigned long ulim = 0;
 
 struct fft_tuning_pair {
     int64_t sz;
@@ -66,7 +66,7 @@ struct fft_tuning_pair {
 };
 
 struct fft_tuning_pair fft_tbl[1000];
-unsigned int nstairs = 0;
+unsigned long nstairs = 0;
 
 char * toom_info_string = "\"placeholder\"";
 char * fft_info_string = "\"placeholder\"";
@@ -81,7 +81,7 @@ char * fft_info_string = "\"placeholder\"";
 
 int startswith(char ** pptr, const char * key)
 {
-    unsigned int l = strlen(key);
+    unsigned long l = strlen(key);
     if (strncmp(*pptr, key, l) != 0)
         return 0;
     *pptr += l;
@@ -245,12 +245,12 @@ void get_toom_thresholds()
      * GF2X_MUL_TOOM4_THRESHOLD
      * GF2X_MUL_TOOM4_ALWAYS_THRESHOLD
      */
-    unsigned int t3 = UINT_MAX;
-    unsigned int tw = UINT_MAX;
-    unsigned int t4 = UINT_MAX;
-    unsigned int t4a = UINT_MAX;
+    unsigned long t3 = UINT_MAX;
+    unsigned long tw = UINT_MAX;
+    unsigned long t4 = UINT_MAX;
+    unsigned long t4a = UINT_MAX;
 
-    unsigned int i;
+    unsigned long i;
 
     for (i = BESTMIN + 1; i && i <= blim; i++) {
 	if (best_tab[i - 1] == GF2X_SELECT_TC3) {
@@ -310,9 +310,9 @@ void get_utoom_thresholds()
      * GF2X_MUL_TOOM3U_THRESHOLD
      * GF2X_MUL_TOOM3U_ALWAYS_THRESHOLD
      */
-    unsigned int tu = UINT_MAX;
-    unsigned int tua = UINT_MAX;
-    unsigned int i;
+    unsigned long tu = UINT_MAX;
+    unsigned long tua = UINT_MAX;
+    unsigned long i;
 
     for (i = BESTMINU + 1; i && i <= ulim; i++) {
 	if (best_utab[i - 1] == GF2X_SELECT_UNB_TC3U) {
@@ -339,7 +339,7 @@ void get_utoom_thresholds()
 
 void digest_table()
 {
-    unsigned int i;
+    unsigned long i;
 
     if (blim || ulim) {
         set_hash_define(replacements + nrepl++,
@@ -367,9 +367,9 @@ void digest_table()
                 (sortfunc_t) &compare_fft_tuning);
 
         /* coalesce fft results */
-        unsigned int j = 0;
+        unsigned long j = 0;
         for(i = 0 ; i < nstairs ; ) {
-            unsigned int k;
+            unsigned long k;
             for(k = i ; k < nstairs ; k++) {
                 if (fft_tbl[k].method != fft_tbl[i].method)
                     break;

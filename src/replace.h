@@ -35,7 +35,7 @@ struct hash_define	{
 
 void set_hash_define_int(struct hash_define * ptr, const char * name, int x);
 void set_hash_define(struct hash_define * ptr, const char * name, const char * v);
-void replace(struct hash_define * ptr, unsigned int n, const char * fname);
+void replace(struct hash_define * ptr, unsigned long n, const char * fname);
 
 #ifdef __cplusplus
 }

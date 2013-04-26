@@ -40,8 +40,8 @@ extern "C" {
  * have c==a or c==b), but any other kind of overlap is unsupported).
  */
 extern void gf2x_mul(unsigned long *c,
-		const unsigned long *a, unsigned int an,
-		const unsigned long *b, unsigned int bn);
+		const unsigned long *a, unsigned long an,
+		const unsigned long *b, unsigned long bn);
 
 /* The second version is reentrant */
 struct gf2x_mul_pool_s {
@@ -53,8 +53,8 @@ extern void gf2x_mul_pool_init(gf2x_mul_pool_t);
 extern void gf2x_mul_pool_clear(gf2x_mul_pool_t);
 
 extern void gf2x_mul_r(unsigned long *c,
-		const unsigned long *a, unsigned int an,
-		const unsigned long *b, unsigned int bn, gf2x_mul_pool_t);
+		const unsigned long *a, unsigned long an,
+		const unsigned long *b, unsigned long bn, gf2x_mul_pool_t);
 
 #ifdef __cplusplus
 }

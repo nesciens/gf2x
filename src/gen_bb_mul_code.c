@@ -27,8 +27,8 @@
 
 int main(int argc, char *argv[])
 {
-    unsigned int i;
-    unsigned int w, K, CHOP, REM, fn;
+    unsigned long i;
+    unsigned long w, K, CHOP, REM, fn;
     unsigned long MASK, mask2;
 
     if (argc != 3) {
