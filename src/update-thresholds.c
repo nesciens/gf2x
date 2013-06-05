@@ -1,6 +1,6 @@
 /* This file is part of the gf2x library.
 
-   Copyright 2007, 2008, 2009
+   Copyright 2007, 2008, 2009, 2013
    Richard Brent, Pierrick Gaudry, Emmanuel Thome', Paul Zimmermann
 
    This program is free software; you can redistribute it and/or modify it
@@ -294,6 +294,15 @@ void get_toom_thresholds()
 		tw, t3);
         printf("/* Warning: Something fishy happened with this tuning */\n");
     }
+
+    /* GF2X_MUL_TOOM4_ALWAYS_THRESHOLD must be >= 30 */
+    if (t4a < 30)
+      {
+	fprintf (stderr,
+                 "GF2X_MUL_TOOM4_ALWAYS_THRESHOLD(%d) must be >= 30\n",
+                 t4a);
+        exit (1);
+      }
 
     set_hash_define_int(replacements + nrepl++, "GF2X_MUL_TOOM_THRESHOLD", t3);
     set_hash_define_int(replacements + nrepl++, "GF2X_MUL_TOOMW_THRESHOLD", tw);

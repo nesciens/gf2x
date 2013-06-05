@@ -140,10 +140,10 @@ Cautious users follow steps 1 to 5 below. Urged users follow only 1 and 5.
    Tuning unfortunately takes a long while ; it is possible to decrease
    the time spent in tuning using additional parameters to the ``make
    tune-*'' commands, more specifically:
-      make tune-toom TOOM_TUNING_LIMIT=<max size in words, at most 2048>
+      make tune-toom TOOM_TUNING_LIMIT=<max size in words>
       make tune-fft FFT_TUNING_LIMIT=<max size in words>
    The default values for TOOM_TUNING_LIMIT and FFT_TUNING_LIMIT are 2048
-   and 8000000, respectively. TOOM_TUNING_LIMIT must not exceed 2048,
+   and 8000000, respectively. TOOM_TUNING_LIMIT must be in the range [30,2048],
    while FFT_TUNING_LIMIT is only limited by the available memory.
 
    More detailed information on tuning can be found in the
