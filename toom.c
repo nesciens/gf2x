@@ -1,6 +1,6 @@
 /* This file is part of the gf2x library.
 
-   Copyright 2007, 2008, 2009
+   Copyright 2007, 2008, 2009, 2013
    Richard Brent, Pierrick Gaudry, Emmanuel Thome', Paul Zimmermann
 
    This program is free software; you can redistribute it and/or modify it
@@ -53,6 +53,9 @@ short gf2x_best_toom(unsigned long n)
     if (n < GF2X_MUL_TOOMW_THRESHOLD)
 	return GF2X_SELECT_KARA;		// KarMul
 
+#if GF2X_MUL_TOOM4_ALWAYS_THRESHOLD < 30
+#error "GF2X_MUL_TOOM4_ALWAYS_THRESHOLD must be >= 30"
+#endif
     if (n >= GF2X_MUL_TOOM4_ALWAYS_THRESHOLD)
 	return GF2X_SELECT_TC4;		// Toom4Mul
 
