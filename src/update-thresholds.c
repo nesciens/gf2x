@@ -103,7 +103,7 @@ void read_table()
         char token[16];
         char * ptr;
 
-        fgets(buf, sizeof(buf), stdin);
+        ptr = fgets(buf, sizeof(buf), stdin);
         if (feof(stdin))
             break;
         if (buf[0] == '#')
@@ -134,7 +134,7 @@ void read_table()
 
         if (strcmp(token, "toom") == 0) {
             best_tab[sz - 1] = m;
-            if (sz > blim) {
+            if (sz > (int64_t) blim) {
                 blim = sz;
             }
             continue;
@@ -142,7 +142,7 @@ void read_table()
 
         if (strcmp(token, "utoom") == 0) {
             best_utab[sz - 1] = m;
-            if (sz > ulim) {
+            if (sz > (int64_t) ulim) {
                 ulim = sz;
             }
             continue;
@@ -290,7 +290,7 @@ void get_toom_thresholds()
     /* Now do some sanity checks */
     if (!(tw <= t3)) {
 	fprintf(stderr,
-		"GF2X_MUL_TOOMW_THRESHOLD(%d) must be below GF2X_MUL_TOOM_THRESHOLD(%d)\n",
+		"GF2X_MUL_TOOMW_THRESHOLD(%lu) must be below GF2X_MUL_TOOM_THRESHOLD(%lu)\n",
 		tw, t3);
         printf("/* Warning: Something fishy happened with this tuning */\n");
     }
@@ -299,7 +299,7 @@ void get_toom_thresholds()
     if (t4a < 30)
       {
 	fprintf (stderr,
-                 "GF2X_MUL_TOOM4_ALWAYS_THRESHOLD(%d) must be >= 30\n",
+                 "GF2X_MUL_TOOM4_ALWAYS_THRESHOLD(%lu) must be >= 30\n",
                  t4a);
         exit (1);
       }
@@ -355,14 +355,14 @@ void digest_table()
                 "GF2X_TOOM_TUNING_INFO", toom_info_string);
 
         if (blim) {
-            printf("toom_table computed up to size %u\n", blim);
+            printf("toom_table computed up to size %lu\n", blim);
             fill_holes(best_tab, blim, GF2X_SELECT_TC4);
             get_toom_thresholds();
             prepare_and_push_hash_define_tbl("GF2X_BEST_TOOM_TABLE", best_tab, blim);
         }
 
         if (ulim) {
-            printf("utoom_table computed up to size %u\n", ulim);
+            printf("utoom_table computed up to size %lu\n", ulim);
             fill_holes(best_utab, ulim, GF2X_SELECT_UNB_TC3U);
             get_utoom_thresholds();
             prepare_and_push_hash_define_tbl("GF2X_BEST_UTOOM_TABLE",best_utab,ulim);
