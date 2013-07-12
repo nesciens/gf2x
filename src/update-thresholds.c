@@ -290,9 +290,8 @@ void get_toom_thresholds()
     /* Now do some sanity checks */
     if (!(tw <= t3)) {
 	fprintf(stderr,
-		"GF2X_MUL_TOOMW_THRESHOLD(%lu) must be below GF2X_MUL_TOOM_THRESHOLD(%lu)\n",
+		"Note: we normally expect GF2X_MUL_TOOMW_THRESHOLD(%lu) to be below GF2X_MUL_TOOM_THRESHOLD(%lu). It is not the case here, but it is not an error either.\n",
 		tw, t3);
-        printf("/* Warning: Something fishy happened with this tuning */\n");
     }
 
     /* GF2X_MUL_TOOM4_ALWAYS_THRESHOLD must be >= 30 */
