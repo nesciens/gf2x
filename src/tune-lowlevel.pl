@@ -95,7 +95,7 @@ for my $s (sort { $a <=> $b } keys %sizes) {
         # already_tuned/tuned subdirectory.
         if (! -f $cfile) {
             my $e;
-            if (defined($e=$ENV{'srcdir'}) && -f "$e/$cfile") {
+            if (defined($e=$ENV{'abs_srcdir'}) && -f "$e/$cfile") {
                 # We are building out of source, so we resort to putting an
                 # absolute path in the link target.
                 $xxlink_target_in_already_tuned_subdir="$e/$cfile";

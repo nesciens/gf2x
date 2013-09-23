@@ -578,7 +578,7 @@ endif
 EXTRA_PROGRAMS+=$(LOWLEVEL)
 tune-lowlevel: $(LOWLEVEL)
 	cd $(top_builddir) ; $(MAKE)
-	MAKE="$(MAKE)" srcdir=$(srcdir)	\
+	MAKE="$(MAKE)" abs_srcdir=$(abs_srcdir)	\
 	perl $(srcdir)/tune-lowlevel.pl $(LOWLEVEL)
 EXTRA_DIST+=tune-lowlevel.pl
 
