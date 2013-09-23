@@ -74,8 +74,12 @@ AC_DEFUN([VERIFY_WORDSIZE],[
 
 AC_DEFUN([SSE2_EXAMPLE],[AC_LANG_SOURCE([
 #include <emmintrin.h>
-__v2di x;
-int main() {}
+__v2di x;       /* Our code currently uses these, but it should not */
+int main() {
+    __m128i foo = _mm_setr_epi32(0x8cab1e00, 0x12345678, 0xdeadbeef, 0xbebecafe);
+    foo = _mm_andnot_si128(_mm_setzero_si128(), foo);
+    return _mm_extract_epi16(foo, 0);
+}
 ])])
 
 # Check whether we need some flag such as -msse2 in order to enable sse-2
