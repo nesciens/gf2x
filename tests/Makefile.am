@@ -29,7 +29,7 @@ check_addmul_SOURCES=check-addmul.c
 check_mul_LDADD=../libgf2x.la
 check_addmul_LDADD=../libgf2x.la
 
-TESTS_ENVIRONMENT=$(SHELL) 2>/dev/null
+LOG_COMPILER=$(SHELL) 2>/dev/null
 TESTS=do-check-mul.sh
 
 EXTRA_DIST=$(TESTS) check-mul.res

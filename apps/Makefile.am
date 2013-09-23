@@ -6,7 +6,7 @@ factor_SOURCES=factor.cpp halfgcd.cpp
 noinst_HEADERS=halfgcd.hpp
 factor_LDADD=../libgf2x.la -lntl -lgmp
 
-TESTS_ENVIRONMENT=$(SHELL) 2>/dev/null
+LOG_COMPILER=$(SHELL) 2>/dev/null
 TESTS=check-factor-000.sh check-factor-001.sh	\
       check-factor-002.sh check-factor-003.sh
 
