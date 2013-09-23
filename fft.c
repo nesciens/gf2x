@@ -751,8 +751,8 @@ static void split_reconstruct(unsigned long * c, unsigned long * c1, unsigned lo
 #ifdef DEBUG
     for (j = 0; j < delta; j++) {
 	if ((GETBIT(c2, j) ^ GETBIT(c1, j) ^ GETBIT(c1, j + n2)) != 0) {
-	    printf("Consistency check failed in gf2x_mul_fft2, bit %ld\n", j);
-	    exit(1);
+	    fprintf(stderr, "Consistency check failed in gf2x_mul_fft2, bit %ld\n", j);
+            abort();
 	}
     }
 #endif
@@ -760,8 +760,8 @@ static void split_reconstruct(unsigned long * c, unsigned long * c1, unsigned lo
     t = c2[0] ^ c1[0] ^ (c1[n2 / WLEN] >> n2 % WLEN) ^
 	((c1[n2 / WLEN + 1] << 1) << (WLEN - 1 - n2 % WLEN));
     if (t != 0) {
-	printf("Consistency check failed in gf2x_mul_fft2, low word %lx\n", t);
-	exit(1);
+	fprintf(stderr, "Consistency check failed in gf2x_mul_fft2, low word %lx\n", t);
+        abort();
     }
 
     Copy(c, c1, cn);	// Copy result

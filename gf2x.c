@@ -51,7 +51,7 @@ void gf2x_mul_basecase(unsigned long * c, const unsigned long * a,
 	default:
 	    fprintf(stderr, "basecase.c: ran off end of switch\n"
 		    "na=nb=%ld ; decrease GF2X_MUL_KARA_THRESHOLD\n", na);
-	    exit(1);
+            abort();
 	}
     } else if (na < nb) {
         /* FIXME -- this does not seem efficient */
