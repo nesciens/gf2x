@@ -76,8 +76,9 @@ AC_DEFUN([SSE2_EXAMPLE],[AC_LANG_SOURCE([
 #include <emmintrin.h>
 __v2di x;       /* Our code currently uses these, but it should not */
 int main() {
-    __m128i foo = _mm_setr_epi32(0x8cab1e00, 0x12345678, 0xdeadbeef, 0xbebecafe);
-    foo = _mm_andnot_si128(_mm_setzero_si128(), foo);
+     __m128i foo = _mm_setr_epi32(0x8cab1e00, 0x12345678, 0xdeadbeef, 0xbebecafe);
+     __m128i bar = _mm_setr_epi32(0x12323717, 0x26622626, 0xabbabbab, 0xfeed1664);
+    foo = _mm_mullo_epi16(foo, bar);
     return _mm_extract_epi16(foo, 0);
 }
 ])])
