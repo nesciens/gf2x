@@ -46,7 +46,9 @@ AC_DEFUN([RUNTIME_ULONG_BITS],[
     AC_CACHE_CHECK([the number of bits in an unsigned long],
         [gf2x_cv_ulongbits],[
         AC_RUN_IFELSE([WORDSIZE_CODE()],[
-            detected=`cat conftest.out | tr -d -c 0-9`
+            # see bug #15631 and autoconf manual about tr.
+            # detected=`cat conftest.out | tr -d -c 0-9`
+            detected=`cat conftest.out`
             if test x$detected = x ; then
                 AC_MSG_ERROR([test program failed])
             else
