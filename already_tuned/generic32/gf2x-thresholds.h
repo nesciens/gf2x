@@ -30,9 +30,7 @@
 #define	GF2X_TOOM_TUNING_INFO		"placeholder"
 #define GF2X_FFT_TUNING_INFO		"placeholder"
 
-/* we rely on the fallback 8*sizeof(unsigned long) as provided by
- * gf2x-impl.h */
-/* #undef GF2X_WORDSIZE   */
+#define GF2X_WORDSIZE           32
 
 #define GF2X_STORAGE_CLASS_mul1        static
 #define GF2X_STORAGE_CLASS_mul_1_n     static
