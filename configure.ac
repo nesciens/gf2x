@@ -38,7 +38,8 @@ AC_ARG_ENABLE([ntl-checks],
 
 AC_ARG_ENABLE([hardware-specific-code],
               [AS_HELP_STRING([--enable-hardware-specific-code],
-                              [Turn on all cpu-dependent optimized code (default is yes)])])
+                              [Turn on all cpu-dependent optimized code (default is yes)])],
+              [],[enable_hardware_specific_code=yes])
 
 AC_ARG_ENABLE([sse2],
               [AS_HELP_STRING([--enable-sse2],
