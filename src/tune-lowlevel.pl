@@ -46,7 +46,7 @@ sub mysys {
 
 my $make;
 if (!defined($make=$ENV{'MAKE'})) {
-    $make="make";
+    $make="$make";
 }
 
 # make sure the upper build is complete. It might be bad to do this
@@ -65,8 +65,11 @@ for my $s (sort { $a <=> $b } keys %sizes) {
 #        next;
 #    }
     my @results;
+    print STDERR "Building the library afresh with current code selection.\n";
+    mysys "cd .. ; $make clean";
+    mysys "cd .. ; $make";
     for my $p (@{$sizes{$s}}) {
-        mysys "make $p";
+        mysys "$make $p";
         my $r = `./$p`;
         chomp($r);
         print STDERR "$r\n";
@@ -137,9 +140,6 @@ for my $s (sort { $a <=> $b } keys %sizes) {
         mysys "ln -sf $link_target_in_already_tuned_subdir ../$ltarget";
     }
     mysys "ln -sf ../$ltarget ../$slot";
-
-    print STDERR "Library source has changed -- rebuilding\n";
-    mysys "cd .. ; $make";
 }
 
 print STDERR "Summary of tune-lowlevel results\n";
