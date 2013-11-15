@@ -10,8 +10,6 @@ find . -name .libs | xargs rm -rf
 
 (cd config ; xargs rm -f) <<EOF
 compile
-config.guess
-config.sub
 depcomp
 install-sh
 libtool.m4
