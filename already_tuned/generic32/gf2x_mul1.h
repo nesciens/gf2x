@@ -19,7 +19,6 @@
    02111-1307, USA.
 */
 
-
 #ifndef GF2X_MUL1_H_
 #define GF2X_MUL1_H_
 

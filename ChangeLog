@@ -1,11 +1,287 @@
-commit c6be9c62fdc2ab132195a46a8f67a31216e4b106
-Author: Emmanuel Thomé <Emmanuel.Thome@gmail.com>
-Date:   Fri Nov 26 11:12:45 2010 +0100
+commit 0d39d3e853f77e309175cd0714d5c13ec07e2abe
+Author: Emmanuel Thomé <Emmanuel.Thome@inria.fr>
+Date:   Thu May 31 22:53:47 2012 +0200
+
+    release gf2x-1.1
+
+ trunk/ChangeLog |  277 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 272 insertions(+), 5 deletions(-)
+
+commit 99a2b4bc86f123316c10cd85e8383127defa6e4f
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Thu Apr 5 07:52:35 2012 +0000
+
+    Port cado-nfs patch 00293ca08fc2813d5e9ba05f5b31820ecde64de5
+    
+    This fixes a GNU make idiom
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@141 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/src/Makefile.am           |   36 ++++++++++++++++++------------------
+ trunk/src/generate-test-list.pl |    4 ++--
+ 2 files changed, 20 insertions(+), 20 deletions(-)
+
+commit 1cc7ff43f8908f2b7c8d8d2dfd0bd95deaa81b0c
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Thu Apr 5 07:47:27 2012 +0000
+
+    changed mul9 default for x86_64_pclmul
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@140 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/already_tuned/x86_64_pclmul/gf2x_mul9.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 9f22b59ff6b4e83217793ec1568c66fce687554b
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Thu Apr 5 07:47:26 2012 +0000
+
+    removed extraneous newline in generated files
+    
+    This caused tune-lowlevel to erroneously report tuning as yielding
+    results different from the preselected choice.
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@139 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/already_tuned/generic32/gf2x_mul1.h |    1 -
+ trunk/already_tuned/generic64/gf2x_mul1.h |    1 -
+ trunk/already_tuned/opteron/gf2x_mul1.h   |    1 -
+ trunk/already_tuned/x86_64/gf2x_mul1.h    |    1 -
+ trunk/already_tuned/x86_sse2/gf2x_mul1.h  |    1 -
+ 5 files changed, 0 insertions(+), 5 deletions(-)
+
+commit dd8354732d39e929be03659bca62189f730fa203
+Author: gaudry <gaudry@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Wed Apr 4 21:04:23 2012 +0000
+
+    Avoid potential error message during make tune-lowlevel.
+    
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@138 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/src/tune-lowlevel.pl |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 7bea0ba52ea36d14eaa9085d49ce827c6ac97388
+Author: zimmerma <zimmerma@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Wed Apr 4 10:55:50 2012 +0000
+
+    [README] improved description
+    
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@137 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/README |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+commit 95a4810a0861584938c40ace682a6358e0c0867e
+Author: zimmerma <zimmerma@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Wed Apr 4 10:50:35 2012 +0000
+
+    [src/tune-lowlevel.pl] fixed typo
+    
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@136 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/src/tune-lowlevel.pl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 543967461f3755fa9310f175cdf7d7e8473ab152
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Wed Apr 4 09:34:59 2012 +0000
+
+    Prepare for release gf2x-1.1 (bugfix)
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@135 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/NEWS         |   11 +++++++++++
+ trunk/configure.ac |    2 +-
+ 2 files changed, 12 insertions(+), 1 deletions(-)
+
+commit 50054fb01cce4a5316e43be873da5321dea8eccc
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Wed Apr 4 09:34:58 2012 +0000
+
+    Added clarification about why GF2X_FUNC exists
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@134 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/gf2x/gf2x-small.h |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
+
+commit 737b0cb2918c3248da00f3c717be565f119575a2
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Wed Apr 4 09:34:57 2012 +0000
+
+    Uniformize inner functions.
+    
+    All static inline functions in mul*.c should be named <basename of the
+    source file>_mul<what it does exactly>. So for example: mul7k3_mul2c. And
+    GF2X_FUNC() should be used for all of these.
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@133 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/src/mul3cl.c   |   14 +++++++-------
+ trunk/src/mul3k3.c   |    7 +++++++
+ trunk/src/mul4cl1.c  |   20 ++++++++++----------
+ trunk/src/mul5k3.c   |   32 ++++++++++++++++----------------
+ trunk/src/mul7cl.c   |   46 +++++++++++++++++++++++-----------------------
+ trunk/src/mul7k3.c   |   26 +++++++++++++-------------
+ trunk/src/mul9cl.c   |    2 +-
+ trunk/src/mul9clk2.c |   28 ++++++++++++++--------------
+ trunk/src/mul9k3.c   |    8 ++++----
+ 9 files changed, 95 insertions(+), 88 deletions(-)
+
+commit 065ac1b486622dbac89dbe70d27c2f1cc663b1d8
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Wed Apr 4 09:34:56 2012 +0000
+
+    Fix for out-of-source build
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@132 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/src/tune-lowlevel.pl |   11 +++++++++--
+ 1 files changed, 9 insertions(+), 2 deletions(-)
+
+commit 8bc1d6039ea620fb694629b37555a607ee32ebbd
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Wed Apr 4 08:54:00 2012 +0000
+
+    Fixed naming of local functions in some files.
+    
+    This repairs a build failure if mul5k3 ever happens to be chosen.
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@131 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/src/mul3cl.c |   14 +++++++-------
+ trunk/src/mul5k3.c |   32 ++++++++++++++++----------------
+ trunk/src/mul9k3.c |    8 ++++----
+ 3 files changed, 27 insertions(+), 27 deletions(-)
+
+commit e8e1e645496fb84d3cd6021b4b53147810678c31
+Author: zimmerma <zimmerma@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Wed Mar 21 17:02:37 2012 +0000
+
+    [config/acinclude.m4] check not only if we can compile sse2 code, but also if
+    		      we can run it
+    
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@130 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/config/acinclude.m4 |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+commit c29d9044e13958cfc7866cd869d08a38dc8becca
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Fri Mar 9 15:27:20 2012 +0000
+
+    autotools fix
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@129 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/config/acinclude.m4 |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+commit 92c16489ae90a850f067348af35a4ca3e06dad11
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Fri Mar 9 15:27:18 2012 +0000
+
+    new tuning
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@128 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ .../already_tuned/x86_64_pclmul/gf2x-thresholds.h  |  320 +++++++++++++++++---
+ trunk/src/Makefile.am                              |    3 +-
+ 2 files changed, 286 insertions(+), 37 deletions(-)
+
+commit 162fee2b9f8bd2044f5a88a3155882bd5ff1c742
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Fri Mar 9 15:27:17 2012 +0000
+
+    trap bad arguments to gf2x_tfft_init
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@127 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/fft.c |   11 +++++++++++
+ 1 files changed, 11 insertions(+), 0 deletions(-)
+
+commit eaf00fcacd5d5d5ed8443728e0c8bc019e263af7
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Fri Mar 9 15:27:15 2012 +0000
+
+    placate autoconf
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@126 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/config/acinclude.m4 |   12 ++++++------
+ trunk/configure.ac        |    2 ++
+ 2 files changed, 8 insertions(+), 6 deletions(-)
+
+commit 5e6213bb384e03259389804eabdcb4ad29ae49e8
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Mon Nov 28 21:36:29 2011 +0000
+
+    typo in generate-test-list.pl
+    
+    Patch contributed by Nicolas Estibals
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@125 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/src/generate-test-list.pl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 80f329f82fb95de349518f2757b3ad6281148d7f
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Mon Nov 28 21:36:28 2011 +0000
+
+    new mul4 from eprint.iacr.org/2011/589.
+    
+    Patch contributed by Nicolas Estibals
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@124 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/src/Makefile.am |    9 +++++
+ trunk/src/mul4cl1.c   |   95 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 104 insertions(+), 0 deletions(-)
+
+commit 39ba2c6c6f3351a3aa5c7a53ab1012e46cb6a8af
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Sat Dec 11 22:35:45 2010 +0000
+
+    support cross-compilation of gf2x
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@123 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/config/acinclude.m4       |  114 +++++++++++++++++++++++++++++++++++++++
+ trunk/configure.ac              |    3 +
+ trunk/src/Makefile.am           |   36 ++++++++-----
+ trunk/src/generate-test-list.pl |    2 +-
+ 4 files changed, 140 insertions(+), 15 deletions(-)
+
+commit a6eee2dd35c190b9dc8be53b7126020ebc2403dc
+Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Sat Dec 11 21:08:43 2010 +0000
 
     release gf2x-1.0
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@122 e5c1114b-a573-4582-9dac-f72f410959ce
 
- trunk/ChangeLog |  428 +++++++++++++++++++++++++++++++++++--------------------
- 1 files changed, 273 insertions(+), 155 deletions(-)
+ trunk/ChangeLog |  435 +++++++++++++++++++++++++++++++++++--------------------
+ 1 files changed, 281 insertions(+), 154 deletions(-)
+
+commit 0b1b5545a5a85ae7963d3b3f266627f421deee6e
+Author: zimmerma <zimmerma@e5c1114b-a573-4582-9dac-f72f410959ce>
+Date:   Mon Nov 29 08:54:14 2010 +0000
+
+    [toom2.c] Marco Bodrato agreed to release the code he was involved in
+              under GPL v2+
+    M    toom2.c
+    
+    
+    git-svn-id: svn+ssh://scm.gforge.inria.fr/svn/gf2x@121 e5c1114b-a573-4582-9dac-f72f410959ce
+
+ trunk/toom2.c |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
 
 commit 87a9b6aa4872f5f979a5980ab2cd122c3a51f716
 Author: thome <thome@e5c1114b-a573-4582-9dac-f72f410959ce>

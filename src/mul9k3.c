@@ -53,7 +53,7 @@ GF2X_FUNC(mul9k3_mul1) (unsigned long a, unsigned long b)
 
 /* same as mul5, but stores a[4]*b[4] into {d,2} */
 GF2X_STORAGE_CLASS_mul5
-void mul9k3_gf2x_mul5c (unsigned long *c, const unsigned long *a,
+void GF2X_FUNC(mul9k3_mul5c) (unsigned long *c, const unsigned long *a,
                         const unsigned long *b, unsigned long *d)
 {
   /* Montgomery formulae with 13 multiplications */
@@ -113,7 +113,7 @@ void mul9k3_gf2x_mul5c (unsigned long *c, const unsigned long *a,
 
 /* same as mul5, but assumes {d,2} contains a[4]*b[4] */
 GF2X_STORAGE_CLASS_mul5
-void mul9k3_gf2x_mul5b (unsigned long *c, const unsigned long *a,
+void GF2X_FUNC(mul9k3_mul5b) (unsigned long *c, const unsigned long *a,
                         const unsigned long *b, const unsigned long *d)
 {
   /* Montgomery formulae with 13 multiplications */
@@ -181,7 +181,7 @@ void gf2x_mul9 (unsigned long *c, const unsigned long *a, const unsigned long *b
   unsigned long aa[5], bb[5], ab[10], ab5, ab6, ab7, ab8, ab9, d[2];
 
     gf2x_mul4 (c+10, a+5, b+5);
-    mul9k3_gf2x_mul5c (c, a, b, d); /* a[4]*b[4] is cached in d */
+    GF2X_FUNC(mul9k3_mul5c) (c, a, b, d); /* a[4]*b[4] is cached in d */
     aa[0] = a[0] ^ a[5];
     aa[1] = a[1] ^ a[6];
     aa[2] = a[2] ^ a[7];
@@ -192,7 +192,7 @@ void gf2x_mul9 (unsigned long *c, const unsigned long *a, const unsigned long *b
     bb[2] = b[2] ^ b[7];
     bb[3] = b[3] ^ b[8];
     bb[4] = b[4];
-    mul9k3_gf2x_mul5b (ab, aa, bb, d);
+    GF2X_FUNC(mul9k3_mul5b) (ab, aa, bb, d);
     ab5 = ab[5] ^ c[5];
     ab6 = ab[6] ^ c[6];
     ab7 = ab[7] ^ c[7];

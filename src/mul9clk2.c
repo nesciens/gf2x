@@ -43,7 +43,7 @@
  * as to remove the false dependency on pclmul, that would be nice.
  */
 static inline __v2di
-GF2X_FUNC(mul9clk_mul1) (unsigned long a, unsigned long b)
+GF2X_FUNC(mul9clk2_mul1) (unsigned long a, unsigned long b)
 {
     __v2di aa = (__v2di) { a, 0 };
     __v2di bb = (__v2di) { b, 0 };
@@ -51,7 +51,7 @@ GF2X_FUNC(mul9clk_mul1) (unsigned long a, unsigned long b)
 }
 
 /* uses the variant of Karatsuba with 6 multiplications */
-static void GF2X_FUNC(mul9clk_mul3) (__v2di *ce, __v2di *co, const unsigned long *a, const unsigned long *b)
+static void GF2X_FUNC(mul9clk2_mul3) (__v2di *ce, __v2di *co, const unsigned long *a, const unsigned long *b)
 {
   unsigned long aa[3], bb[3];
   __v2di p0, p1, p2;
@@ -62,12 +62,12 @@ static void GF2X_FUNC(mul9clk_mul3) (__v2di *ce, __v2di *co, const unsigned long
   bb[0] = b[1]^b[2];
   bb[1] = b[0]^b[2];
   bb[2] = b[0]^b[1];
-  p0  = GF2X_FUNC(mul9clk_mul1)(a[0], b[0]);
-  p1  = GF2X_FUNC(mul9clk_mul1)(a[1], b[1]);
-  p2  = GF2X_FUNC(mul9clk_mul1)(a[2], b[2]);
-  pp0 = GF2X_FUNC(mul9clk_mul1)(aa[0], bb[0]);
-  pp1 = GF2X_FUNC(mul9clk_mul1)(aa[1], bb[1]);
-  pp2 = GF2X_FUNC(mul9clk_mul1)(aa[2], bb[2]);
+  p0  = GF2X_FUNC(mul9clk2_mul1)(a[0], b[0]);
+  p1  = GF2X_FUNC(mul9clk2_mul1)(a[1], b[1]);
+  p2  = GF2X_FUNC(mul9clk2_mul1)(a[2], b[2]);
+  pp0 = GF2X_FUNC(mul9clk2_mul1)(aa[0], bb[0]);
+  pp1 = GF2X_FUNC(mul9clk2_mul1)(aa[1], bb[1]);
+  pp2 = GF2X_FUNC(mul9clk2_mul1)(aa[2], bb[2]);
 
   ce[0] = p0;
   ce[1] = p0^p1^p2^pp1;
@@ -116,12 +116,12 @@ void gf2x_mul9 (unsigned long *c, const unsigned long *a, const unsigned long *b
   __v2di q0e[3], q0o[2];
   __v2di q1e[3], q1o[2];
   __v2di q2e[3], q2o[2];
-  GF2X_FUNC(mul9clk_mul3) (p0e, p0o, a+0, b+0);
-  GF2X_FUNC(mul9clk_mul3) (p1e, p1o, a+3, b+3);
-  GF2X_FUNC(mul9clk_mul3) (p2e, p2o, a+6, b+6);
-  GF2X_FUNC(mul9clk_mul3) (q0e, q0o, aa+0, bb+0);
-  GF2X_FUNC(mul9clk_mul3) (q1e, q1o, aa+3, bb+3);
-  GF2X_FUNC(mul9clk_mul3) (q2e, q2o, aa+6, bb+6);
+  GF2X_FUNC(mul9clk2_mul3) (p0e, p0o, a+0, b+0);
+  GF2X_FUNC(mul9clk2_mul3) (p1e, p1o, a+3, b+3);
+  GF2X_FUNC(mul9clk2_mul3) (p2e, p2o, a+6, b+6);
+  GF2X_FUNC(mul9clk2_mul3) (q0e, q0o, aa+0, bb+0);
+  GF2X_FUNC(mul9clk2_mul3) (q1e, q1o, aa+3, bb+3);
+  GF2X_FUNC(mul9clk2_mul3) (q2e, q2o, aa+6, bb+6);
 
   __v2di e,h,l;
   e = p0e[0];

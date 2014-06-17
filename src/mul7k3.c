@@ -44,7 +44,7 @@
  * as to remove the false dependency on pclmul, that would be nice.
  */
 static inline void
-GF2X_FUNC(mul4clk_mul2)(__v2di * t, __v2di ss1, __v2di ss2)
+GF2X_FUNC(mul7k3_mul2)(__v2di * t, __v2di ss1, __v2di ss2)
 {
     typedef union {
         __v2di s;
@@ -65,7 +65,7 @@ GF2X_FUNC(mul4clk_mul2)(__v2di * t, __v2di ss1, __v2di ss2)
 }
 
 static inline void
-GF2X_FUNC(mul4clk_mul2c)(__v2di * t, __v2di ss1, __v2di ss2, unsigned long *d)
+GF2X_FUNC(mul7k3_mul2c)(__v2di * t, __v2di ss1, __v2di ss2, unsigned long *d)
 {
     typedef union {
         __v2di s;
@@ -88,7 +88,7 @@ GF2X_FUNC(mul4clk_mul2c)(__v2di * t, __v2di ss1, __v2di ss2, unsigned long *d)
 }
 
 static inline void
-GF2X_FUNC(mul4clk_mul2b)(__v2di * t, __v2di ss1, __v2di ss2, unsigned long *d)
+GF2X_FUNC(mul7k3_mul2b)(__v2di * t, __v2di ss1, __v2di ss2, unsigned long *d)
 {
     typedef union {
         __v2di s;
@@ -113,7 +113,7 @@ GF2X_FUNC(mul4clk_mul2b)(__v2di * t, __v2di ss1, __v2di ss2, unsigned long *d)
 /* specialized Karatsuba with 3 calls to mul2, i.e., 9 multiplications
    {d,2} <- {a+3,1} * {b+3,1} */
 GF2X_STORAGE_CLASS_mul4
-void gf2x_mul4c (unsigned long *c, const unsigned long *a, const unsigned long *b, unsigned long *d)
+void GF2X_FUNC(mul7k3_mul4c) (unsigned long *c, const unsigned long *a, const unsigned long *b, unsigned long *d)
 {
   __v2di ab[2];
   __v2di lo[2], hi[2];
@@ -121,10 +121,10 @@ void gf2x_mul4c (unsigned long *c, const unsigned long *a, const unsigned long *
   __v2di a2 = _mm_loadu_si128((__v2di*)(a+2));
   __v2di b0 = _mm_loadu_si128((__v2di*)b);
   __v2di b2 = _mm_loadu_si128((__v2di*)(b+2));
-  GF2X_FUNC(mul4clk_mul2)(lo, a0, b0);
-  GF2X_FUNC(mul4clk_mul2c)(hi, a2, b2, d);
+  GF2X_FUNC(mul7k3_mul2)(lo, a0, b0);
+  GF2X_FUNC(mul7k3_mul2c)(hi, a2, b2, d);
   __v2di middle = lo[1] ^ hi[0];
-  GF2X_FUNC(mul4clk_mul2)(ab, a0 ^ a2, b0 ^ b2);
+  GF2X_FUNC(mul7k3_mul2)(ab, a0 ^ a2, b0 ^ b2);
   _mm_storeu_si128((__v2di*)(c + 0), lo[0]);
   _mm_storeu_si128((__v2di*)(c + 2), ab[0] ^ lo[0] ^ middle);
   _mm_storeu_si128((__v2di*)(c + 4), ab[1] ^ hi[1] ^ middle);
@@ -134,7 +134,7 @@ void gf2x_mul4c (unsigned long *c, const unsigned long *a, const unsigned long *
 /* specialized Karatsuba with 3 calls to mul2, i.e., 9 multiplications,
    assume {d,2} = {a+3,1} * {b+3,1} */
 GF2X_STORAGE_CLASS_mul4
-void gf2x_mul4b (unsigned long *c, const unsigned long *a, const unsigned long *b, unsigned long *d)
+void GF2X_FUNC(mul7k3_mul4b) (unsigned long *c, const unsigned long *a, const unsigned long *b, unsigned long *d)
 {
   __v2di ab[2];
   __v2di lo[2], hi[2];
@@ -142,10 +142,10 @@ void gf2x_mul4b (unsigned long *c, const unsigned long *a, const unsigned long *
   __v2di a2 = _mm_loadu_si128((__v2di*)(a+2));
   __v2di b0 = _mm_loadu_si128((__v2di*)b);
   __v2di b2 = _mm_loadu_si128((__v2di*)(b+2));
-  GF2X_FUNC(mul4clk_mul2)(lo, a0, b0);
-  GF2X_FUNC(mul4clk_mul2b)(hi, a2, b2, d);
+  GF2X_FUNC(mul7k3_mul2)(lo, a0, b0);
+  GF2X_FUNC(mul7k3_mul2b)(hi, a2, b2, d);
   __v2di middle = lo[1] ^ hi[0];
-  GF2X_FUNC(mul4clk_mul2)(ab, a0 ^ a2, b0 ^ b2);
+  GF2X_FUNC(mul7k3_mul2)(ab, a0 ^ a2, b0 ^ b2);
   _mm_storeu_si128((__v2di*)(c + 0), lo[0]);
   _mm_storeu_si128((__v2di*)(c + 2), ab[0] ^ lo[0] ^ middle);
   _mm_storeu_si128((__v2di*)(c + 4), ab[1] ^ hi[1] ^ middle);
@@ -159,7 +159,7 @@ void gf2x_mul7 (unsigned long *c, const unsigned long *a, const unsigned long *b
     unsigned long aa[4], bb[4], ab[8], ab4, ab5, ab6, ab7, d[2];
 
     gf2x_mul3 (c+8, a+4, b+4);
-    gf2x_mul4c (c, a, b, d);
+    GF2X_FUNC(mul7k3_mul4c) (c, a, b, d);
     aa[0] = a[0] ^ a[4];
     aa[1] = a[1] ^ a[5];
     aa[2] = a[2] ^ a[6];
@@ -168,7 +168,7 @@ void gf2x_mul7 (unsigned long *c, const unsigned long *a, const unsigned long *b
     bb[1] = b[1] ^ b[5];
     bb[2] = b[2] ^ b[6];
     bb[3] = b[3];
-    gf2x_mul4b (ab, aa, bb, d);
+    GF2X_FUNC(mul7k3_mul4b) (ab, aa, bb, d);
     ab4 = ab[4] ^ c[4];
     ab5 = ab[5] ^ c[5];
     ab6 = ab[6] ^ c[6];

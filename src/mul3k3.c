@@ -39,6 +39,13 @@
 #error "This code needs pclmul support"
 #endif
 
+
+/* XXX XXX XXX This is dangerous XXX XXX XXX
+ *
+ * we are here exposing gf2x_mul2b and gf2x_mul2c, with unprotected
+ * prefixes. If another source file happens to also define this functions
+ * with the same mechanism, both cannot coexist.
+ */
 #undef GF2X_MUL2_H_
 #define CARRY
 #include "mul2cl.c"

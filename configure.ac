@@ -18,11 +18,13 @@
 #  Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 #  02111-1307, USA.
 
-AC_INIT([gf2x], [1.0])
+AC_INIT([gf2x], [1.1])
 : ${CFLAGS=-g -O4}
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([config])
 AC_CANONICAL_TARGET
+
+AC_LANG([C])
 
 AC_SUBST([gf2x_lib_version], [1:0:0])
 
@@ -47,6 +49,9 @@ AC_PROG_CC
 AC_PROG_CXX
 AC_COMPILE_WARNINGS
 AC_PROG_CC_C99
+
+GF2X_PROG_CC_FOR_BUILD
+GF2X_PROG_EXEEXT_FOR_BUILD
 
 # This macro is used for tuning
 AM_PROG_CC_C_O
