@@ -1,6 +1,6 @@
 /* This file is part of the gf2x library.
 
-   Copyright 2007,2008,2009
+   Copyright 2007, 2008, 2009
    Richard Brent, Pierrick Gaudry, Emmanuel Thome', Paul Zimmermann
 
    This program is free software; you can redistribute it and/or modify it
@@ -24,51 +24,24 @@
 #ifndef GF2X_H_
 #define GF2X_H_
 
-/**********************************************************************/
-/* Some support macros */
-
-#include <assert.h>
-#ifndef ASSERT
-#define ASSERT(x)	assert(x)
-#endif
-#ifndef	MAYBE_UNUSED
-#if defined(__GNUC__)
-#define MAYBE_UNUSED __attribute__ ((unused))
-#else
-#define MAYBE_UNUSED
-#endif
-#endif
-#ifndef	GNUC_VERSION
-#define GNUC_VERSION(X,Y,Z)     \
-    (defined(__GNUC__) &&        \
-    (__GNUC__ == X && __GNUC_MINOR__ == Y && __GNUC_PATCHLEVEL__ == Z))
-#endif
-#if GNUC_VERSION(4,3,0) || GNUC_VERSION(4,3,1)
-#warning "Your GCC version is buggy. Binary fields may fail randomly"
-/* Gcc bug reports 37101 and 37340 -- the only convenient fix is to
- * upgrade to 4.3.2 */
-#endif
-
-/*********************************************************************/
-/* Helper macros */
-#include <stdlib.h>
-
-#include "gf2x/gf2x-thresholds.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+#include <stddef.h>     /* size_t */
+
 /* This is the toplevel multiplication routine, the only one that really
- * matters.
- *
- * The destination must not overlap with the inputs.
+ * matters. a and b point to polynomials whose coefficients span an and
+ * bn machine words (unsigned longs).
  *
  * c must have enough room to hold an+bn words.
+ *
+ * The destination pointer c may alias either a or b (that is, one may
+ * have c==a or c==b), but any other kind of overlap is unsupported).
  */
 extern void gf2x_mul(unsigned long *c,
-		const unsigned long *aa, unsigned int an,
-		const unsigned long *bb, unsigned int bn);
+		const unsigned long *a, unsigned int an,
+		const unsigned long *b, unsigned int bn);
 
 /* The second version is reentrant */
 struct gf2x_mul_pool_s {
@@ -80,8 +53,8 @@ extern void gf2x_mul_pool_init(gf2x_mul_pool_t);
 extern void gf2x_mul_pool_clear(gf2x_mul_pool_t);
 
 extern void gf2x_mul_r(unsigned long *c,
-		const unsigned long *aa, unsigned int an,
-		const unsigned long *bb, unsigned int bn, gf2x_mul_pool_t);
+		const unsigned long *a, unsigned int an,
+		const unsigned long *b, unsigned int bn, gf2x_mul_pool_t);
 
 #ifdef __cplusplus
 }

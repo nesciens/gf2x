@@ -35,7 +35,7 @@ build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
 subdir = .
-DIST_COMMON = README $(am__configure_deps) $(include_HEADERS) \
+DIST_COMMON = README $(am__configure_deps) $(nobase_include_HEADERS) \
 	$(srcdir)/Makefile.am $(srcdir)/Makefile.in \
 	$(srcdir)/version.sh.in $(top_srcdir)/configure \
 	$(top_srcdir)/gf2x/gf2x-config.h.in AUTHORS COPYING ChangeLog \
@@ -88,9 +88,9 @@ RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	install-pdf-recursive install-ps-recursive install-recursive \
 	installcheck-recursive installdirs-recursive pdf-recursive \
 	ps-recursive uninstall-recursive
-includeHEADERS_INSTALL = $(INSTALL_HEADER)
-nodist_includeHEADERS_INSTALL = $(INSTALL_HEADER)
-HEADERS = $(include_HEADERS) $(nodist_include_HEADERS)
+nobase_includeHEADERS_INSTALL = $(install_sh_DATA)
+nobase_nodist_includeHEADERS_INSTALL = $(install_sh_DATA)
+HEADERS = $(nobase_include_HEADERS) $(nobase_nodist_include_HEADERS)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 ETAGS = etags
@@ -220,13 +220,13 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 lib_LTLIBRARIES = libgf2x.la
 libgf2x_la_SOURCES = gf2x.c toom.c fft.c
-include_HEADERS = gf2x.h	\
+nobase_include_HEADERS = gf2x.h	\
 		gf2x/gf2x-impl.h		\
 		gf2x/gf2x-small.h
 
 
 # All these are generated.
-nodist_include_HEADERS = \
+nobase_nodist_include_HEADERS = \
 		gf2x/gf2x-config.h		\
 		gf2x/gf2x-thresholds.h		\
 		gf2x/gf2x_mul1.h		\
@@ -244,8 +244,9 @@ DISTCLEANFILES = gf2x/gf2x-thresholds.h	\
 	       gf2x/gf2x_mul3.h		\
 	       gf2x/gf2x_mul4.h
 
-EXTRA_DIST = version.sh.in BUGS patch-wrt-ntl-5.4.2 inject-ntl-5.4.2 \
-	ntl_gf2x_mul_code.h hardware
+EXTRA_DIST = configfsf.guess configfsf.sub version.sh.in BUGS \
+	patch-wrt-ntl-5.4.2 inject-ntl-5.4.2 ntl_gf2x_mul_code.h \
+	hardware
 all: all-recursive
 
 .SUFFIXES:
@@ -371,37 +372,41 @@ clean-libtool:
 
 distclean-libtool:
 	-rm -f libtool
-install-includeHEADERS: $(include_HEADERS)
+install-nobase_includeHEADERS: $(nobase_include_HEADERS)
 	@$(NORMAL_INSTALL)
 	test -z "$(includedir)" || $(MKDIR_P) "$(DESTDIR)$(includedir)"
-	@list='$(include_HEADERS)'; for p in $$list; do \
+	@$(am__vpath_adj_setup) \
+	list='$(nobase_include_HEADERS)'; for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f=$(am__strip_dir) \
-	  echo " $(includeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(includedir)/$$f'"; \
-	  $(includeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(includedir)/$$f"; \
+	  $(am__vpath_adj) \
+	  echo " $(nobase_includeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(includedir)/$$f'"; \
+	  $(nobase_includeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(includedir)/$$f"; \
 	done
 
-uninstall-includeHEADERS:
+uninstall-nobase_includeHEADERS:
 	@$(NORMAL_UNINSTALL)
-	@list='$(include_HEADERS)'; for p in $$list; do \
-	  f=$(am__strip_dir) \
+	@$(am__vpath_adj_setup) \
+	list='$(nobase_include_HEADERS)'; for p in $$list; do \
+	  $(am__vpath_adj) \
 	  echo " rm -f '$(DESTDIR)$(includedir)/$$f'"; \
 	  rm -f "$(DESTDIR)$(includedir)/$$f"; \
 	done
-install-nodist_includeHEADERS: $(nodist_include_HEADERS)
+install-nobase_nodist_includeHEADERS: $(nobase_nodist_include_HEADERS)
 	@$(NORMAL_INSTALL)
 	test -z "$(includedir)" || $(MKDIR_P) "$(DESTDIR)$(includedir)"
-	@list='$(nodist_include_HEADERS)'; for p in $$list; do \
+	@$(am__vpath_adj_setup) \
+	list='$(nobase_nodist_include_HEADERS)'; for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f=$(am__strip_dir) \
-	  echo " $(nodist_includeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(includedir)/$$f'"; \
-	  $(nodist_includeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(includedir)/$$f"; \
+	  $(am__vpath_adj) \
+	  echo " $(nobase_nodist_includeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(includedir)/$$f'"; \
+	  $(nobase_nodist_includeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(includedir)/$$f"; \
 	done
 
-uninstall-nodist_includeHEADERS:
+uninstall-nobase_nodist_includeHEADERS:
 	@$(NORMAL_UNINSTALL)
-	@list='$(nodist_include_HEADERS)'; for p in $$list; do \
-	  f=$(am__strip_dir) \
+	@$(am__vpath_adj_setup) \
+	list='$(nobase_nodist_include_HEADERS)'; for p in $$list; do \
+	  $(am__vpath_adj) \
 	  echo " rm -f '$(DESTDIR)$(includedir)/$$f'"; \
 	  rm -f "$(DESTDIR)$(includedir)/$$f"; \
 	done
@@ -742,7 +747,8 @@ info: info-recursive
 
 info-am:
 
-install-data-am: install-includeHEADERS install-nodist_includeHEADERS
+install-data-am: install-nobase_includeHEADERS \
+	install-nobase_nodist_includeHEADERS
 
 install-dvi: install-dvi-recursive
 
@@ -780,8 +786,8 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-includeHEADERS uninstall-libLTLIBRARIES \
-	uninstall-nodist_includeHEADERS
+uninstall-am: uninstall-libLTLIBRARIES uninstall-nobase_includeHEADERS \
+	uninstall-nobase_nodist_includeHEADERS
 
 .MAKE: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) install-am \
 	install-strip
@@ -796,16 +802,16 @@ uninstall-am: uninstall-includeHEADERS uninstall-libLTLIBRARIES \
 	dvi-am html html-am info info-am install install-am \
 	install-data install-data-am install-dvi install-dvi-am \
 	install-exec install-exec-am install-html install-html-am \
-	install-includeHEADERS install-info install-info-am \
-	install-libLTLIBRARIES install-man \
-	install-nodist_includeHEADERS install-pdf install-pdf-am \
-	install-ps install-ps-am install-strip installcheck \
-	installcheck-am installdirs installdirs-am maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags tags-recursive uninstall uninstall-am \
-	uninstall-includeHEADERS uninstall-libLTLIBRARIES \
-	uninstall-nodist_includeHEADERS
+	install-info install-info-am install-libLTLIBRARIES \
+	install-man install-nobase_includeHEADERS \
+	install-nobase_nodist_includeHEADERS install-pdf \
+	install-pdf-am install-ps install-ps-am install-strip \
+	installcheck installcheck-am installdirs installdirs-am \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
+	uninstall-libLTLIBRARIES uninstall-nobase_includeHEADERS \
+	uninstall-nobase_nodist_includeHEADERS
 
 dist-hook:
 	-find $(distdir) \( -name .svn -type d \) -o -name "*~" -o -name ".#*" \

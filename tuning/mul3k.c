@@ -1,10 +1,7 @@
-#ifndef tuning_GF2X_MUL3_H_
-#define tuning_GF2X_MUL3_H_
-
 /* This file is part of the gf2x library.
 
-   Copyright 2007,2008,2009
-   Richard Brent, Pierrick Gaudry, Paul Zimmermann, Emmanuel Thome'
+   Copyright 2007, 2008, 2009
+   Richard Brent, Pierrick Gaudry, Emmanuel Thome', Paul Zimmermann
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -21,6 +18,9 @@
    Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
    02111-1307, USA.
 */
+
+#ifndef tuning_GF2X_MUL3_H_
+#define tuning_GF2X_MUL3_H_
 
 #include "gf2x.h"
 #include "gf2x/gf2x-small.h"

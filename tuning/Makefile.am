@@ -202,8 +202,10 @@ EXTRA_PROGRAMS+=tunetoom$(EXEEXT)
 tunetoom_SOURCES=tunetoom.c tuning-common.c
 tunetoom_LDADD=libtiming.la ../libgf2x.la
 
+TOOM_TUNING_LIMIT=2048
+
 tunetoom.res: tunetoom$(EXEEXT)
-	./tunetoom -s 1.05 2048 -o tunetoom.res
+	./tunetoom -s 1.05 $(TOOM_TUNING_LIMIT) -o tunetoom.res
 
 tune-toom: tunetoom.res update-thresholds$(EXEEXT)
 	cd $(top_builddir) ; $(MAKE)
@@ -220,8 +222,10 @@ EXTRA_PROGRAMS+=tunefft$(EXEEXT)
 tunefft_SOURCES=tunefft.c tuning-common.c
 tunefft_LDADD=libtiming.la ../libgf2x.la
 
+FFT_TUNING_LIMIT=8000000
+
 tunefft.res: tunefft$(EXEEXT)
-	./tunefft -s 1.02 8000000 -o tunefft.res
+	./tunefft -s 1.02 $(FFT_TUNING_LIMIT) -o tunefft.res
 
 tune-fft: tunefft.res update-thresholds$(EXEEXT)
 	cd $(top_builddir) ; $(MAKE)

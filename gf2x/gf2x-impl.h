@@ -1,6 +1,6 @@
 /* This file is part of the gf2x library.
 
-   Copyright 2007,2008,2009
+   Copyright 2007, 2008, 2009
    Richard Brent, Pierrick Gaudry, Emmanuel Thome', Paul Zimmermann
 
    This program is free software; you can redistribute it and/or modify it
@@ -24,6 +24,15 @@
 
 #include "gf2x.h"
 #include "gf2x/gf2x-config.h"
+#include "gf2x/gf2x-thresholds.h"
+
+/**********************************************************************/
+/* Some support macros */
+
+#include <assert.h>
+#ifndef ASSERT
+#define ASSERT(x)	assert(x)
+#endif
 
 #ifndef GF2X_WORDSIZE
 #define GF2X_WORDSIZE  (8 * SIZEOF_UNSIGNED_LONG)
@@ -44,7 +53,7 @@ extern "C" {
 extern long gf2x_toomspace(long n);
 extern long gf2x_toomuspace(long n);
 extern void gf2x_mul_basecase(unsigned long * c, const unsigned long * a,
-			 long na, const unsigned long * b, long nb) MAYBE_UNUSED;
+			 long na, const unsigned long * b, long nb);
 
 
 extern void gf2x_mul_toom(unsigned long *c, const unsigned long *a,
@@ -77,14 +86,11 @@ extern void gf2x_mul_fft2(unsigned long *c, const unsigned long *a, long an,
 	     const unsigned long *b, long bn, long K);
 
 
-/* tunetoom.c need to peek into toom.c's tables ; that's very ugly. SO
+/* tunetoom.c need to poke into toom.c's tables ; that's very ugly. So
  * please don't use for anything else.
  * */
 extern short best_tab[GF2X_TOOM_TUNING_LIMIT];
 extern short best_utab[GF2X_TOOM_TUNING_LIMIT];
-
-
-/* Karatsuba, Toom, and so on are in separate .c files */
 
 #ifdef __cplusplus
 }

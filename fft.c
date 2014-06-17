@@ -1,6 +1,6 @@
 /* This file is part of the gf2x library.
 
-   Copyright 2007,2008,2009
+   Copyright 2007, 2008, 2009
    Richard Brent, Pierrick Gaudry, Emmanuel Thome', Paul Zimmermann
 
    This program is free software; you can redistribute it and/or modify it
@@ -24,6 +24,7 @@
 
 #include <stdio.h>
 #include <stdint.h> /* for int64_t in Lshift */
+#include <stdlib.h> /* for int64_t in Lshift */
 
 #include "gf2x.h"
 #include "gf2x/gf2x-impl.h"

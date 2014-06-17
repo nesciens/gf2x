@@ -1,4 +1,46 @@
 
+AC_DEFUN([WORDSIZE_CODE],[
+/* We check wraparound rather than zero, because that's the only thing
+   the norm guarantees (C99) -- UINT_MAX isn't committed to being a power
+   of two */
+#include <stdio.h>
+int main() {
+    unsigned long x = 1UL;
+    unsigned long y;
+    FILE * f = fopen("conftest.out","w");
+    int i = 1;
+    for( ; ; i++) {
+        y = x << 1;
+        if (y < x) {
+            break;
+        }
+        x = y;
+    }
+    fprintf(f,"%d\n",i);
+    fclose(f);
+    return 0;
+}
+])
+
+AC_DEFUN([VERIFY_WORDSIZE],[
+    AC_MSG_CHECKING([whether $CC has $1-bit unsigned longs])
+    AC_RUN_IFELSE([WORDSIZE_CODE()],[
+        detected=`cat conftest.out | tr -d -c 0-9`
+        if test x$detected = x ; then
+            AC_MSG_ERROR([test program failed])
+        elif test x$1 != x$detected ; then
+            AC_MSG_ERROR([no, found $detected-bit. Please provide appropriate \$CC variable])
+        else
+            AC_MSG_RESULT([yes])
+        fi
+    ],[
+        AC_MSG_FAILURE([cannot compile/run test program])
+    ],[
+        AC_MSG_NOTICE([check skipped because of cross-compiling])
+    ])
+])
+
+
 AC_DEFUN([SSE2_EXAMPLE],[
 #include <emmintrin.h>
 __v2di x;

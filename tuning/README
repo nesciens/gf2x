@@ -41,11 +41,11 @@ post to the list gf2x-discuss@lists.gforge.inria.fr ; we need:
 - anything relevant for identifying your machine, or machine family, and
   compiler. This includes for example the output of the following
   commands, at least the ones that exist:
+      sh /path/to/source/of/gf2x/config.guess
       uname -a
       arch
       cat /proc/cpuinfo
       psrinfo -v
-      /usr/sbin/psrinfo -v
       gcc -v
       cc -v
       cc -V
