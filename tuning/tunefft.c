@@ -4,21 +4,20 @@
    Richard Brent, Pierrick Gaudry, Emmanuel Thome', Paul Zimmermann
 
    This program is free software; you can redistribute it and/or modify it
-   under the terms of the GNU General Public License as published by the
-   Free Software Foundation; either version 2 of the License, or (at your
-   option) any later version.
-
+   under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or (at
+   your option) any later version.
+   
    This program is distributed in the hope that it will be useful, but WITHOUT
    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-   more details.
-
-   You should have received a copy of the GNU General Public License along
-   with this program; see the file COPYING.  If not, write to the Free
-   Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-   02111-1307, USA.
+   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+   License for more details.
+   
+   You should have received a copy of the GNU Lesser General Public
+   License along with CADO-NFS; see the file COPYING.  If not, write to
+   the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+   Boston, MA 02110-1301, USA.
 */
-
 /* Program to tune the FFT multiplication over GF(2). */
 
 /* How to use this program:
@@ -235,8 +234,12 @@ ugly_label:
                 memcpy(u, c, 2 * maxn * sizeof(unsigned long));
             }
             check(a, mid, b, mid, reference, u, "F1", c);
-	    TIME(t2[i], gf2x_mul_fft2(v, a, mid, b, mid, K));
-	    check(a, mid, b, mid, "F1", c, "F2", v);
+            if (K >= GF2X_WORDSIZE) {
+                TIME(t2[i], gf2x_mul_fft(v, a, mid, b, mid, -K));
+                check(a, mid, b, mid, "F1", c, "F2", v);
+            } else {
+                t2[i] = DBL_MAX;
+            }
 	    if (t1[i] < t2[i]) {
 		T[i] = t1[i];
 		printf("F1(%ld):%1.1e ", K, T[i]);

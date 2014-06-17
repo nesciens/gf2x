@@ -4,21 +4,20 @@
    Richard Brent, Pierrick Gaudry, Emmanuel Thome', Paul Zimmermann
 
    This program is free software; you can redistribute it and/or modify it
-   under the terms of the GNU General Public License as published by the
-   Free Software Foundation; either version 2 of the License, or (at your
-   option) any later version.
-
+   under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or (at
+   your option) any later version.
+   
    This program is distributed in the hope that it will be useful, but WITHOUT
    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-   more details.
-
-   You should have received a copy of the GNU General Public License along
-   with this program; see the file COPYING.  If not, write to the Free
-   Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-   02111-1307, USA.
+   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+   License for more details.
+   
+   You should have received a copy of the GNU Lesser General Public
+   License along with CADO-NFS; see the file COPYING.  If not, write to
+   the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+   Boston, MA 02110-1301, USA.
 */
-
 #include <string.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -122,28 +121,18 @@ void gf2x_mul_r(unsigned long * c,
      * not yet been tuned */
 #ifdef GF2X_MUL_FFT_TABLE
     long ix, K, sab = sc / 2;
-    long FFT2;
     long max_ix = sizeof(T_FFT_TAB)/sizeof(T_FFT_TAB[0]);
     for (ix = 0; T_FFT_TAB[ix + 1][0] <= sab && ix + 1 < max_ix; ix++);
     /* now T_FFT_TAB[ix][0] <= sab < T_FFT_TAB[ix+1][0] */
     K = T_FFT_TAB[ix][1];
-    if (K < 0) {
-        FFT2 = 1;
-        K = -K;
-    } else {
-        FFT2 = 0;
-    }
 
     /* gf2x_mul_fft can handle unbalanced operands if not too
      * small: return the result in {dst, sa+sb} */
 
     /* Note that dst aliasing a or b works with fft. */
-    if ((K >= 3) && (sc >= GF2X_MUL_FFT_THRESHOLD)) {
-        if (FFT2)
-            gf2x_mul_fft2(dst, a, sa, b, sb, K);	// Split FFT into two
-        else
-            gf2x_mul_fft(dst, a, sa, b, sb, K);	// Don't split here
 
+    if (sc >= GF2X_MUL_FFT_THRESHOLD && K && K != 1) {
+        gf2x_mul_fft(dst, a, sa, b, sb, K);
         goto end_of_gf2x_mul_r;
     }
 #endif

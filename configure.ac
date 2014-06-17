@@ -1,5 +1,5 @@
 
-AC_INIT([gf2x], [0.9.5])
+AC_INIT([gf2x], [0.9.6])
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([config])
 AC_CANONICAL_TARGET
@@ -81,11 +81,11 @@ else
  AC_MSG_NOTICE([Using supplied hwdir value $hwdir])
 fi
 
-echo "using ABI=\"$ABI\""
-echo "      CC=\"$CC\""
-echo "      CFLAGS=\"$CFLAGS\""
-echo "      CPPFLAGS=\"$CPPFLAGS\""
-echo "      hwdir=\"$hwdir\""
+AC_MSG_NOTICE([using ABI="$ABI"])
+AC_MSG_NOTICE([      CC="$CC"])
+AC_MSG_NOTICE([      CFLAGS="$CFLAGS"])
+AC_MSG_NOTICE([      CPPFLAGS="$CPPFLAGS"])
+AC_MSG_NOTICE([      hwdir="$hwdir"])
 
 for f in gf2x-thresholds.h gf2x_mul1.h gf2x_mul2.h gf2x_mul3.h gf2x_mul4.h ; do
  who=tuned
