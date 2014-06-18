@@ -35,6 +35,12 @@ LT_INIT
 AC_ARG_ENABLE([ntl-checks],
               [AS_HELP_STRING([--enable-ntl-checks],
                               [Turn on ntl checks])])
+
+AC_ARG_ENABLE([hardware-specific-code],
+              [AS_HELP_STRING([--enable-hardware-specific-code],
+                              [Turn on all cpu-dependent optimized code (default is yes)])],
+              [],[enable_hardware_specific_code=yes])
+
 AC_ARG_ENABLE([sse2],
               [AS_HELP_STRING([--enable-sse2],
                               [Turn on sse-2 code (default is yes)])])
@@ -62,9 +68,6 @@ gf2x_wordsize=`expr 8 \* $ac_cv_sizeof_unsigned_long`
 AC_SUBST([GF2X_WORDSIZE], [$gf2x_wordsize])
 
 
-CHECK_SSE2_SUPPORT()
-
-CHECK_PCLMUL_SUPPORT()
 
 : ${ABI='default'}
 
@@ -81,7 +84,10 @@ if test x$hwdir = x ; then
  case "$target_cpu" in
   # All 32-bit pentium patterns
   i?86|pentium*|athlon|prescott)
-   if test "$gf2x_cv_cc_supports_sse2" = "no" ; then
+   if test x$enable_hardware_specific_code = xyes; then
+     CHECK_SSE2_SUPPORT()
+   fi
+   if test x$gf2x_cv_cc_supports_sse2 != xyes ; then
     hwdir=x86_nosse2
    else
     hwdir=x86_sse2
@@ -94,13 +100,25 @@ if test x$hwdir = x ; then
    ;;
   core2|opteron|x86_64|nocona|k10)
    # Note: could set to something else if we have separate tuning files.
-   if test "$gf2x_cv_cc_supports_pclmul" = "no" ; then
-     hwdir=x86_64
+   CHECK_SSE2_SUPPORT()
+   if test x$enable_hardware_specific_code = xyes; then
+     CHECK_PCLMUL_SUPPORT()
+   fi
+   if test x$gf2x_cv_cc_supports_pclmul != xyes ; then
+     if test x$gf2x_cv_cc_supports_sse2 != xyes ; then
+       hwdir=generic64
+     else
+       hwdir=x86_64
+     fi
    else
      hwdir=x86_64_pclmul
    fi
    if test x$ABI = x32 ; then
-    hwdir=x86_sse2
+    if test x$gf2x_cv_cc_supports_sse2 != xyes ; then
+     hwdir=x86_nosse2
+    else
+     hwdir=x86_sse2
+    fi
    elif test x$ABI = xdefault ; then
     RUNTIME_ULONG_BITS()
     case x$gf2x_cv_ulongbits in
@@ -113,6 +131,8 @@ if test x$hwdir = x ; then
    ;;
  esac
 else
+ CHECK_SSE2_SUPPORT()
+ CHECK_PCLMUL_SUPPORT()
  AC_MSG_NOTICE([Using supplied hwdir value $hwdir])
 fi
 
@@ -153,8 +173,8 @@ fi
 # This is used in src/Makefile.am
 AM_CONDITIONAL([GF2X_32BIT_SOURCES],[test "x$tuned_nbits" = x32])
 AM_CONDITIONAL([GF2X_64BIT_SOURCES],[test "x$tuned_nbits" = x64])
-AM_CONDITIONAL([GF2X_SSE2_AVAILABLE],[test "x$gf2x_cv_cc_supports_sse2" != xno])
-AM_CONDITIONAL([GF2X_PCLMUL_AVAILABLE],[test "x$gf2x_cv_cc_supports_pclmul" != xno])
+AM_CONDITIONAL([GF2X_SSE2_AVAILABLE],[test "x$gf2x_cv_cc_supports_sse2" = xyes])
+AM_CONDITIONAL([GF2X_PCLMUL_AVAILABLE],[test "x$gf2x_cv_cc_supports_pclmul" = xyes])
 
 AC_CONFIG_HEADERS([gf2x/gf2x-config.h])
 
