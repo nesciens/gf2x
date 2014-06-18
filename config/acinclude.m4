@@ -74,10 +74,26 @@ AC_DEFUN([VERIFY_WORDSIZE],[
     esac
 ])
 
+# pepper this check with more sse-2 only statements, or we might be
+# fooled by some early athlon64 cpus supporting extended 3dnow, which
+# includes a subset of sse-2, but do not support the full sse-2 insn set.
 AC_DEFUN([SSE2_EXAMPLE],[AC_LANG_SOURCE([
 #include <emmintrin.h>
-__v2di x;
-int main() {}
+__v2di x;       /* Our code currently uses these, but it should not */
+int main(int argc, char * argv[]) {
+     __m128i foo = _mm_setr_epi32(argc, argc + 1, argc + 2, argc + 3);
+     __m128i bar = _mm_setr_epi32(argc + 3, argc + 2, argc + 1, argc);
+    foo = _mm_mullo_epi16(foo, bar);
+    foo = _mm_slli_epi64(foo, 1);
+    foo = _mm_xor_si128(bar, _mm_unpacklo_epi32 (foo, bar));
+    foo = _mm_srli_epi64(foo, 1);
+    foo = _mm_mullo_epi16(foo, bar);
+    foo = _mm_shuffle_epi32(foo, 78);
+    foo = _mm_xor_si128(bar, _mm_unpacklo_epi32 (foo, bar));
+    foo = _mm_srli_si128(foo, 1);
+
+    return _mm_extract_epi16(foo, 0) & (argc - 1);
+}
 ])])
 
 # Check whether we need some flag such as -msse2 in order to enable sse-2
