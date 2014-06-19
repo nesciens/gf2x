@@ -112,7 +112,11 @@ if test x$hwdir = x ; then
       hwdir=x86_64_pclmul
     fi
     if test x$ABI = x32 ; then
-     hwdir=x86_sse2
+     if test "$gf2x_cv_can_run_sse2" = "no"; then
+      hwdir=x86_nosse2
+     else
+      hwdir=x86_sse2
+     fi
     elif test x$ABI = xdefault ; then
      RUNTIME_ULONG_BITS()
      case x$gf2x_cv_ulongbits in
