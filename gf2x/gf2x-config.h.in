@@ -10,7 +10,7 @@
 #undef HAVE_MEMORY_H
 
 /* Define if pclmul as present in the source tree is supported by the compiler
-   and hardware */
+   */
 #undef HAVE_PCLMUL_SUPPORT
 
 /* Define if sse-2 code as present in the source tree is supported by the
