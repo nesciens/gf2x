@@ -100,16 +100,16 @@ int main(int argc, char * argv[]) {
 # support
 AC_DEFUN([CHECK_SSE2_SUPPORT],[
  ac_save_CFLAGS=$CFLAGS
- AC_CACHE_CHECK([whether $CC can compile and run sse-2 code], [gf2x_cv_cc_supports_sse2],[
+ AC_CACHE_CHECK([whether $CC can compile sse-2 code], [gf2x_cv_cc_supports_sse2],[
   gf2x_cv_cc_supports_sse2=no
   if test "x${enable_sse2}" = xno ; then
    echo $ECHO_N "explicitly disabled, "
   else
-   AC_RUN_IFELSE([SSE2_EXAMPLE()],[
+   AC_COMPILE_IFELSE([SSE2_EXAMPLE()],[
     gf2x_cv_cc_supports_sse2=yes
    ],[
     CFLAGS="$ac_save_CFLAGS -msse2"
-    AC_RUN_IFELSE([SSE2_EXAMPLE()],[
+    AC_COMPILE_IFELSE([SSE2_EXAMPLE()],[
      gf2x_cv_cc_supports_sse2="requires -msse2"
     ],[
      gf2x_cv_cc_supports_sse2=no
@@ -134,19 +134,40 @@ AC_DEFUN([CHECK_SSE2_SUPPORT],[
    ])
   ])
  fi
+ AC_CACHE_CHECK([whether we can run sse-2 code], [gf2x_cv_can_run_sse2],[
+  gf2x_cv_can_run_sse2=no
+  if test "x${gf2x_cv_cc_supports_sse2}" = xno ; then
+   echo $ECHO_N "cannot compile it, "
+  else
+   AC_RUN_IFELSE([SSE2_EXAMPLE()],[
+    gf2x_cv_can_run_sse2=yes
+   ],[
+    gf2x_cv_can_run_sse2=no
+   ],[
+    echo $ECHO_N "cross-compiling, "
+    gf2x_cv_can_run_sse2=no
+   ])
+  fi
+ ])
  CFLAGS=$ac_save_CFLAGS
  CPPFLAGS=$ac_save_CPPFLAGS
- if test "$gf2x_cv_cc_supports_sse2" = "requires -msse2" ;then
-  CFLAGS="$CFLAGS -msse2"
- fi
- if test "$gf2x_cv_cpp_requires_msse2_flag" = "yes" ; then
-  CPPFLAGS="$CPPFLAGS -msse2"
- fi
- if test "$gf2x_cv_cc_supports_sse2" != "no" ;then
-  AC_DEFINE([HAVE_SSE2_SUPPORT],[1],[Define if sse-2 code as present in the source tree is supported by the compiler])
- fi
 ])# CHECK_SSE2_SUPPORT
 
+# Enables compiler sse2 support, or errors out.
+# Assumes CHECK_SSE2_SUPPORT has run.
+AC_DEFUN([ENABLE_SSE2_SUPPORT],[
+ if test "$gf2x_cv_cc_supports_sse2" = "no" ;then
+  AC_MSG_ERROR([Sorry, cannot enable sse-2 support!])
+ else
+  if test "$gf2x_cv_cc_supports_sse2" = "requires -msse2" ;then
+   CFLAGS="$CFLAGS -msse2"
+  fi
+  if test "$gf2x_cv_cpp_requires_msse2_flag" = "yes" ; then
+   CPPFLAGS="$CPPFLAGS -msse2"
+  fi
+  AC_DEFINE([HAVE_SSE2_SUPPORT],[1],[Define if sse-2 code as present in the source tree is supported by the compiler])
+ fi
+])# ENABLE_SSE2_SUPPORT
 
 
 AC_DEFUN([PCLMUL_EXAMPLE],[AC_LANG_SOURCE([
@@ -168,23 +189,20 @@ return zz.x[[0]] - 61;
 # support
 AC_DEFUN([CHECK_PCLMUL_SUPPORT],[
  ac_save_CFLAGS="$CFLAGS"
- AC_CACHE_CHECK([whether $CC can compile pclmulqdq and if it is supported by the hardware], [gf2x_cv_cc_supports_pclmul],[
+ AC_CACHE_CHECK([whether $CC can compile pclmulqdq], [gf2x_cv_cc_supports_pclmul],[
   gf2x_cv_cc_supports_pclmul=no
   if test "x${enable_pclmul}" = xno ; then
    echo $ECHO_N " disabled, "
   else
-   AC_RUN_IFELSE([PCLMUL_EXAMPLE()],[
+   AC_COMPILE_IFELSE([PCLMUL_EXAMPLE()],[
     gf2x_cv_cc_supports_pclmul=yes
    ],[
     CFLAGS="$ac_save_CFLAGS -mpclmul"
-    AC_RUN_IFELSE([PCLMUL_EXAMPLE()],[
+    AC_COMPILE_IFELSE([PCLMUL_EXAMPLE()],[
      gf2x_cv_cc_supports_pclmul="requires -mpclmul"
     ],[
      gf2x_cv_cc_supports_pclmul=no
     ])
-   ],[
-   echo $ECHO_N " cross-compiling, "
-   gf2x_cv_cc_supports_pclmul=no
    ])
   fi
  ])
@@ -200,25 +218,45 @@ AC_DEFUN([CHECK_PCLMUL_SUPPORT],[
     AC_PREPROC_IFELSE([PCLMUL_EXAMPLE()],[
     gf2x_cv_cpp_requires_mpclmul_flag=yes
     ],[
-     AC_MSG_ERROR([Sorry, the preprocessor can't parse pclmul !])
+     AC_MSG_ERROR([Sorry, the preprocessor can't parse pclmul!])
     ])
    ])
   ])
  fi
+ AC_CACHE_CHECK([whether we can run pclmul code], [gf2x_cv_can_run_pclmul],[
+  gf2x_cv_can_run_pclmul=no
+  if test "x${gf2x_cv_cc_supports_pclmul}" = xno ; then
+   echo $ECHO_N "cannot compile it, "
+  else
+   AC_RUN_IFELSE([PCLMUL_EXAMPLE()],[
+    gf2x_cv_can_run_pclmul=yes
+   ],[
+    gf2x_cv_can_run_pclmul=no
+   ],[
+    echo $ECHO_N "cross-compiling, "
+    gf2x_cv_can_run_pclmul=no
+   ])
+  fi
+ ])
  CFLAGS="$ac_save_CFLAGS"
  CPPFLAGS="$ac_save_CPPFLAGS"
- if test "$gf2x_cv_cc_supports_pclmul" = "requires -mpclmul" ;then
-  CFLAGS="$CFLAGS -mpclmul"
- fi
- if test "$gf2x_cv_cpp_requires_mpclmul_flag" = "yes" ; then
-  CPPFLAGS="$CPPFLAGS -mpclmul"
- fi
- if test "$gf2x_cv_cc_supports_pclmul" != "no" ;then
-  AC_DEFINE([HAVE_PCLMUL_SUPPORT],[1],[Define if pclmul as present in the source tree is supported by the compiler and hardware])
- fi
 ])# CHECK_PCLMUL_SUPPORT
 
-
+# Enables pclmul support, or errors out.
+# Assumes CHECK_PCLMUL_SUPPORT has run.
+AC_DEFUN([ENABLE_PCLMUL_SUPPORT],[
+ if test "$gf2x_cv_cc_supports_pclmul" = "no" ;then
+  AC_MSG_ERROR([Sorry, cannot enable pclmul support!])
+ else
+  if test "$gf2x_cv_cc_supports_pclmul" = "requires -mpclmul" ;then
+   CFLAGS="$CFLAGS -mpclmul"
+  fi
+  if test "$gf2x_cv_cpp_requires_mpclmul_flag" = "yes" ; then
+   CPPFLAGS="$CPPFLAGS -mpclmul"
+  fi
+  AC_DEFINE([HAVE_PCLMUL_SUPPORT],[1],[Define if pclmul as present in the source tree is supported by the compiler])
+ fi
+])# ENABLE_PCLMUL_SUPPORT
 
 
 AC_DEFUN([AC_COMPILE_WARNINGS], [
