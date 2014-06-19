@@ -103,7 +103,11 @@ if test x$hwdir = x ; then
    core2|opteron|x86_64|nocona|k10)
     # Note: could set to something else if we have separate tuning files.
     if test "$gf2x_cv_can_run_pclmul" = "no" ; then
+     if test "$gf2x_cv_can_run_sse2" = "no"; then
+      hwdir=generic64
+     else
       hwdir=x86_64
+     fi
     else
       hwdir=x86_64_pclmul
     fi
@@ -115,7 +119,12 @@ if test x$hwdir = x ; then
       x64|xdontknow) true ;;
       *)
         AC_MSG_WARN([The default ABI for this compiler has $gf2x_cv_ulongbits-bit unsigned longs, not 64-bit as the CPU supports. Using $gf2x_cv_ulongbits-bit])
-        hwdir=x86_sse2;;
+        if test "$gf2x_cv_can_run_sse2" = "no"; then
+         hwdir=x86_nosse2
+        else
+         hwdir=x86_sse2
+        fi
+        ;;
      esac
     fi
     ;;
